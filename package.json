@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/juliancwirko/react-redux-webpack-meteor#readme",
   "dependencies": {
-    "concurrently": "^3.1.0"
-  }
+    "concurrently": "^3.1.0",
+    "semantic-ui-react": "^0.83.0"
+  },
+  "devDependencies": {}
 }
