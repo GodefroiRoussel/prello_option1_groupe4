@@ -5,7 +5,6 @@ import style from './home.styl';
 import Todo from '../Todo/Todo';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
-import { Input } from 'semantic-ui-react';
 
 import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
 
@@ -33,8 +32,9 @@ const Home = (props) => {
             <button onClick={handleLogout} styleName="logout-button">Logout</button>
           </div>
           <div>
-              <Input placeholder='Search...'
+            <input
               type="text"
+              styleName="add-todo-input"
               placeholder="Add todo item ..."
               onKeyPress={handleAddTodo}
             />

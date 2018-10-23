@@ -8,7 +8,7 @@ import style from './main.styl';
 const Main = (props) => {
   const { children } = props;
   return (
-      <div>
+    <div>
       <section styleName="section">
         <div styleName="container">
           {children}
