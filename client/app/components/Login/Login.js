@@ -19,15 +19,14 @@ const Login = () => {
   const form = () => (
       <Grid centered style={style.root}>
           <Grid.Column mobile={16} tablet={8} computer={4}>
-
-              <Form>
+              <Form onSubmit={handleLogin} >
                   <Form.Field>
                       <label>Nickname</label>
-                      <input type="text" placeholder="Type your nickname"/>
+                      <input name="username" type="text" placeholder="Type your nickname"/>
                   </Form.Field>
                   <Form.Field>
                       <label>Password</label>
-                      <input type="password" placeholder="Your password"/>
+                      <input name="password" type="password" placeholder="Your password"/>
                   </Form.Field>
                   <Form.Field>
                       <Button fluid animated='fade'>
