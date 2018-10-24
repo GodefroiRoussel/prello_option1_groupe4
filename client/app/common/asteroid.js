@@ -1,6 +1,7 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser } from '../components/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../components/Todo/TodoActions';
+import { addList, removeList } from '../components/List/ListActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -11,6 +12,7 @@ const asteroid = new Asteroid({
 
 // if you want realitme updates in all connected clients
 // subscribe to the publication
+asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
 
@@ -20,6 +22,10 @@ asteroid.ddp.on('added', (doc) => {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addTodo(docObj));
   }
+  if (doc.collection === 'list') {
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addList(docObj));
+  }
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));
   }
@@ -28,6 +34,9 @@ asteroid.ddp.on('added', (doc) => {
 asteroid.ddp.on('removed', (removedDoc) => {
   if (removedDoc.collection === 'todo') {
     store.dispatch(removeTodo(removedDoc.id));
+  }
+  if (removedDoc.collection === 'list'){
+    store.dispatch(removeList(removedDoc.id));
   }
   if (removedDoc.collection === 'users') {
     store.dispatch(unsetLoggedUser());

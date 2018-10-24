@@ -55,6 +55,9 @@ Meteor.methods({
     addList(message) {
         return List.insert({message: message});
     },
+    removeList(id){
+        return List.remove({_id: id});
+    }
 });
 
 
