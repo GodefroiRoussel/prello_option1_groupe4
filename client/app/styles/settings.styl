@@ -1,5 +1,58 @@
 color-main-light = #fff
 color-main-dark = #000
-color-main-contrast = #2a3647
+color-main-alert = red
+color-main-warning = orange
+color-main-success = green
+color-1 = #004878
+color-2 = #C0BEB9
+color-3 = #F7F6F5
+color-4 = #00AEEF
+color-5 = #FFD026
 
 font-main = 'Raleway', sans-serif
+
+.textColorLight
+  color color-main-light
+
+.textColorDark
+  color color-main-dark
+
+.textColorAlert
+  color color-main-alert
+
+.textColorWarning
+  color color-main-warning
+
+.textColorSuccess
+  color color-main-success
+
+.textColor1
+  color color-1
+
+.textColor2
+  color color-2
+
+.textColor3
+  color color-3
+
+.textColor4
+  color color-4
+
+.textColor5
+  color color-5
+
+/*--------- FORMS -------*/
+label
+  color color-4 !important
+
+input[type=text]
+  color color-1 !important
+
+input[type=text]
+  border none
+&:focus
+  border rem-calc(0.6) solid  color-5 !important
+
+Button
+  color color-3 !important
+  background color-4 !important
