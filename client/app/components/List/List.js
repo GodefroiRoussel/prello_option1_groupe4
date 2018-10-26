@@ -1,8 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
+import { Button, Icon } from 'semantic-ui-react';
+import { callRemoveList } from './ListAsyncActions';
 
-const List = () => {
+
+const List = (props) => {
+
+    const {id, dispatchCallRemoveList} = (props);
+
+    const handleRemove = () => {
+        dispatchCallRemoveList(id);
+      };
 
     const list = () => {
         return (
@@ -10,9 +19,13 @@ const List = () => {
                 <div>
                     <input
                     type="text"
-                    styleName="add-todo-input"
                     placeholder="Add todo item ..."
                     />
+                </div>
+                <div>
+                    <Button onClick={handleRemove} icon>
+                        <Icon name='delete' />
+                    </Button>
                 </div>
             </div>
         );
@@ -20,7 +33,14 @@ const List = () => {
     return <div>{list()}</div>;
 };
 
+List.propTypes ={
+    id: React.PropTypes.string.isRequired,
+    dispatchCallRemoveList: React.PropTypes.func.isRequired,
+};
+
   const mapStateToProps = () => ({});
-  const mapDispatchToProps = () => ({});
+  const mapDispatchToProps = dispatch => ({
+      dispatchCallRemoveList: _id => dispatch(callRemoveList(_id)),
+  });
   
   export default connect(mapStateToProps, mapDispatchToProps)(List);
