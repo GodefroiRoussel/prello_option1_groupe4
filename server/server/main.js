@@ -8,6 +8,7 @@ import { Accounts } from 'meteor/accounts-base'
 const Todo = new Meteor.Collection('todo');
 const List = new Meteor.Collection('list');
 const Team = new Meteor.Collection('team');
+const Board = new Meteor.Collection('Board')
 
 // We can publish some data (here all)
 // we will be able to subscribe to the data later in the client app
@@ -28,7 +29,11 @@ Meteor.publish('team', function() {
 
 Meteor.publish('user', function () {
     return Meteor.users.find({_id: this.userId});
-});
+})
+
+/*Meteor.publish('board', function () {
+    return Board.find()})
+})*/
 
 // We can also use server side methods and call them from our client app
 // here we just fetch all documents from the collection
@@ -69,6 +74,9 @@ Meteor.methods({
     getTeams() {
         return Team.find().fetch();
     },
+    addBoard(message) {
+        return Board.insert({message: message})
+    }
 });
 
 

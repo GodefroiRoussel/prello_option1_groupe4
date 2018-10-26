@@ -3,7 +3,7 @@ accounts-password@1.5.1
 allow-deny@1.1.0
 autoupdate@1.4.1
 babel-compiler@7.1.1
-babel-runtime@1.2.4_1
+babel-runtime@1.2.7
 base64@1.0.11
 binary-heap@1.0.10
 boilerplate-generator@1.5.0
@@ -33,7 +33,7 @@ logging@1.1.20
 meteor@1.9.2
 meteor-base@1.4.0
 minifier-js@2.3.5
-minimongo@1.4.4
+minimongo@1.4.5
 modern-browsers@0.1.2
 modules@0.12.2
 modules-runtime@0.10.2

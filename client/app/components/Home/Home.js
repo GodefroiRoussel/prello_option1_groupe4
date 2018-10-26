@@ -87,7 +87,7 @@ const Home = (props) => {
         </div>
       );
     }
-    return <Login />;
+    return <Login/>;
   };
   return <div>{home()}</div>;
 };
