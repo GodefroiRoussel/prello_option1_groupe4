@@ -7,13 +7,14 @@ import {connect} from "react-redux";
 const CreateBoard = (props) => {
     const { dispatchCallEditBoard } = props;
     const handleCreateBoard = (e) => {
-        console.log(e.target.value);
+        console.log(e.target.boardname.value);
         if (e.key === 'Enter') {
             const elem = e.target;
             e.preventDefault();
-            if (elem.value) {
-                dispatchCallEditBoard(elem.value);
-                elem.value = '';
+            if (elem.boardname.isNotNull()) {
+                console.log("coucou");
+                dispatchCallEditBoard(elem.boardname.value);
+                elem.boardname.value = '';
             }
         }
     };
