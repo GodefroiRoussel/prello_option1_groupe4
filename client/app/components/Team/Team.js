@@ -17,6 +17,8 @@ const Team = (props) => {
     return <div>{team()}</div>;
 };
 
+
+
 Team.propTypes ={
     id: React.PropTypes.string.isRequired,
     activeItem: React.PropTypes.string.isRequired,
