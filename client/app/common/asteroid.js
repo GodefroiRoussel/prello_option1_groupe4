@@ -2,6 +2,7 @@ import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser } from '../components/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../components/Todo/TodoActions';
 import { addList, removeList } from '../components/List/ListActions';
+import { addTeam } from '../components/Team/TeamActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -15,6 +16,7 @@ const asteroid = new Asteroid({
 asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
+asteroid.subscribe('team');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
@@ -25,6 +27,10 @@ asteroid.ddp.on('added', (doc) => {
   if (doc.collection === 'list') {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addList(docObj));
+  }
+  if(doc.collection === 'team'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addTeam(docObj));
   }
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));

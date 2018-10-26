@@ -7,6 +7,7 @@ import { Accounts } from 'meteor/accounts-base'
 // Read more: http://guide.meteor.com/collections.html
 const Todo = new Meteor.Collection('todo');
 const List = new Meteor.Collection('list');
+const Team = new Meteor.Collection('team');
 
 // We can publish some data (here all)
 // we will be able to subscribe to the data later in the client app
@@ -19,6 +20,10 @@ Meteor.publish('todo', function () {
 
 Meteor.publish('list', function() {
     return List.find();
+})
+
+Meteor.publish('team', function() {
+    return Team.find();
 })
 
 Meteor.publish('user', function () {
@@ -57,7 +62,13 @@ Meteor.methods({
     },
     removeList(id){
         return List.remove({_id: id});
-    }
+    },
+    addTeam(name){
+        return Team.insert({name: name});
+    },
+    getTeams() {
+        return Team.find().fetch();
+    },
 });
 
 
