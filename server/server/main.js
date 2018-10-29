@@ -50,6 +50,9 @@ Meteor.methods({
     getTodos() {
         return Todo.find().fetch();
     },
+    addTodo(message){
+        return Todo.insert(message);
+    },
     removeTodo(id) {
         return Todo.remove({_id: id});
     },
@@ -76,20 +79,6 @@ Meteor.methods({
     },
 });
 
-Meteor.method("addTodo", function (message) {
-    return Todo.insert({message : message});
-  }, {
-    url: "methods/addTodo",
-    getArgsFromRequest: function (request) {
-      // Let's say we want this function to accept a form-encoded request with
-      // fields named `a` and `b`.
-      var content = request.body;
-  
-      // Since form enconding doesn't distinguish numbers and strings, we need
-      // to parse it manually
-      return Todo.insert({message: content.message});
-    }
-  })
 
 
 // Deny all client-side updates on the Lists collection
