@@ -14,9 +14,9 @@ const Team = new Meteor.Collection('team');
 // remember that this is not secured, all can subscribe to all data from the client side, just demo purposes
 //
 // Read more: http://guide.meteor.com/data-loading.html
-Meteor.publish('todo', function () {
+Meteor.publish('todo', function() {  
     return Todo.find();
-});
+  })
 
 Meteor.publish('list', function() {
     return List.find();
@@ -30,6 +30,14 @@ Meteor.publish('user', function () {
     return Meteor.users.find({_id: this.userId});
 });
 
+JsonRoutes.setResponseHeaders({
+    "Cache-Control": "no-store",
+    "Pragma": "no-cache",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+  });
+
 // We can also use server side methods and call them from our client app
 // here we just fetch all documents from the collection
 // again, remember that this is not secured, all can call it from the client side, just demo purposes
@@ -41,9 +49,6 @@ Meteor.methods({
     },
     getTodos() {
         return Todo.find().fetch();
-    },
-    addTodo(message) {
-        return Todo.insert({message: message});
     },
     removeTodo(id) {
         return Todo.remove({_id: id});
@@ -70,6 +75,21 @@ Meteor.methods({
         return Team.find().fetch();
     },
 });
+
+Meteor.method("addTodo", function (message) {
+    return Todo.insert({message : message});
+  }, {
+    url: "methods/addTodo",
+    getArgsFromRequest: function (request) {
+      // Let's say we want this function to accept a form-encoded request with
+      // fields named `a` and `b`.
+      var content = request.body;
+  
+      // Since form enconding doesn't distinguish numbers and strings, we need
+      // to parse it manually
+      return Todo.insert({message: content.message});
+    }
+  })
 
 
 // Deny all client-side updates on the Lists collection
