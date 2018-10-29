@@ -16,3 +16,5 @@ accounts-password
 simple:rest
 simple:json-routes
 simple:rest-accounts-password
+force-ssl
+accounts-base
