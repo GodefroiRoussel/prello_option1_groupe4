@@ -4,19 +4,19 @@ import {Grid, Form, Button, Icon} from 'semantic-ui-react';
 import {callEditBoard} from "./CreateBoardAsyncAction";
 import {connect} from "react-redux";
 
+
 const CreateBoard = (props) => {
     const { dispatchCallEditBoard } = props;
     const handleCreateBoard = (e) => {
         console.log(e.target.boardname.value);
-        if (e.key === 'Enter') {
-            const elem = e.target;
-            e.preventDefault();
-            if (elem.boardname.isNotNull()) {
-                console.log("coucou");
-                dispatchCallEditBoard(elem.boardname.value);
-                elem.boardname.value = '';
-            }
+        const elem = e.target;
+        e.preventDefault();
+        if (elem.boardname.value) {
+            console.log("coucou");
+            dispatchCallEditBoard(elem.boardname.value);
+            elem.boardname.value = '';
         }
+
     };
     const form = () => (
         <Grid centered >
