@@ -18,3 +18,4 @@ simple:json-routes
 simple:rest-accounts-password
 force-ssl
 accounts-base
+alanning:roles

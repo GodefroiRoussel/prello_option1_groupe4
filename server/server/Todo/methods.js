@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Security from '../security';
 
 const Todo = new Meteor.Collection('todo');
 
@@ -18,7 +19,7 @@ Meteor.methods({
         if (! Meteor.userId()) {
           throw new Meteor.Error('not-authorized');
         }*/
-     
+        Security.checkLoggedIn(this.userId);
         return Todo.insert(message);
       },
     removeTodo(id) {

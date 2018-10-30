@@ -38,7 +38,7 @@ JsonRoutes.setResponseHeaders({
 Meteor.methods({
     'user.register' (data) {
         Accounts.createUser({
-            email: data.email,
+            email: data.username,
             password: data.password
         });
     },
