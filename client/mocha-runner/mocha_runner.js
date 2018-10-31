@@ -17,5 +17,8 @@ global.navigator = {
 
 documentRef = document;
 
-require('babel-core/register');
+/*
+TODO: Rewrite script for mocha 5.2
+require('@babel-core/register');
 require('babel-polyfill');
+*/
