@@ -4,7 +4,97 @@ var autoprefixer = require('autoprefixer');
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production'
 
+
+module.exports = {
+  devtool: 'eval',
+  entry: [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './app/App.js'
+  ],
+  plugins: [
+    //new CleanWebpackPlugin(['public']),
+    new HtmlWebpackPlugin({
+      title: 'Prello',
+      template: './index_template.ejs',
+      inject: 'body'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    })
+  ],
+  output: {
+    pathinfo: true,
+    path: path.resolve(__dirname, 'public'),
+    filename: 'bundle.js',
+    //publicPath: 'http://localhost:3000/'
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 3000,
+    hot: true,
+    inline: true,
+    /*colors: true,
+    historyApiFallback: true,
+    inline: true, // The small notification bar
+    noInfo: true, // Delete all useless info and keeps only warnings and errors
+    open: true, // To open a browser when launching the script
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    } */
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.(sc|c)ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ]
+      },
+      {
+        test: /\.styl$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'stylus-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        exclude: /node_modules/,
+        use: [
+          'file-loader'
+        ]
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.css', '.styl', '.png', '.jpg', '.jpeg', '.gif']
+  },
+};
+/*
 module.exports = {
   devtool: 'eval',
   entry: [
@@ -24,19 +114,34 @@ module.exports = {
       template: './index_template.ejs',
       inject: 'body'
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
+    new webpack.HotModuleReplacementPlugin()
   ],
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 3000,
+    colors: true,
+    historyApiFallback: true,
+    hot: true,
+    inline: true, // The small notification bar
+    noInfo: true, // Delete all useless info and keeps only warnings and errors
+    open: true, // To open a browser when launching the script
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['babel']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -53,15 +158,27 @@ module.exports = {
         loader: 'url-loader?name=images/[name].[ext]&limit=8192'
       }
     ]
+
+    
+        loaders: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['babel']
+          },
+        ]
+        
   },
   resolve: {
-    root: path.join(__dirname, '..', 'app'),
-    extensions: ['', '.js', '.jsx', '.json', '.css', '.styl', '.png', '.jpg', '.jpeg', '.gif']
+    //root: path.join(__dirname, '..', 'app'),
+    extensions: ['.js', '.jsx', '.json', '.css', '.styl', '.png', '.jpg', '.jpeg', '.gif']
   },
+  
   stylus: function () {
     return [sGrid, rupture]
-  },
+  }
   postcss: function () {
     return [autoprefixer];
   }
 };
+*/

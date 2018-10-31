@@ -1,6 +1,11 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["react-hot-loader/babel"],
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "react-hot-loader/babel"
+  ],
   "env": {
     "test": {
       "plugins": [
@@ -8,7 +13,7 @@
           "babel-plugin-webpack-loaders",
           {
             "config": "./webpack.test.config.js",
-            "verbose": false,
+            "verbose": false
           }
         ]
       ]
