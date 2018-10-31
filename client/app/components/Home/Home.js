@@ -54,7 +54,7 @@ const Home = (props) => {
               {
                 teams.map(m =>
                   <div key={m._id}> 
-                    <Button onClick={() => browserHistory.push('/team')}>{m.name}</Button>
+                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {id: m._id}})}>{m.name}</Button>
                     </div>
                   )
               }
@@ -76,7 +76,7 @@ const Home = (props) => {
             <input
               type="text"
               styleName="add-todo-input"
-              placeholder="Add todo item ..."
+              placeholder="Add todo items ..."
               onKeyPress={handleAddTodo}
             />
           </div>
