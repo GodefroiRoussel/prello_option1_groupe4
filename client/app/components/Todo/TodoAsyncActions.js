@@ -2,7 +2,7 @@ import asteroid from '../../common/asteroid';
 import { addTodo, getAllTodo, removeTodo, editTodo } from './TodoActions';
 
 export function callAddTodo(message) {
-  return dispatch => asteroid.call('addTodo', message)
+  return dispatch => asteroid.call('addTodo', {message: message})
       .then(result => dispatch(addTodo({ _id: result, message })));
 }
 
