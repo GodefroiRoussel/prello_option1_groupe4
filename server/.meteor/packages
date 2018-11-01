@@ -18,3 +18,5 @@ simple:json-routes
 simple:rest-accounts-password
 force-ssl
 accounts-base
+aldeed:simple-schema
+aldeed:collection2@3.0.0
