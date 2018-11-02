@@ -25,6 +25,7 @@
   "homepage": "https://github.com/juliancwirko/react-redux-webpack-meteor",
   "dependencies": {
     "asteroid": "^2.0.3",
+    "dotenv": "^6.1.0",
     "history": "~4.4.0",
     "lodash": "~4.17.2",
     "react": "~15.4.1",
@@ -62,12 +63,14 @@
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "jsdom": "^9.8.3",
-    "mini-css-extract-plugin": "^0.4.4",
     "mocha": "^5.2.0",
     "node-libs-browser": "~2.0.0",
     "node-sass": "^4.9.4",
+    "postcss": "^7.0.5",
+    "postcss-js": "^2.0.0",
     "postcss-load-config": "^2.0.0",
     "postcss-loader": "^3.0.0",
+    "postcss-normalize": "^7.0.1",
     "postcss-plugin": "^1.0.0",
     "react-addons-test-utils": "~15.4.1",
     "react-hot-loader": "~3.0.0-beta.6",
@@ -78,17 +81,9 @@
     "stylus-loader": "^3.0.2",
     "sugarss": "^2.0.0",
     "url-loader": "^1.1.2",
-    "webpack": "^4.23.1",
+    "webpack": "^4.24.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
-  },
-  "postcss": {
-    "parser": "sugarss",
-    "map": false,
-    "plugins": {
-      "postcss-plugin": {}
-    },
-    "exec": true
   },
   "eslintConfig": {
     "parserOptions": {
