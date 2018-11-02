@@ -25,9 +25,11 @@
   "homepage": "https://github.com/juliancwirko/react-redux-webpack-meteor",
   "dependencies": {
     "asteroid": "^2.0.3",
+    "chart.js": "^2.5.0",
     "history": "~4.4.0",
     "lodash": "~4.17.2",
     "react": "~15.4.1",
+    "react-chartjs-2": "^2.5.8",
     "react-css-modules": "^4.0.3",
     "react-dom": "~15.4.1",
     "react-redux": "^4.4.6",
