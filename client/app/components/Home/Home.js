@@ -45,7 +45,7 @@ const Home = (props) => {
   const home = () => {
     if (user && user.username) {
       return (
-        <div styleName="todo-wrapper">
+        <div>
           <div styleName="logout">
             Logged user: {user.username}
             <button onClick={handleLogout} styleName="logout-button">Logout</button>

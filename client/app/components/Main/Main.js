@@ -9,11 +9,8 @@ const Main = (props) => {
   const { children } = props;
   return (
     <div>
-      <section styleName="section">
-        <div styleName="container">
+
           {children}
-        </div>
-      </section>
       <Alert position="top-right" effect="jelly" />
     </div>
   );

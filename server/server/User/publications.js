@@ -1,9 +1,7 @@
 import {Meteor} from 'meteor/meteor';
-
-const User = new Meteor.Collection('user');
+import User from './model';
 
 Meteor.publish('user', function() {
     return User.find();
 })
 
-export default User;

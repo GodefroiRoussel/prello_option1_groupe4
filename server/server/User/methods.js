@@ -1,6 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import User from './publications';
-import List from "../List/publications";
+import User from "./model";
 
 Meteor.methods({
     addUser(gender,nickname, firstName, name, email, password){
