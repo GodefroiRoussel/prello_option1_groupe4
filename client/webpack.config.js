@@ -8,7 +8,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
     './app/App.js'
   ],
@@ -16,7 +16,7 @@ module.exports = {
     pathinfo: true,
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:3000/'
+    publicPath: 'http://localhost:8080/'
   },
   plugins: [
     new HtmlWebpackPlugin({
