@@ -6,13 +6,7 @@ import { Tab, Card, Image, List } from 'semantic-ui-react';
 
 const Team = (props) => {
 
-    const {teams} = props;
-
-    const name = teams.map(x => {
-        if(x._id == props.location.state.id){
-            return x.name;
-        }
-    });
+    const t = props.location.state.team
 
     const panes = [
         { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane><Card.Group items={listBoards} /></Tab.Pane> },
@@ -45,13 +39,7 @@ const Team = (props) => {
     const members = () =>{
         return (
             <div>
-                <h2>Membres de l'équipe ({
-                    teams.map(x => {
-                        if(x._id == props.location.state.id){
-                            return x.members.length;
-                        }
-                    })
-                })</h2>
+                <h2>Membres de l'équipe ({t.members.length})</h2>
                 <p>Les membres d'équipes peuvent consulter et rejoindre tous les tableaux visibles par les membres d'une équipe et peuvent créer de nouveaux tableaux au sein de l'équipe.</p>
                 {listMembers()}
             </div>
@@ -81,7 +69,7 @@ const Team = (props) => {
     const team = () => {
         return (
             <div>
-                <h1>{name}</h1>
+                <h1>{t.name}</h1>
                 <Tab panes={panes} />
             </div>
         )
@@ -90,11 +78,9 @@ const Team = (props) => {
 };
 
 Team.propTypes = {
-    teams: React.PropTypes.array.isRequired,
 };
 
-  const mapStateToProps = state => ({
-      teams: state.teams,
+  const mapStateToProps = () => ({
   });
 
   const mapDispatchToProps = ()=> ({});

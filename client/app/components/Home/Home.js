@@ -54,7 +54,7 @@ const Home = (props) => {
               {
                 teams.map(m =>
                   <div key={m._id}> 
-                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {id: m._id}})}>{m.name}</Button>
+                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.name}</Button>
                     </div>
                   )
               }
