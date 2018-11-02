@@ -1,62 +1,90 @@
 import React from 'react';
 // import cssModules from 'react-css-modules';
-import {Menu, Image, Grid, Item, Button, Icon} from 'semantic-ui-react';
+import {Menu, Card, Image, Grid, Item, Button, Icon} from 'semantic-ui-react';
 import {connect} from "react-redux";
+import defaultStyle from '../../styles/settings.styl'
+import style from './Board.styl'
 import {callGetBoard} from './BoardAsyncActions';
+import List from '../List/List'
+import bo from '../../common/dataTest'
+//import rootReducer from '../../mainReducer'
 
 
 const Board = (match, props) => {
 
-    const {id} = props
     console.log(match.params.idBoard);
-    console.log(callGetBoard(match.params.idBoard))
-    //console.log(callGetBoard(match.params.idBoard))
-    //const name = callGetBoard(match.params.idBoard).name;
+    //console.log(callGetBoard(match.params.idBoard));
+
+    const b = bo;
 
     //state = {}
 
-    //const handleItemClick = (e, { name }) => ({ activeItem: name })
+    const handleItemClick = (e, { name }) => (console.log(name));
 
-    /*render() {
-        const { activeItem } = this.state*/
+    const { activeItem } = '';
 
-    const board = () => (
-        <Menu stackable width={16}>
+    const boardMenu = () => (
+        <Menu className={style.Menu} stackable width={16}>
             <Menu.Item
-            name='azertyuiop'>
+                name={b.titleBoard}>
             </Menu.Item>
-
             <Menu.Item>
-            <Icon name='star outline'></Icon>
+                <Icon name='star outline'/>
             </Menu.Item>
 
             <Menu.Item
-                name='Visibility'
-                //active={activeItem === 'testimonials'}
-                //onClick={this.handleItemClick}
+                name={'visbile for ' + b.visibilityBoard}
+                active={activeItem === 'visibility'}
+                onClick={handleItemClick}
             >
-                Visibility
             </Menu.Item>
 
-            <Menu.Item name='parameters'
-                //onClick={this.handleItemClick}>
-                >
+            <Menu.Item
+                position ='right'
+                name='parameters'
+                onClick={handleItemClick}
+            >
                 Board parameters
             </Menu.Item>
         </Menu>
     );
-    return <div>{board()}</div>;
+
+    const boardBody = () => (
+        <Card.Group>
+            {b.lists.map(list =>
+                <List key={list} ></List>)}
+        </Card.Group>
+
+    );
+
+    const board = () => (
+        <Grid>
+            <Grid.Row computer={16}>
+                {boardMenu()}
+            </Grid.Row>
+            <Grid.Row  className={style.CardGroup} computer={14}>
+                {boardBody()}
+            </Grid.Row>
+        </Grid>
+    );
+
+
+    return (
+    <div>{board()}</div>)
 };
 
 Board.propTypes = {
-    //dispatchCallGetBoard: React.PropTypes.func.isRequired,
-    //id: React.PropTypes.string.isRequired,
-    //name: React.PropTypes.string.isRequired,
 };
+
+const mapStateToProps = state => {
+    /*return ({
+        list = state.lists
+    })*/
+}
 
 const mapDispatchToProps = dispatch => ({
     //dispatchCallGetBoard: _id => dispatch(callGetBoard(_id)),
 });
 
 
-export default connect(mapDispatchToProps)(Board);
+export default connect(mapStateToProps)(Board);

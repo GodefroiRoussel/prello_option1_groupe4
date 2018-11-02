@@ -9,8 +9,8 @@ const Main = (props) => {
   const { children } = props;
   return (
     <div>
-      <section styleName="section">
-        <div styleName="container">
+      <section>
+        <div>
           {children}
         </div>
       </section>
