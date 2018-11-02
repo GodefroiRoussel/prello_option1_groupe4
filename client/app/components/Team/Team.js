@@ -5,6 +5,7 @@ import { Tab, Card, Image, List } from 'semantic-ui-react';
 
 
 const Team = (props) => {
+    const {user} = props;
 
     const t = props.location.state.team
 
@@ -37,6 +38,7 @@ const Team = (props) => {
       )
     
     const members = () =>{
+        console.log(user.username);
         return (
             <div>
                 <h2>Membres de l'équipe ({t.members.length})</h2>
@@ -78,9 +80,11 @@ const Team = (props) => {
 };
 
 Team.propTypes = {
+    user: React.PropTypes.object,
 };
 
-  const mapStateToProps = () => ({
+  const mapStateToProps = (state) => ({
+    user: state.user,
   });
 
   const mapDispatchToProps = ()=> ({});

@@ -6,7 +6,7 @@ import Todo from '../Todo/Todo';
 import List from '../List/List';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { Button, Input } from 'semantic-ui-react';
 import { callAddTeam } from '../Team/TeamAsyncActions';
 import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
