@@ -8,7 +8,7 @@ import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
 import { Button, Input } from 'semantic-ui-react';
-import { callAddTeam } from '../Team/TeamAsyncActions';
+
 import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
 import { callAddList } from '../List/ListAsyncActions';
 
@@ -26,11 +26,14 @@ const Home = (props) => {
     }
   }
 
+  // affectation selon les propriètés
+
   const handleAddTodo = (e) => {
     if (e.key === 'Enter') {
       const elem = e.target;
       e.preventDefault();
       if (elem.value) {
+        //envoie vers TodoAsyncAction
         dispatchCallAddTodo(elem.value);
         elem.value = '';
       }
@@ -45,7 +48,7 @@ const Home = (props) => {
   const home = () => {
     if (user && user.username) {
       return (
-        <div styleName="todo-wrapper">
+        <div>
           <div styleName="logout">
             Logged user: {user.username}
             <button onClick={handleLogout} styleName="logout-button">Logout</button>
@@ -92,6 +95,7 @@ const Home = (props) => {
   return <div>{home()}</div>;
 };
 
+// Vérifier le type des varible
 Home.propTypes = {
   teams: React.PropTypes.array.isRequired,
   lists: React.PropTypes.array.isRequired,
@@ -102,6 +106,7 @@ Home.propTypes = {
   user: React.PropTypes.object,
 };
 
+//Vairable observé en cas de changement d'état (state) afin que les données se reload que se soit par l'user ou par la BD
 const mapStateToProps = state => ({
   teams: state.teams,
   lists: state.lists,

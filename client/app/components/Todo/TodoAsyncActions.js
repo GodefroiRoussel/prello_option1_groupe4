@@ -2,8 +2,9 @@ import asteroid from '../../common/asteroid';
 import { addTodo, getAllTodo, removeTodo, editTodo } from './TodoActions';
 
 export function callAddTodo(message) {
-  return dispatch => asteroid.call('addTodo', message)
+  return dispatch => asteroid.call('addTodo', {message: message})
       .then(result => dispatch(addTodo({ _id: result, message })));
+  //.then est un promise pour ne pas bloquer la page / id est le retour du serveur avec un message / dispatch grace à redux ajoute à notre state
 }
 
 export function callGetAllTodo() {
