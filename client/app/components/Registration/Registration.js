@@ -30,12 +30,12 @@ const Registration = (props) => {
         e.preventDefault();
         dispatchCallAddUser({
             firstName: e.target.firstName.value,
-            name: e.target.password.name,
-            nickname: e.target.username.nickname,
-            email: e.target.password.email,
-            emailVerification: e.target.username.emailVerification,
-            password: e.target.password.password,
-            passwordConfirmation: e.target.username.passwordConfirmation
+            name: e.target.name.value,
+            nickname: e.target.nickname.value,
+            email: e.target.email.value,
+            emailVerification: e.target.emailVerification.value,
+            password: e.target.password.value,
+            passwordConfirmation: e.target.passwordConfirmation.value
         }).catch((error) => {
             Alert.error(error.message);
         });

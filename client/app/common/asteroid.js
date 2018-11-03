@@ -3,6 +3,7 @@ import { setLoggedUser, unsetLoggedUser } from '../components/Login/LoginActions
 import { addTodo, removeTodo, editTodo } from '../components/Todo/TodoActions';
 import { addList, removeList } from '../components/List/ListActions';
 import { addTeam } from '../components/Team/TeamActions';
+import { addUser } from '../components/User/UserActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -31,6 +32,10 @@ asteroid.ddp.on('added', (doc) => {
   if(doc.collection === 'team'){
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addTeam(docObj));
+  }
+  if(doc.collection === 'user'){
+      const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+      store.dispatch(addUser(docObj));
   }
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));

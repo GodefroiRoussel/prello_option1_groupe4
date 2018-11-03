@@ -1,9 +1,9 @@
 import asteroid from '../../common/asteroid';
 import { addUser, getAllUser, removeUser, editUser } from './UserActions';
 
-export function callAddUser(message) {
-    return dispatch => asteroid.call('addUser', message)
-        .then(result => dispatch(addUser({ _id: result, message })));
+export function callAddUser(data) {
+    return dispatch => asteroid.call('addUser', data)
+        .then(result => dispatch(addUser({ _id: result, data })));
     //.then est un promise pour ne pas bloquer la page / id est le retour du serveur avec un message / dispatch grace à redux ajoute à notre state
 }
 
