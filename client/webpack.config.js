@@ -18,6 +18,18 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: 'http://localhost:8080/'
   },
+  devServer: {
+    contentBase: './public',
+    publicPath: 'http://localhost:8080/',
+    hot: true,
+    historyApiFallback: true,
+    colors: true,
+    noInfo: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React with Webpack and Redux - Meteor as a backend only!',

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "webpack-dev-server --open",
+    "dev": "webpack-dev-server --progress --open",
     "build": "webpack -p --config webpack.prod.conf.js",
     "lint": "eslint ./app",
     "testonly": "BABEL_DISABLE_CACHE=1 NODE_ENV=test mocha $npm_package_options_mocha",
