@@ -96,7 +96,7 @@ const dataBarPlot2 = {
 };
 
 const dataLineChart = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     datasets: [
         {
             label: 'Number of hours passed in development this week',
@@ -146,12 +146,13 @@ const dataLineChart = {
 //TODO: Handle dynamic name and datas
 //TODO: Refactor in little components
 //TODO: Right Scroll with the list of members
+//TODO: Fix Bug of cards
 const WeeklyActivityReport = () => {
 
     const form = () => (
         <div>
             <Header as='h2'>Dream Team Weekly Activity Report <Label> Week 3 </Label></Header>
-            <Grid columns='equal'>
+            <Grid columns='equal' textAlign='center' divided>
                 <Grid.Row centered>
                     <Table celled collapsing>
                         <Table.Header>
@@ -185,19 +186,30 @@ const WeeklyActivityReport = () => {
                     </Grid.Column>
 
                     <Grid.Column >
-                        <div>
-                            <h2>Number of tasks due in time</h2>
-                            <Pie data={data} />
-                        </div>
-                    </Grid.Column>
-                    <Grid.Column >
-                        <div>
-                            <h2>Number of hours of billable tasks</h2>
-                            <Pie data={dataPieBillable} />
-                        </div>
+                        <Grid
+                            columns='equal'
+                            padded
+                            stackable
+                            textAlign='center'
+                        >
+                            <Grid.Row>
+                                <Grid.Column >
+
+                                    <div>
+                                        <h2>Number of tasks due in time</h2>
+                                        <Pie data={data} />
+                                    </div>
+                                </Grid.Column>
+                                <Grid.Column >
+                                    <div>
+                                        <h2>Number of hours of billable tasks</h2>
+                                        <Pie data={dataPieBillable} />
+                                    </div>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
                     </Grid.Column>
                 </Grid.Row>
-
 
                 <Grid.Row>
                     <Grid.Column>
@@ -211,9 +223,6 @@ const WeeklyActivityReport = () => {
                             <h2>Number of finished tasks by person this week</h2>
                             <Bar
                                 data={dataBarPlot2}
-                                options={{
-                                    maintainAspectRatio: false
-                                }}
                             />
                         </div>
                     </Grid.Column>
@@ -221,105 +230,113 @@ const WeeklyActivityReport = () => {
 
 
                 <Grid.Row>
-                    <h2>Boards</h2>
-                    <h1> TODO : LIST OF CARD BOARD</h1>
+                    <div>
+                        <h2>Boards</h2>
+                        <h1> TODO : LIST OF CARD BOARD</h1>
+                    </div>
                 </Grid.Row>
 
 
                 <Grid.Row>
-                    <h2>Members</h2>
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Elliot Baker'
-                            meta='Admin'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                        />
-                    </Grid.Column>
+                    <div>
+                        <h2>Members</h2>
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Elliot Baker'
+                                meta='Admin'
+                                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                            />
+                        </Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Pierre Baker'
-                            meta='Member'
-                            description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
-                        />
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Elliot Baker'
-                            meta='Admin'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                        />
-                    </Grid.Column>
+                        <Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Pierre Baker'
-                            meta='Member'
-                            description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
-                        />
-                    </Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Pierre Baker'
+                                meta='Member'
+                                description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
+                            />
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Elliot Baker'
-                            meta='Admin'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                        />
-                    </Grid.Column>
+                        </Grid.Column>
+                        <Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Pierre Baker'
-                            meta='Member'
-                            description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
-                        />
-                    </Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Elliot Baker'
+                                meta='Admin'
+                                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                            />
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Elliot Baker'
-                            meta='Admin'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                        />
-                    </Grid.Column>
+                        </Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Pierre Baker'
-                            meta='Member'
-                            description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
-                        />
-                    </Grid.Column>
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Pierre Baker'
+                                meta='Member'
+                                description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
+                            />
+                        </Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Elliot Baker'
-                            meta='Admin'
-                            description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
-                        />
-                    </Grid.Column>
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Elliot Baker'
+                                meta='Admin'
+                                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                            />
+                        </Grid.Column>
 
-                    <Grid.Column>
-                        <Card
-                            image='./../../styles/assets/logo.png'
-                            header='Pierre Baker'
-                            meta='Member'
-                            description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
-                        />
-                    </Grid.Column>
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Pierre Baker'
+                                meta='Member'
+                                description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
+                            />
+                        </Grid.Column>
 
-                    <Button icon>
-                        <Icon name='angle right' />
-                    </Button>
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Elliot Baker'
+                                meta='Admin'
+                                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                            />
+                        </Grid.Column>
+
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Pierre Baker'
+                                meta='Member'
+                                description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
+                            />
+                        </Grid.Column>
+
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Elliot Baker'
+                                meta='Admin'
+                                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                            />
+                        </Grid.Column>
+
+                        <Grid.Column>
+                            <Card
+                                image='/images/logo.png'
+                                header='Pierre Baker'
+                                meta='Member'
+                                description='Pierre is a computer science engineer living in Nashville who enjoys playing guitar and hanging with his dog.'
+                            />
+                        </Grid.Column>
+
+                        <Button icon>
+                            <Icon name='angle right' />
+                        </Button>
+                    </div>
                 </Grid.Row>
             </Grid >
         </div >
