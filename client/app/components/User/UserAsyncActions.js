@@ -17,7 +17,11 @@ export function callRemoveUser(_id) {
         .then(() => dispatch(removeUser(_id)));
 }
 
-export function callEditUser(_id, finished) {
-    return dispatch => asteroid.call('editUser', _id, finished)
-        .then(() => dispatch(editUser(_id, finished)));
+export function callEditUserProfile(data) {
+    return dispatch => asteroid.call('editUserProfile',data)
+        .then(() => dispatch(editUserProfile(data)));
+}
+export function callEditUserPassword(data) {
+    return dispatch => asteroid.call('editUserPassword',data)
+        .then(() => dispatch(editUserPassword(data)));
 }

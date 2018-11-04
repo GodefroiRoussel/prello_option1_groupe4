@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";
 import Team from './components/Team/Team';
+import Account from './components/Account/Account';
 
 
 const Root = (
@@ -13,6 +14,7 @@ const Root = (
         <Route path="team" component={Team}/>
         <Route path="login" component={Login}/>
         <Route path="registration" component={Registration}/>
+        <Route path="account" component={Account}/>
     </Route>
 
 

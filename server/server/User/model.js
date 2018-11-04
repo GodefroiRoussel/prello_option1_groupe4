@@ -3,6 +3,7 @@ import {Meteor} from "meteor/meteor";
 
 //const User = new Meteor.Collection('user');
 
+/*
 Accounts.schema = new SimpleSchema({
     firstNameUser: {type: String},
     lastNameUser: {type: String},
@@ -18,4 +19,4 @@ Accounts.schema = new SimpleSchema({
     colourBlindUser: {type: String}
 });
 
-export default Accounts;
+export default Accounts;*/

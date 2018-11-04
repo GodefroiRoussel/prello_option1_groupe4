@@ -8,7 +8,9 @@ const users = (state = [], action) => {
             return add(state, action);
         case REMOVE_USER:
             return remove(state, action);
-        case EDIT_USER:
+        case EDIT_USER_PROFILE:
+            return edit(state, action);
+        case EDIT_USER_PASSWORD:
             return edit(state, action);
         case GET_ALL_USER:
             return action.data;

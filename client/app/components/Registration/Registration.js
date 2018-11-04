@@ -29,6 +29,7 @@ const Registration = (props) => {
     const handleRegistration = (e) => {
         e.preventDefault();
         dispatchCallAddUser({
+            gender: e.target.gender,
             firstName: e.target.firstName.value,
             name: e.target.name.value,
             nickname: e.target.nickname.value,
@@ -49,7 +50,7 @@ const Registration = (props) => {
                     <h2 className={style.titleRegistrationBox}>Registration</h2>
                     <Form onSubmit={handleRegistration}>
                         <Form.Field>
-                            <Form.Select fluid label='Gender' options={options} placeholder='Gender' />
+                            <Form.Select fluid label='Gender' options={options} placeholder='Gender' name="gender" />
                         </Form.Field>
                         <Form.Field>
                             <label>First Name</label>

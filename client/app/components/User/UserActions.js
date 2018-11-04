@@ -5,7 +5,8 @@
 //Constant pour simplifier l'appel
 export const ADD_USER = 'ADD_TODO';
 export const REMOVE_USER = 'REMOVE_USER';
-export const EDIT_USER = 'EDIT_USER';
+export const EDIT_USER_PROFILE = 'EDIT_USER_PROFILE';
+export const EDIT_USER_PASSWORD = 'EDIT_USER_PASSWORD';
 export const GET_ALL_USER = 'GET_ALL_USER';
 
 /*
@@ -27,11 +28,17 @@ export function removeUser(_id) {
     };
 }
 
-export function editUser(_id, finished) {
+export function editUserProfile(data) {
     return {
-        type: EDIT_USER,
-        _id,
-        finished,
+        type: EDIT_USER_PROFILE,
+        data
+    };
+}
+
+export function editUserPassword(data) {
+    return {
+        type: EDIT_USER_PASSWORD,
+        data
     };
 }
 
