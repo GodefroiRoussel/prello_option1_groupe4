@@ -10,16 +10,13 @@ import {Grid, Form, Button, Icon, Image} from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
 import style from './account.styl';
 
-import {callAddUser} from "../User/UserAsyncActions";
+import {callEditUserPassword, callEditUserProfile} from "../User/UserAsyncActions";
 
 import logo from './../../styles/assets/logo.png'
 import Login from "../Login/Login";
 
 
-const options = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-]
+
 
 const Account = (props) => {
 
@@ -28,10 +25,11 @@ const Account = (props) => {
     const updateProfile = (e) => {
         e.preventDefault();
         dispatchCallUpdateUserProfile({
-            gender: e.target.gender.value,
-            firstName: e.target.firstName.value,
-            name: e.target.name.value,
-            email: e.target.email.value,
+            genderUser : 'Male',
+            //genderUser: e.target.gender.value,
+            firstNameUser: e.target.firstName.value,
+            lastNameUser: e.target.name.value,
+            mailUser: e.target.email.value,
         }).catch((error) => {
             Alert.error(error.message);
         });
@@ -50,8 +48,21 @@ const Account = (props) => {
         browserHistory.push('/account');
     };
 
+    var options = [
+        {  text: 'Choose a gender', value: ''},
+        {  text: 'Male', value: 'male'},
+        { text: 'Female', value: 'female'},
+    ]
+
+
+
+
 
     const form = () => {
+
+
+
+
         if (user && user.username) {
             return(
             <Grid centered style={style.root}>
@@ -63,7 +74,7 @@ const Account = (props) => {
                         <h2 className={style.titleAccountBox}>Profile</h2>
                         <Form onSubmit={updateProfile}>
                             <Form.Field>
-                                <Form.Select fluid label='Gender' options={options} defaultValue={user.profile.genderUser} placeholder='Gender'/>
+                                <Form.Select fluid label='Gender' options={options} name="gender" />
                             </Form.Field>
                             <Form.Field>
                                 <label>First Name</label>
@@ -144,8 +155,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    dispatchCallUpdateUserProfile: data => dispatch(callUpdateUserProfile(data)),
-    dispatchCallUpdateUserPassword: data => dispatch(callUpdateUserPassword(data))
+    dispatchCallUpdateUserProfile: data => dispatch(callEditUserProfile(data)),
+    dispatchCallUpdateUserPassword: data => dispatch(callEditUserPassword(data))
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(cssModules(Account, style));
