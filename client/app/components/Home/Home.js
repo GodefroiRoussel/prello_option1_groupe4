@@ -6,10 +6,12 @@ import Todo from '../Todo/Todo';
 import List from '../List/List';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
+import { browserHistory } from 'react-router';
 import { Button, Input } from 'semantic-ui-react';
 
 import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
 import { callAddList } from '../List/ListAsyncActions';
+import { callAddTeam } from '../Team/TeamAsyncActions';
 
 const Home = (props) => {
   const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
@@ -19,7 +21,7 @@ const Home = (props) => {
       const elem = e.target;
       e.preventDefault();
       if (elem.value) {
-        dispatchCallAddTeam(elem.value);
+        dispatchCallAddTeam({name: elem.value, user: user.username});
         elem.value = '';
       }
     }
@@ -55,8 +57,8 @@ const Home = (props) => {
           <div>
               {
                 teams.map(m =>
-                  <div key={m._id}>
-                    <Button onClick={() => browserHistory.push('/team')}>{m.name}</Button>
+                  <div key={m._id}> 
+                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.nameTeam}</Button>
                     </div>
                   )
               }
@@ -78,7 +80,7 @@ const Home = (props) => {
             <input
               type="text"
               styleName="add-todo-input"
-              placeholder="Add todo item ..."
+              placeholder="Add todo items ..."
               onKeyPress={handleAddTodo}
             />
           </div>
