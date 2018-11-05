@@ -3,13 +3,14 @@ import { setLoggedUser, unsetLoggedUser } from '../components/Login/LoginActions
 import { addTodo, removeTodo, editTodo } from '../components/Todo/TodoActions';
 import { addList, removeList } from '../components/List/ListActions';
 import { addTeam } from '../components/Team/TeamActions';
+import { getBoard } from '../components/Board/BoardActions';
 import { addUser } from '../components/User/UserActions';
 import store from '../store';
 
 const Asteroid = createClass();
 // Connect to a Meteor backend
 const asteroid = new Asteroid({
-  endpoint: 'ws://localhost:9000/websocket',
+    endpoint: 'ws://localhost:9000/websocket',
 });
 
 // if you want realitme updates in all connected clients
@@ -18,6 +19,7 @@ asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
 asteroid.subscribe('team');
+asteroid.subscribe('board');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
@@ -43,21 +45,27 @@ asteroid.ddp.on('added', (doc) => {
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {
-  if (removedDoc.collection === 'todo') {
-    store.dispatch(removeTodo(removedDoc.id));
-  }
-  if (removedDoc.collection === 'list'){
-    store.dispatch(removeList(removedDoc.id));
-  }
-  if (removedDoc.collection === 'users') {
-    store.dispatch(unsetLoggedUser());
-  }
+    if (removedDoc.collection === 'todo') {
+        store.dispatch(removeTodo(removedDoc.id));
+    }
+    if (removedDoc.collection === 'list'){
+        store.dispatch(removeList(removedDoc.id));
+    }
+    if (removedDoc.collection === 'users') {
+        store.dispatch(unsetLoggedUser());
+    }
 });
 
 asteroid.ddp.on('changed', (updatedDoc) => {
-  if (updatedDoc.collection === 'todo') {
-    store.dispatch(editTodo(updatedDoc.id, updatedDoc.fields.finished));
-  }
+    if (updatedDoc.collection === 'todo') {
+        store.dispatch(editTodo(updatedDoc.id, updatedDoc.fields.finished));
+    }
 });
+
+/*asteroid.ddp.on('get', (getdDoc) => {
+    if (getdDoc.collection === 'board') {
+        store.dispatch(getBoard(getDoc.id));
+    }
+});*/
 
 export default asteroid;

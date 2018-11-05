@@ -1,46 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
 import { Button, Icon } from 'semantic-ui-react';
 import { callRemoveList } from './ListAsyncActions';
+import Card from "semantic-ui-react/dist/commonjs/views/Card/Card";
+import Feed from "semantic-ui-react/dist/commonjs/views/Feed/Feed";
+import styleDefault from '../../styles/settings.styl';
+import style from './List.styl';
 
 
 const List = (props) => {
 
-    const {id, dispatchCallRemoveList} = (props);
+    const l = props;
 
-    const handleRemove = () => {
-        dispatchCallRemoveList(id);
-      };
-
-    const list = () => {
-        return (
-            <div>
-                <div>
-                    <input
-                    type="text"
-                    placeholder="Add todo item ..."
-                    />
-                </div>
-                <div>
-                    <Button onClick={handleRemove} icon>
-                        <Icon name='delete' />
-                    </Button>
-                </div>
-            </div>
-        );
-    };
-    return <div>{list()}</div>;
+    const list = () => (
+        <Card>
+            <Card.Content>
+                <Card.Header>{l.titleList}</Card.Header>
+            </Card.Content>
+            <Card.Content>
+                <Feed>
+                    <Feed.Content>
+                        <div>Cards</div>
+                    </Feed.Content>
+                </Feed>
+            </Card.Content>
+        </Card>
+    )
+    return <div className={style.bundList}>{list()}</div>;
 };
 
 List.propTypes ={
-    id: React.PropTypes.string.isRequired,
-    dispatchCallRemoveList: React.PropTypes.func.isRequired,
 };
 
   const mapStateToProps = () => ({});
   const mapDispatchToProps = dispatch => ({
-      dispatchCallRemoveList: _id => dispatch(callRemoveList(_id)),
   });
   
   export default connect(mapStateToProps, mapDispatchToProps)(List);

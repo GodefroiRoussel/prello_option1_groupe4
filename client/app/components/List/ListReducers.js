@@ -1,7 +1,8 @@
 import { ADD_LIST, GET_ALL_LIST, REMOVE_LIST } from './ListActions';
 import { remove, edit, add } from '../../common/helpers';
+import bo from '../../common/dataTest'
 
-const lists = (state = [], action) => {
+const lists = (state = bo.lists, action) => {
   switch (action.type) {
     case ADD_LIST:
       return add(state, action);

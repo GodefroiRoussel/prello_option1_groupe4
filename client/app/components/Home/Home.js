@@ -14,110 +14,107 @@ import { callAddList } from '../List/ListAsyncActions';
 import { callAddTeam } from '../Team/TeamAsyncActions';
 
 const Home = (props) => {
-  const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
+    const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
 
-  const handleAddTeam = (e) => {
-    if (e.key === 'Enter') {
-      const elem = e.target;
-      e.preventDefault();
-      if (elem.value) {
-        dispatchCallAddTeam({name: elem.value, user: user.username});
-        elem.value = '';
-      }
+    const handleAddTeam = (e) => {
+        if (e.key === 'Enter') {
+            const elem = e.target;
+            e.preventDefault();
+            if (elem.value) {
+                dispatchCallAddTeam(elem.value);
+                elem.value = '';
+            }
+        }
     }
-  }
 
-  // affectation selon les propriètés
-
-  const handleAddTodo = (e) => {
-    if (e.key === 'Enter') {
-      const elem = e.target;
-      e.preventDefault();
-      if (elem.value) {
-        //envoie vers TodoAsyncAction
-        dispatchCallAddTodo(elem.value);
-        elem.value = '';
-      }
+    const handleAddTodo = (e) => {
+        if (e.key === 'Enter') {
+            const elem = e.target;
+            e.preventDefault();
+            if (elem.value) {
+                dispatchCallAddTodo(elem.value);
+                elem.value = '';
+            }
+        }
+    };
+    const handleLogout = () => {
+        asteroid.logout();
+    };
+    const handleAddList = () => {
+        dispatchCallAddList("hello");
     }
-  };
-  const handleLogout = () => {
-    asteroid.logout();
-  };
-  const handleAddList = () => {
-    dispatchCallAddList("hello");
-  }
-  const home = () => {
-    if (user && user.username) {
-      return (
-        <div>
-          <div styleName="logout">
-            Logged user: {user.username}
-            <button onClick={handleLogout} styleName="logout-button">Logout</button>
-          </div>
-          <div>
-              {
-                teams.map(m =>
-                  <div key={m._id}> 
-                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.nameTeam}</Button>
+    const home = () => {
+        if (user && user.username) {
+            return (
+                <div styleName="todo-wrapper">
+                    <div styleName="logout">
+                        Logged user: {user.username}
+                        <button onClick={handleLogout} styleName="logout-button">Logout</button>
                     </div>
-                  )
-              }
-            </div>
-          <div>
-            <Input type='text' onKeyPress={handleAddTeam} icon='users' iconPosition='left' placeholder='Add Team' />
-          </div>
-          <div>
-            <Button onClick={handleAddList}>Click Here</Button>
-          </div>
-          <div>
-          {
-              lists.map((l, i) =>
-                <List id={l._id} key={l._id} message={l.message}/>
-              )
-          }
-          </div>
-          <div>
-            <input
-              type="text"
-              styleName="add-todo-input"
-              placeholder="Add todo items ..."
-              onKeyPress={handleAddTodo}
-            />
-          </div>
-          <div>
-            {todos.map((t, i) =>
-              <Todo id={t._id} message={t.message} finished={t.finished} key={t._id} />)}
-          </div>
-        </div>
-      );
-    }
-    return <Login />;
-  };
-  return <div>{home()}</div>;
+                    <div>
+                        {
+                            teams.map(m =>
+                                <div key={m._id}>
+                                    <Button onClick={() => browserHistory.push('/team')}>{m.name}</Button>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <div>
+                        <Input type='text' onKeyPress={handleAddTeam} icon='users' iconPosition='left' placeholder='Add Team' />
+                    </div>
+                    <div>
+                        <Button onClick={handleAddList}>Click Here</Button>
+                    </div>
+                    <div>
+                        {
+                            lists.map((l, i) =>
+                                <List id={l._id} key={l._id} message={l.message}/>
+                            )
+                        }
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            styleName="add-todo-input"
+                            placeholder="Add todo item ..."
+                            onKeyPress={handleAddTodo}
+                        />
+                    </div>
+                    <div>
+                        {todos.map((t, i) =>
+                            <Todo id={t._id} message={t.message} finished={t.finished} key={t._id} />)}
+                    </div>
+                </div>
+            );
+        }
+        return <Login/>;
+    };
+    return <div>{home()}</div>;
 };
 
 // Vérifier le type des varible
 Home.propTypes = {
-  teams: React.PropTypes.array.isRequired,
-  lists: React.PropTypes.array.isRequired,
-  todos: React.PropTypes.array.isRequired,
-  dispatchCallAddTeam: React.PropTypes.func.isRequired,
-  dispatchCallAddTodo: React.PropTypes.func.isRequired,
-  dispatchCallAddList: React.PropTypes.func.isRequired,
-  user: React.PropTypes.object,
+    teams: React.PropTypes.array.isRequired,
+    lists: React.PropTypes.array.isRequired,
+    todos: React.PropTypes.array.isRequired,
+    dispatchCallAddTeam: React.PropTypes.func.isRequired,
+    dispatchCallAddTodo: React.PropTypes.func.isRequired,
+    dispatchCallAddList: React.PropTypes.func.isRequired,
+    user: React.PropTypes.object,
 };
 
 //Vairable observé en cas de changement d'état (state) afin que les données se reload que se soit par l'user ou par la BD
 const mapStateToProps = state => ({
-  teams: state.teams,
-  lists: state.lists,
-  todos: state.todos,
-  user: state.user,
+    teams: state.teams,
+    lists: state.lists,
+    todos: state.todos,
+    user: state.user,
 });
 const mapDispatchToProps = dispatch => ({
-  dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
-  dispatchCallAddList: data => dispatch(callAddList(data)),
-  dispatchCallAddTodo: data => dispatch(callAddTodo(data)),
+    dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
+    dispatchCallAddList: data => dispatch(callAddList(data)),
+    dispatchCallAddTodo: data => dispatch(callAddTodo(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Home, style));
