@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
-import { callRemoveTodo, callEditTodo } from './TodoAsyncActions';
+import { callRemoveTodo, callEditTodo } from '../../objects/Todo/TodoAsyncActions';
 import style from './todo.styl';
 
 const Todo = (props) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 // import cssModules from 'react-css-modules';
 import {Grid, Form, Button, Icon} from 'semantic-ui-react';
-import {callEditBoard} from "./CreateBoardAsyncAction";
+import {callEditBoard} from "../../objects/CreateBoard/CreateBoardAsyncAction";
 import {connect} from "react-redux";
 
 

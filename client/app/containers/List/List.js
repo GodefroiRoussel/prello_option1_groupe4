@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
-import { callRemoveList } from './ListAsyncActions';
+import { callRemoveList } from '../../objects/List/ListAsyncActions';
 import Card from "semantic-ui-react/dist/commonjs/views/Card/Card";
 import Feed from "semantic-ui-react/dist/commonjs/views/Feed/Feed";
 import styleDefault from '../../styles/settings.styl';

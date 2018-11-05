@@ -4,7 +4,7 @@ import {Menu, Card, Image, Grid, Item, Button, Icon} from 'semantic-ui-react';
 import {connect} from "react-redux";
 import defaultStyle from '../../styles/settings.styl'
 import style from './Board.styl'
-import {callGetBoard} from './BoardAsyncActions';
+import {callGetBoard} from '../../objects/Board/BoardAsyncActions';
 import List from '../List/List'
 import bo from '../../common/dataTest'
 //import rootReducer from '../../mainReducer'

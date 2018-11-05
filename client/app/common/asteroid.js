@@ -1,10 +1,10 @@
 import { createClass } from 'asteroid';
-import { setLoggedUser, unsetLoggedUser } from '../containers/Login/LoginActions';
-import { addTodo, removeTodo, editTodo } from '../containers/Todo/TodoActions';
-import { addList, removeList } from '../containers/List/ListActions';
-import { addTeam } from '../containers/Team/TeamActions';
-import { getBoard } from '../containers/Board/BoardActions';
-import { addUser } from '../containers/User/UserActions';
+import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
+import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
+import { addList, removeList } from '../objects/List/ListActions';
+import { addTeam } from '../objects/Team/TeamActions';
+import { getBoard } from '../objects/Board/BoardActions';
+import { addUser } from '../objects/User/UserActions';
 import store from '../store';
 
 const Asteroid = createClass();

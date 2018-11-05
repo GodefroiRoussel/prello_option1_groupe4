@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
-import Modal from './ModalTeam/ModalContainer';
 import ListMember from '../../components/ListMember';
 
 class Team extends React.Component {

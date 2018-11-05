@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import Alert from 'react-s-alert';
 import asteroid from '../../common/asteroid';
 import { Link, browserHistory } from 'react-router'
-import {User} from '../User/User'
 
 import {Grid, Form, Button, Icon, Image} from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
 import style from './account.styl';
 
-import {callEditUserPassword, callEditUserProfile} from "../User/UserAsyncActions";
+import {callEditUserPassword, callEditUserProfile} from "../../objects/User/UserAsyncActions";
 
 import logo from './../../styles/assets/logo.png'
 import Login from "../Login/Login";

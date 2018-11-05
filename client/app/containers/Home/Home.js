@@ -9,9 +9,9 @@ import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
 import { Button, Input } from 'semantic-ui-react';
 
-import { callAddTodo } from '../../containers/Todo/TodoAsyncActions';
-import { callAddList } from '../List/ListAsyncActions';
-import { callAddTeam } from '../Team/TeamAsyncActions';
+import { callAddTodo } from '../../objects/Todo/TodoAsyncActions';
+import { callAddList } from '../../objects/List/ListAsyncActions';
+import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
 
 const Home = (props) => {
     const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
