@@ -9,7 +9,6 @@ const Main = (props) => {
   const { children } = props;
   return (
     <div>
-
           {children}
       <Alert position="top-right" effect="jelly" />
     </div>
