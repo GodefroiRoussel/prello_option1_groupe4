@@ -10,59 +10,76 @@ import style from './login.styl';
 
 import logo from './../../styles/assets/logo.png'
 
+class Login extends React.Component {
+    constructor(){
+        super()
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
 
-const Login = () => {
+    handleLogin = (e) => {
+        e.preventDefault();
+        asteroid.loginWithPassword({
+          username: this.state.username,
+          password: this.state.password,
+        })
+          .catch((error) => {
+            Alert.error(error.message);
+          });
+      };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    asteroid.loginWithPassword({
-      username: e.target.username.value,
-      password: e.target.password.value,
-    })
-      .catch((error) => {
-        Alert.error(error.message);
-      });
-  };
+      updateUsername = (username) => {
+          this.setState({username: username});
+      }
 
-  const form = () => (
-      <Grid centered style={style.root}>
-          <Grid.Column mobile={12} tablet={8} computer={6}>
-              <Image className={style.logo} src={logo} size='small' />
-              <div className={style.loginBox}>
-                  <h2 className={style.titleLoginBox}>Login</h2>
-                  <Form onSubmit={handleLogin}>
-                      <Form.Field>
-                          <label>Nickname</label>
-                          <input name="username" type="text" placeholder="Type your nickname"/>
-                      </Form.Field>
-                      <Form.Field>
-                          <label>Password</label>
-                          <input name="password" type="password" placeholder="Your password"/>
-                      </Form.Field>
-                      <Form.Field>
-                          <Button fluid animated='fade'>
-                              <Button.Content hidden>Login</Button.Content>
-                              <Button.Content visible>
-                                  <Icon name='arrow right' />
-                              </Button.Content>
-                          </Button>
-                      </Form.Field>
-                  </Form>
-              </div>
-              <div className={style.loginBox}>
-                  <Button fluid animated='fade' onClick={() => browserHistory.push('/registration')} >
-                      <Button.Content hidden>Register</Button.Content>
-                      <Button.Content visible>
-                          Need an account ?
-                      </Button.Content>
-                  </Button>
-              </div>
+      updatePassword = (password) => {
+        this.setState({password: password});
+    }
 
-          </Grid.Column>
-      </Grid>
+      render() {
+          return (
+    <div>
+            <Grid centered style={style.root}>
+            <Grid.Column mobile={12} tablet={8} computer={6}>
+                <Image className={style.logo} src={logo} size='small' />
+                <div className={style.loginBox}>
+                    <h2 className={style.titleLoginBox}>Login</h2>
+                    <Form onSubmit={this.handleLogin}>
+                        <Form.Field>
+                            <label>Nickname</label>
+                            <input onChange={(username) => {this.updateUsername(username.target.value)}} name="username" type="text" placeholder="Type your nickname"/>
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Password</label>
+                            <input onChange={(password) => {this.updatePassword(password.target.value)}} name="password" type="password" placeholder="Your password"/>
+                        </Form.Field>
+                        <Form.Field>
+                            <Button fluid animated='fade'>
+                                <Button.Content hidden>Login</Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='arrow right' />
+                                </Button.Content>
+                            </Button>
+                        </Form.Field>
+                    </Form>
+                </div>
+                <div className={style.loginBox}>
+                    <Button fluid animated='fade' onClick={() => browserHistory.push('/registration')} >
+                        <Button.Content hidden>Register</Button.Content>
+                        <Button.Content visible>
+                            Need an account ?
+                        </Button.Content>
+                    </Button>
+                </div>
 
-  );
-  return <div>{form()}</div>;
-};
+            </Grid.Column>
+        </Grid>
+      </div>
+          )}
+
+    
+}
 
 export default cssModules(Login, style);
