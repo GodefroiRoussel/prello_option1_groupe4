@@ -9,7 +9,7 @@ import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
 import { Button, Input } from 'semantic-ui-react';
 
-import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
+import { callAddTodo } from '../../containers/Todo/TodoAsyncActions';
 import { callAddList } from '../List/ListAsyncActions';
 import { callAddTeam } from '../Team/TeamAsyncActions';
 
@@ -53,9 +53,9 @@ const Home = (props) => {
                     </div>
                     <div>
                         {
-                            teams.map(m =>
-                                <div key={m._id}>
-                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.nameTeam}</Button>
+                            teams.map(team =>
+                                <div key={team._id}>
+                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team}})}>{team.nameTeam}</Button>
                                 </div>
                             )
                         }

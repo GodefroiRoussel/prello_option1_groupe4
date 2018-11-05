@@ -144,7 +144,7 @@ const dataLineChart = {
 };
 
 //TODO: Handle dynamic name and datas
-//TODO: Refactor in little components
+//TODO: Refactor in little containers
 //TODO: Right Scroll with the list of members
 //TODO: Fix Bug of cards
 const WeeklyActivityReport = () => {

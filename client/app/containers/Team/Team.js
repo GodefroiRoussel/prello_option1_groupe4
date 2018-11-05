@@ -3,17 +3,30 @@ import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
 import Modal from './ModalTeam/ModalContainer';
+import ListMember from '../../components/ListMember';
 
-
-const Team = (props) => {
-    const {valueDropdown, user, dispatchCallHandleSetVisibility} = props;
-    let open =false;
-    const t = props.location.state.team
-
-    const handleSetVisibility = () => {
-        console.log(valueDropdown)
+class Team extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log(props);
     }
 
+    render() {
+        return (
+            <div>
+                <h2>Membres de l'équipe ({this.props.location.state.team.members.length})</h2>
+                <p>Les membres d'équipes peuvent consulter et rejoindre tous les tableaux visibles par les membres d'une équipe et peuvent créer de nouveaux tableaux au sein de l'équipe.</p>
+                <ListMember members = {["Cat", "Julie", "FF"]}/> 
+            </div>
+        )
+    }
+
+
+    handleSetVisibility = () => {
+
+    }
+
+    /*
     const panes = [
         { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane>{CardExampleGroups()}</Tab.Pane> },
         { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane>{members()}</Tab.Pane> },
@@ -45,40 +58,8 @@ const Team = (props) => {
         ]
 
       const listMembers = () => (
-          <div>
-            <Input icon={{ name: 'search', circular: true, link: true }} placeholder='Search...' />
-        <List animated verticalAlign='middle'>
-          <List.Item>
-            <Image avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
-            <List.Content>
-              <List.Header>Helen</List.Header>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <Image avatar src='https://react.semantic-ui.com/images/avatar/small/christian.jpg' />
-            <List.Content>
-              <List.Header>Christian</List.Header>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <Image avatar src='https://react.semantic-ui.com/images/avatar/small/daniel.jpg' />
-            <List.Content>
-              <List.Header>Daniel</List.Header>
-            </List.Content>
-          </List.Item>
-        </List>
-          </div>
+          
       )
-    
-    const members = () =>{
-        return (
-            <div>
-                <h2>Membres de l'équipe ({t.members.length})</h2>
-                <p>Les membres d'équipes peuvent consulter et rejoindre tous les tableaux visibles par les membres d'une équipe et peuvent créer de nouveaux tableaux au sein de l'équipe.</p>
-                {listMembers()}
-            </div>
-        )
-    }
 
     const CardExampleGroups = () => {
         if(t !== undefined){
@@ -137,19 +118,16 @@ const Team = (props) => {
         else{
             <Loader active inline='centered' />
         }
-    };
-    return <div>{team()}</div>;
+    };*/
 };
 
-Team.propTypes = {
-    user: React.PropTypes.object,
-    t: React.PropTypes.object,
-};
 
-  const mapStateToProps = (state) => ({
-    user: state.user,
-    modal: state.modal,
-  });
+  function mapStateToProps(state){
+      return{
+        user: state.user,
+        modal: state.modal,
+      }
+  };
 
   const mapDispatchToProps = ()=> ({});
   
