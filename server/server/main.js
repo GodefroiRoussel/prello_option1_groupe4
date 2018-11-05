@@ -6,6 +6,7 @@ import { check } from 'meteor/check'
 import './Todo/index';
 import './List/index';
 import './Team/index';
+import './User/index';
 
 // declare MongoDB collection here
 //
