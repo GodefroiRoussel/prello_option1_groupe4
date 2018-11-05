@@ -1,9 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-
-const Team = new Meteor.Collection('team');
+import Team from './model';
 
 Meteor.publish('team', function() {
     return Team.find();
 })
-
-export default Team;

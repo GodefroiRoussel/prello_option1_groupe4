@@ -19,3 +19,4 @@ simple:rest-accounts-password
 force-ssl
 accounts-base
 alanning:roles
+aldeed:simple-schema

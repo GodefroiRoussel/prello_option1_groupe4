@@ -11,6 +11,7 @@ import { Button, Input } from 'semantic-ui-react';
 
 import { callAddTodo } from '../../components/Todo/TodoAsyncActions';
 import { callAddList } from '../List/ListAsyncActions';
+import { callAddTeam } from '../Team/TeamAsyncActions';
 
 const Home = (props) => {
   const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
@@ -20,7 +21,7 @@ const Home = (props) => {
       const elem = e.target;
       e.preventDefault();
       if (elem.value) {
-        dispatchCallAddTeam(elem.value);
+        dispatchCallAddTeam({name: elem.value, user: user.username});
         elem.value = '';
       }
     }
@@ -57,7 +58,7 @@ const Home = (props) => {
               {
                 teams.map(m =>
                   <div key={m._id}> 
-                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.name}</Button>
+                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: m}})}>{m.nameTeam}</Button>
                     </div>
                   )
               }
