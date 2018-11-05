@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { connect } from 'react-redux';
+import asteroid from '../../common/asteroid';
 
 import {
     Container,
@@ -17,9 +19,12 @@ import {
     Visibility,
 } from 'semantic-ui-react'
 
-import logo from '../../styles/assets/logo.png'
+import logo from '../../styles/assets/logo_polytech.png'
 import defaultStyle from '../../styles/settings.styl'
 import style from './navbar.styl';
+import {browserHistory} from "react-router";
+import cssModules from "react-css-modules";
+
 
 const menuStyle = {
     border: 'none',
@@ -44,12 +49,19 @@ const dropdowMenu = {
 
 
 
-const loginButton = {
+const handleLogout = () => {
+    asteroid.logout();
+};
 
-}
 
 
-export default class Navbar extends Component {
+class Navbar extends Component {
+
+    constructor(props) {
+        super(props)
+        console.log(props)
+    }
+
     state = {
         menuFixed: false,
         overlayFixed: false,
@@ -61,35 +73,70 @@ export default class Navbar extends Component {
     unStickTopMenu = () => this.setState({ menuFixed: false })
 
     render() {
-        const { menuFixed, overlayFixed, overlayRect } = this.state
+        const { menuFixed} = this.state
 
-        return (
-            <div>
-                <Visibility onBottomPassed={this.stickTopMenu} onBottomVisible={this.unStickTopMenu} once={false}>
-                    <Menu borderless fixed={menuFixed && 'top'} style={menuFixed ? fixedMenuStyle : menuStyle} className={defaultStyle.backgroundColor4}>
+        if (this.props.user) {
+            return (
+                <div>
+                    <Visibility onBottomPassed={this.stickTopMenu} onBottomVisible={this.unStickTopMenu} once={false}>
+                        <Menu borderless fixed={menuFixed && 'top'} style={menuFixed ? fixedMenuStyle : menuStyle} className={defaultStyle.backgroundColor4}>
 
                             <Menu.Item>
-                                <Image size='mini' src={logo}/>
+                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')}/>
                             </Menu.Item>
-                            <Menu.Item header className={defaultStyle.textColor3}>Prello</Menu.Item>
+                            <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/')}>Prello</Menu.Item>
 
                             <Menu.Menu position='right'>
-                                <Menu.Item>
-                                    <Button className={classNames(defaultStyle.backgroundColor3,defaultStyle.textColor4)} style={loginButton}>Log-in</Button>
-                                </Menu.Item>
-                                <Dropdown style={dropdowMenu} text='jt159' pointing className='link item'>
+
+                                <Dropdown style={dropdowMenu} text={this.props.user.username} pointing className='link item'>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>Settings</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => browserHistory.push('/account')}>Settings</Dropdown.Item>
                                         <Dropdown.Item>API acces</Dropdown.Item>
                                         <Dropdown.Divider />
-                                        <Dropdown.Item>Logout</Dropdown.Item>
+                                        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Menu.Menu>
 
-                    </Menu>
-                </Visibility>
-            </div>
-        )
+                        </Menu>
+                    </Visibility>
+                </div>
+            )
+        }else{
+            return (
+                <div>
+                    <Visibility onBottomPassed={this.stickTopMenu} onBottomVisible={this.unStickTopMenu} once={false}>
+                        <Menu borderless fixed={menuFixed && 'top'} style={menuFixed ? fixedMenuStyle : menuStyle} className={defaultStyle.backgroundColor4}>
+
+                            <Menu.Item>
+                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')}/>
+                            </Menu.Item>
+                            <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/')}>Prello</Menu.Item>
+
+                            <Menu.Menu position='right'>
+                                <Menu.Item>
+                                    <Button className={classNames(defaultStyle.backgroundColor3,defaultStyle.textColor4)} onClick={() => browserHistory.push('/login')}>Log-in</Button>
+                                </Menu.Item>
+
+                            </Menu.Menu>
+
+                        </Menu>
+                    </Visibility>
+                </div>
+            )
+        }
+
+
+
     }
 }
+
+Navbar.propTypes = {
+    user: React.PropTypes.object,
+};
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default connect(mapStateToProps)(cssModules(Navbar, style));

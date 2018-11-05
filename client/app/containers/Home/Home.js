@@ -47,10 +47,7 @@ const Home = (props) => {
         if (user && user.username) {
             return (
                 <div styleName="todo-wrapper">
-                    <div styleName="logout">
-                        Logged user: {user.username}
-                        <button onClick={handleLogout} styleName="logout-button">Logout</button>
-                    </div>
+
                     <div>
                         {
                             teams.map(team =>

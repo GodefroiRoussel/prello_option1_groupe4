@@ -11,8 +11,6 @@ import style from './registration.styl';
 
 import {callAddUser} from "../../objects/User/UserAsyncActions";
 
-import logo from './../../styles/assets/logo.png'
-
 
 const options = [
     { key: 'm', text: 'Male', value: 'male' },
@@ -44,7 +42,6 @@ const Registration = (props) => {
     const form = () => (
         <Grid centered style={style.root}>
             <Grid.Column mobile={12} tablet={8} computer={6}>
-                <Image className={style.logo} src={logo} size='small' />
                 <div className={style.registrationBox}>
                     <h2 className={style.titleRegistrationBox}>Registration</h2>
                     <Form onSubmit={handleRegistration}>

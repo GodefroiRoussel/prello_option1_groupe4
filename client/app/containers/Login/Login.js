@@ -8,8 +8,6 @@ import {Grid, Form, Button, Icon, Image} from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
 import style from './login.styl';
 
-import logo from './../../styles/assets/logo.png'
-
 class Login extends React.Component {
     constructor(){
         super()
@@ -43,7 +41,6 @@ class Login extends React.Component {
     <div>
             <Grid centered style={style.root}>
             <Grid.Column mobile={12} tablet={8} computer={6}>
-                <Image className={style.logo} src={logo} size='small' />
                 <div className={style.loginBox}>
                     <h2 className={style.titleLoginBox}>Login</h2>
                     <Form onSubmit={this.handleLogin}>
@@ -56,7 +53,7 @@ class Login extends React.Component {
                             <input onChange={(password) => {this.updatePassword(password.target.value)}} name="password" type="password" placeholder="Your password"/>
                         </Form.Field>
                         <Form.Field>
-                            <Button fluid animated='fade'>
+                            <Button fluid animated='fade' onClick={() => browserHistory.push('/')}>
                                 <Button.Content hidden>Login</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='arrow right' />
