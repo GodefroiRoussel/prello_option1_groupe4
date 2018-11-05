@@ -4,12 +4,28 @@ import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import Alert from 'react-s-alert';
 import style from './main.styl';
+import Navbar from './../../components/Navbar/Navbar'
+import {
+    Container
+} from 'semantic-ui-react'
+
+const mainBox = {
+    marginTop: '1em',
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 0,
+    minHeight: '50em'
+}
 
 const Main = (props) => {
   const { children } = props;
+
   return (
     <div>
-          {children}
+      <Navbar/>
+        <div style={mainBox}>
+            {children}
+        </div>
       <Alert position="top-right" effect="jelly" />
     </div>
   );
