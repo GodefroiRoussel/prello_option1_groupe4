@@ -20,3 +20,6 @@ force-ssl
 accounts-base
 alanning:roles
 aldeed:simple-schema
+msavin:mongol
+meteortoys:allthings
+aldeed:collection2@3.0.0

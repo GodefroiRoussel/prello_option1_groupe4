@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import User from './model';
 
-Meteor.publish('user', function() {
-    return User.find();
+Meteor.publish('accounts', function() {
+    return Accounts.find();
 })
 

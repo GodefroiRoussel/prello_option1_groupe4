@@ -17,6 +17,7 @@ export const edit = (state, action) => {
     const elemToEditIndex = state.indexOf(elemToEditArray[0]);
     const newState = state.slice();
     newState[elemToEditIndex].finished = action.finished;
+    console.log(newState);
     return newState;
   }
   return state;
