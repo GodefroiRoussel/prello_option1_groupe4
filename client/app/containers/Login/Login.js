@@ -40,7 +40,7 @@ class Login extends React.Component {
           return (
     <div>
             <Grid centered style={style.root}>
-            <Grid.Column mobile={12} tablet={8} computer={6}>
+            <Grid.Column mobile={12} tablet={6} computer={4}>
                 <div className={style.loginBox}>
                     <h2 className={style.titleLoginBox}>Login</h2>
                     <Form onSubmit={this.handleLogin}>

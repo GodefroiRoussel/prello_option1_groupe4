@@ -62,6 +62,6 @@ Meteor.methods({
         return users.findOne(id);
     },
     editUserProfile(data){
-        Meteor.users.update(Meteor.userId(), {$set: {profile: data}});
+       return Meteor.users.update(Meteor.userId(), {$set: {profile: data}});
     }
 })
