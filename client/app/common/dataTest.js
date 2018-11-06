@@ -23,4 +23,25 @@ const bo = {titleBoard: 'MyBoard',
     ]
 };
 
-export default bo;
+const lists = [
+    {
+        titleList: 'MyList1',
+        positionList: 1,
+        isDeletedList: false,
+        isArchivedList: false
+    },
+    {
+        titleList: 'MyList2',
+        positionList: 2,
+        isDeletedList: false,
+        isArchivedList: false
+    }
+]
+const l = {
+    titleList: 'MyList',
+    positionList: 1,
+    isDeletedList: false,
+    isArchivedList: false
+};
+
+export default (bo, lists, l);

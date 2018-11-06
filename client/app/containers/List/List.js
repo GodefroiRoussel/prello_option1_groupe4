@@ -1,39 +1,70 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Button, Icon } from 'semantic-ui-react';
-import { callRemoveList } from '../../objects/List/ListAsyncActions';
-import Card from "semantic-ui-react/dist/commonjs/views/Card/Card";
-import Feed from "semantic-ui-react/dist/commonjs/views/Feed/Feed";
-import styleDefault from '../../styles/settings.styl';
-import style from './List.styl';
+import React, {Component} from 'react';
+//import ListComponent from '../../components/List.component'
+import l from '../../common/dataTest'
+import {Card, Button, Grid, Form, Input} from "semantic-ui-react";
+import style from './List.styl'
 
 
-const List = (props) => {
+export default class List extends Component {
 
-    const l = props;
+    state = {
+        list: l,
+        addCardInput: false
+    }
 
-    const list = () => (
-        <Card>
-            <Card.Content>
-                <Card.Header>{l.titleList}</Card.Header>
-            </Card.Content>
-            <Card.Content>
-                <Feed>
-                    <Feed.Content>
-                        <div>Cards</div>
-                    </Feed.Content>
-                </Feed>
-            </Card.Content>
-        </Card>
-    )
-    return <div className={style.bundList}>{list()}</div>;
-};
+    displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
 
-List.propTypes ={
-};
+    handlecreateCard = (e) => {
+        console.log(e.target.cardName.value);
+        const elem = e.target;
+        e.preventDefault();
+        if (elem.cardName.value) {
+            //dispatchCallEditBoard(elem.boardname.value);
+            elem.cardName.value = '';
+        }
+    }
 
-  const mapStateToProps = () => ({});
-  const mapDispatchToProps = dispatch => ({
-  });
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(List);
+    render () {
+        return (
+            <Card>
+                <Card.Content>
+                    <Card.Header>
+                        <Grid width={16}>
+                            <Grid.Row>
+                                <Grid.Column width={12}>
+                                    {this.state.list.titleList}
+                                </Grid.Column>
+                                <Grid.Column width={2}>
+                                    <Button size={"mini"} position={"right"}>
+                                        ...
+                                    </Button>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </Card.Header>
+                    <Card.Description>
+                        Cards
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <div>
+                        <a onClick={this.displayAddCard}>
+                            + Add card
+                        </a>
+                    </div>
+                    {(this.state.addCardInput) ?
+                        (
+                            <Form onSubmit={this.handlecreateCard}>
+                                <Form.Field>
+                                    <Input name="cardName" type="text" placeholder="card name"/>
+                                </Form.Field>
+                            </Form>
+                        )
+                        :
+                        null
+                    }
+                </Card.Content>
+            </Card>
+        )
+    }
+}
