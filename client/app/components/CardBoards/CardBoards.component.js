@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
+import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown, Modal} from 'semantic-ui-react';
 
 const CardBoards = (props) => {
     return (

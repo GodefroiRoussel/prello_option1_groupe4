@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
-import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
-import ListMember from '../../components/ListMember.component';
-import CardBoards from '../../components/CardBoards.component';
+import { Tab, Card, Image, List, Button , Grid} from 'semantic-ui-react';
+import ListMember from '../../components/ListMember/ListMember.component';
+import CardBoards from '../../components/CardBoards/CardBoards.component';
 import { callAddMember, callRemoveTeam } from '../../objects/Team/TeamAsyncActions';
-import { setActiveIndex } from '../../objects/Team/TeamActions';
+import {callGetAllUser} from '../../objects/User/UserAsyncActions';
 import { browserHistory } from 'react-router';
+import style from './team.styl';
+
 
 
 class Team extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            team: ""
+        };
     }
 
     render() {
@@ -19,12 +24,17 @@ class Team extends React.Component {
             return <div/>
         }
         else{
+            this.state.team = this.props.team;
             return (
-                <div>
-                    <h1>{this.props.team.nameTeam}</h1>
-                    <div>
-                        <Tab panes={this.panes}/>
-                    </div>
+                <div styleName="test">
+                    <Grid>
+                        <Grid.Column>
+                        <h1>{this.props.team.nameTeam}</h1>
+                            <div>
+                                <Tab panes={this.panes}/>
+                        </div>
+                        </Grid.Column>
+                    </Grid>
                 </div>
             )
         }
@@ -32,7 +42,7 @@ class Team extends React.Component {
 
     panes = [
         { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane><CardBoards boards={this.props.team.idBoards}/></Tab.Pane> },
-        { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane> },
+        { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane>},
         { menuItem: {key: 'setting', icon: 'setting', content: 'Paramètres'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
       ]
 
@@ -56,11 +66,10 @@ class Team extends React.Component {
 
 };
 
-
   function mapStateToProps(state, ownProps){
       return{
         team: state.teams.find(el => el._id == ownProps.location.state.team),
-        steam: state.teams,
+        teams: state.teams,
       }
   };
 
@@ -69,4 +78,4 @@ class Team extends React.Component {
       DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
   });
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Team);
+  export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Team, style));

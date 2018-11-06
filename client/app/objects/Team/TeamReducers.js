@@ -1,4 +1,4 @@
-import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM, ACTIVE_INDEX } from './TeamActions';
+import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM } from './TeamActions';
 import { add, edit, remove } from '../../common/helpers';
 
 const teams = (state = [], action) => {
@@ -20,15 +20,7 @@ const teams = (state = [], action) => {
       return state;
 
     case REMOVE_TEAM:
-      return remove(state, action);
-
-    case ACTIVE_INDEX:
-      if(state.activeIndex){
-        return {...state, activeIndex: action.data}
-      }
-      else{
-        return state.concat([action.data]);
-      }      
+      return remove(state, action);  
 
     default:
       return state;
