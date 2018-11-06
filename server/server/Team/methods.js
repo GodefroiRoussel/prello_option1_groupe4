@@ -18,8 +18,8 @@ Meteor.methods({
     removeTeam(id){
         return Team.remove(id);
     },
-    editTeam(id, edit) {
-        return Team.update({_id: id}, {$set: edit});
+    addMemberTeam(id, members) {
+        return Team.update({_id: id}, {$set: {members: members}});
     },
 
 })

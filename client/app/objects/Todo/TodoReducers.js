@@ -9,6 +9,7 @@ const todos = (state = [], action) => {
     case REMOVE_TODO:
       return remove(state, action);
     case EDIT_TODO:
+    console.log(action);
       return edit(state, action);
     case GET_ALL_TODO:
       return action.data;

@@ -2,132 +2,77 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
-import ListMember from '../../components/ListMember';
+import ListMember from '../../components/ListMember.component';
+import CardBoards from '../../components/CardBoards.component';
+import { callAddMember, callRemoveTeam } from '../../objects/Team/TeamAsyncActions';
+import { setActiveIndex } from '../../objects/Team/TeamActions';
+import { browserHistory } from 'react-router';
+
 
 class Team extends React.Component {
     constructor(props) {
         super(props)
-        console.log(props);
+    }
+
+    handleTabChange = (e, { activeIndex }) => {
+        console.log(this.props);
+        this.props.DispatchCallActiveIndex(activeIndex)
     }
 
     render() {
-        return (
-            <div>
-                <h2>Membres de l'équipe ({this.props.location.state.team.members.length})</h2>
-                <p>Les membres d'équipes peuvent consulter et rejoindre tous les tableaux visibles par les membres d'une équipe et peuvent créer de nouveaux tableaux au sein de l'équipe.</p>
-                <ListMember members = {["Cat", "Julie", "FF"]}/> 
-            </div>
-        )
+        if(!this.props.team || !this.props.activeIndex){
+            return <div/>
+        }
+        else{
+            return (
+                <div>
+                    <h1>{this.props.team.nameTeam}</h1>
+                    <div>
+                        <Tab panes={this.panes} activeIndex={this.props.activeIndex} onTabChange={this.handleTabChange}/>
+                    </div>
+                </div>
+            )
+        }
     }
 
-
-    handleSetVisibility = () => {
-
-    }
-
-    /*
-    const panes = [
-        { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane>{CardExampleGroups()}</Tab.Pane> },
-        { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane>{members()}</Tab.Pane> },
-        { menuItem: {key: 'setting', icon: 'setting', content: 'Paramètres'}, render: () => <Tab.Pane>{settings()}</Tab.Pane> },
+    panes = [
+        { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane><CardBoards boards={this.props.team.idBoards}/></Tab.Pane> },
+        { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane> },
+        { menuItem: {key: 'setting', icon: 'setting', content: 'Paramètres'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
       ]
 
-      const settings = () => (
-          <div>
-              <h3>Team visibility</h3>
-              <p><strong>Private</strong> This team is {valueDropdown}</p>
-              <span>
-                    visibility of the team is {' '}
-                    <Dropdown inline onChange={handleSetVisibility} selection value={valueDropdown} options={friendOptions} defaultValue={friendOptions[0].value} />
-                </span>
-              <h3>Restrictions</h3>
-              <h3>Creating board Restrictions</h3>
-          </div>
-      )
+    settings = (
+        <div>
+            <h3>Team visibility</h3>
+            <p><strong>Private</strong> This team is </p>
+            <span>
+                    visibility of the team is
+            </span>
+            <h3>Restrictions</h3>
+            <h3>Creating board Restrictions</h3>
+            <Button onClick={this.handleDeleteTeam.bind(this)}>delete</Button>
+        </div>
+    )
 
-      const friendOptions = [
-           {
-             text: 'privé',
-             value: false,
-           },
-           {
-             text: 'public',
-             value: true,
-           }
-        ]
-
-      const listMembers = () => (
-          
-      )
-
-    const CardExampleGroups = () => {
-        if(t !== undefined){
-            console.log(t.idBoards);
-            return(
-                <Card.Group>
-                    {
-                        t.idBoards.map(x => {
-                            console.log("helo");
-                            return (
-                            <Card key={x}>
-                                <Card.Content>
-                                <Card.Header>{x}</Card.Header>
-                                </Card.Content>
-                            </Card>)
-                        })
-                    }
-                  <Card>
-                    <Card.Content>
-                      <Card.Header>Add a board</Card.Header>
-                    </Card.Content>
-                  </Card>
-                </Card.Group>
-                );
-        }
-        else{
-            <Loader active inline='centered' />
-        }
-        
+    handleDeleteTeam(){
+        this.props.DispatchCallRemoveTeam({id: this.props.team._id});
+        browserHistory.push({pathname: '/' ,state: {team: this.props.team._id, activeIndex:1}});
     }
 
-    const team = () => {
-        if(t && user){
-            if(open){
-                console.log(open);
-                return (
-                    <div>
-                        <h1>{t.name}</h1>
-                        <Tab panes={panes} />
-                        <Button onClick={open=true}>modal</Button>
-                        <Modal></Modal>
-                    </div>
-                )
-            }
-            else{
-                return (
-                    <div>
-                        <h1>{t.name}</h1>
-                        <Tab panes={panes} />
-                        <Button onClick={() => {open=true}}>modal</Button>
-                    </div>
-                )
-            }
-            
-        } 
-        else{
-            <Loader active inline='centered' />
-        }
-    };*/
 };
 
 
-  function mapStateToProps(state){
+  function mapStateToProps(state, ownProps){
       return{
-        user: state.user,
-        modal: state.modal,
+        team: state.teams.find(el => el._id == ownProps.location.state.team),
+        activeIndex: ownProps.location.state.activeIndex,
       }
   };
 
-  const mapDispatchToProps = ()=> ({});
+  const mapDispatchToProps = (dispatch)=> ({
+      DispatchCallAddMember: data => dispatch(callAddMember(data)),
+      DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
+      DispatchCallActiveIndex: data => dispatch(setActiveIndex(data)),
+  });
   
   export default connect(mapStateToProps, mapDispatchToProps)(Team);

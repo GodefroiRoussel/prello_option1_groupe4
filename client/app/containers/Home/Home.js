@@ -21,7 +21,7 @@ const Home = (props) => {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
-                dispatchCallAddTeam(elem.value);
+                dispatchCallAddTeam({name: elem.value, user: user.username});
                 elem.value = '';
             }
         }
@@ -52,7 +52,7 @@ const Home = (props) => {
                         {
                             teams.map(team =>
                                 <div key={team._id}>
-                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team}})}>{team.nameTeam}</Button>
+                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team._id, activeIndex:0}})}>{team.nameTeam}</Button>
                                 </div>
                             )
                         }

@@ -4,7 +4,10 @@
 
 export const ADD_TEAM = 'ADD_TEAM';
 export const GET_ALL_TEAM = 'GET_ALL_TEAM';
-export const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM';
+export const EDIT_TEAM_MEMBERS = 'EDIT_TEAM_MEMBERS';
+export const REMOVE_TEAM = 'REMOVE_TEAM';
+export const ACTIVE_INDEX = 'ACTIVE_INDEX';
+
 
 export function addTeam(data) {
     return {
@@ -20,9 +23,24 @@ export function getAllTeam(data){
     };
 }
 
-export function setActiveItem(data){
+export function editTeamMembers(_id, members){
     return {
-        type: SET_ACTIVE_ITEM,
+        type: EDIT_TEAM_MEMBERS,
+        _id,
+        members,
+    };
+}
+
+export function removeTeam(_id) {
+    return {
+      type: REMOVE_TEAM,
+      _id,
+    };
+  }
+
+export function setActiveIndex(data) {
+    return {
+        type: ACTIVE_INDEX,
         data,
     };
 }
