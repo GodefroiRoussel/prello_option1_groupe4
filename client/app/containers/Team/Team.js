@@ -14,13 +14,8 @@ class Team extends React.Component {
         super(props)
     }
 
-    handleTabChange = (e, { activeIndex }) => {
-        console.log(this.props);
-        this.props.DispatchCallActiveIndex(activeIndex)
-    }
-
     render() {
-        if(!this.props.team || !this.props.activeIndex){
+        if(!this.props.team){
             return <div/>
         }
         else{
@@ -28,7 +23,7 @@ class Team extends React.Component {
                 <div>
                     <h1>{this.props.team.nameTeam}</h1>
                     <div>
-                        <Tab panes={this.panes} activeIndex={this.props.activeIndex} onTabChange={this.handleTabChange}/>
+                        <Tab panes={this.panes}/>
                     </div>
                 </div>
             )
@@ -56,7 +51,7 @@ class Team extends React.Component {
 
     handleDeleteTeam(){
         this.props.DispatchCallRemoveTeam({id: this.props.team._id});
-        browserHistory.push({pathname: '/' ,state: {team: this.props.team._id, activeIndex:1}});
+        browserHistory.push({pathname: '/'});
     }
 
 };
@@ -65,14 +60,13 @@ class Team extends React.Component {
   function mapStateToProps(state, ownProps){
       return{
         team: state.teams.find(el => el._id == ownProps.location.state.team),
-        activeIndex: ownProps.location.state.activeIndex,
+        steam: state.teams,
       }
   };
 
   const mapDispatchToProps = (dispatch)=> ({
       DispatchCallAddMember: data => dispatch(callAddMember(data)),
       DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
-      DispatchCallActiveIndex: data => dispatch(setActiveIndex(data)),
   });
   
   export default connect(mapStateToProps, mapDispatchToProps)(Team);
