@@ -1,9 +1,10 @@
 import { createClass } from 'asteroid';
-import { setLoggedUser, unsetLoggedUser } from '../components/Login/LoginActions';
-import { addTodo, removeTodo, editTodo } from '../components/Todo/TodoActions';
-import { addList, removeList } from '../components/List/ListActions';
-import { addTeam } from '../components/Team/TeamActions';
-import { getBoard } from '../components/Board/BoardActions';
+import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
+import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
+import { addList, removeList } from '../objects/List/ListActions';
+import { addTeam } from '../objects/Team/TeamActions';
+import { getBoard } from '../objects/Board/BoardActions';
+import { addUser } from '../objects/User/UserActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -21,22 +22,26 @@ asteroid.subscribe('team');
 asteroid.subscribe('board');
 
 asteroid.ddp.on('added', (doc) => {
-    // we need proper document object format here
-    if (doc.collection === 'todo') {
-        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-        store.dispatch(addTodo(docObj));
-    }
-    if (doc.collection === 'list') {
-        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-        store.dispatch(addList(docObj));
-    }
-    if(doc.collection === 'team'){
-        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
-        store.dispatch(addTeam(docObj));
-    }
-    if (doc.collection === 'users') {
-        store.dispatch(setLoggedUser(doc.fields));
-    }
+  // we need proper document object format here
+  if (doc.collection === 'todo') {
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addTodo(docObj));
+  }
+  if (doc.collection === 'list') {
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addList(docObj));
+  }
+  if(doc.collection === 'team'){
+    const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+    store.dispatch(addTeam(docObj));
+  }
+  if(doc.collection === 'user'){
+      const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+      store.dispatch(addUser(docObj));
+  }
+  if (doc.collection === 'users') {
+    store.dispatch(setLoggedUser(doc.fields));
+  }
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {

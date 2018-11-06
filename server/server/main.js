@@ -7,6 +7,7 @@ import './Todo/index';
 import './List/index';
 import './Team/index';
 import './Collections/Board/index';
+import './User/index';
 
 // declare MongoDB collection here
 //
@@ -39,7 +40,7 @@ JsonRoutes.setResponseHeaders({
 Meteor.methods({
     'user.register' (data) {
         Accounts.createUser({
-            email: data.email,
+            email: data.username,
             password: data.password
         });
     },
