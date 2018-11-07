@@ -5,7 +5,6 @@ Meteor.publish('team', function() {
     const userid = Meteor.userId();
     const user = Meteor.users.findOne(userid);
     if(user){
-        console.log(user.username)
         return(Team.find({members :{ $elemMatch: { $eq: user.username}}}));
     }
     //return (Team.find(element => element.members.includes(Meteor.users.find(user).username)));

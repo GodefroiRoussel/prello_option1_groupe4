@@ -32,9 +32,6 @@ Accounts.emailTemplates.verifyEmail = {
 
 Meteor.methods({
     addUser(data){
-        console.log("Data add User function :")
-        console.log(data);
-        console.log(Meteor.users.find().fetch());
         return Accounts.createUser({
             username:data.nickname,
             email:data.email,
