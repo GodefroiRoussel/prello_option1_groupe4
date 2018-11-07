@@ -1,20 +1,22 @@
 import React from 'react';
 import cssModules from 'react-css-modules';
 import { connect } from 'react-redux';
-import style from './home.styl';
+
 import Todo from '../Todo/Todo';
 import List from '../List/List';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
-import { Button, Input , Card} from 'semantic-ui-react';
+import {Button, Input, Card, Grid, Divider} from 'semantic-ui-react';
 
 import { callAddTodo } from '../../objects/Todo/TodoAsyncActions';
 import { callAddList } from '../../objects/List/ListAsyncActions';
 import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
 import { callEditBoard} from '../../objects/Board/BoardAsyncActions';
-import CardTeamsComponent from '../../components/CardTeams.component';
+import CardTeamsComponent from '../../components/CardTeams/CardTeams.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
+import defaultStyle from "../../styles/settings.styl";
+import style from './home.styl';
 
 class Home extends React.Component {
     constructor(props) {
@@ -54,11 +56,37 @@ class Home extends React.Component {
             }
             else{
                 return(<div>
-                    <h1>Boards</h1>
-                    <CardBoards boards={this.props.boards}></CardBoards>
-                    <h1>Teams</h1>
-                    <Input type='text' onKeyPress={this.handleAddTeam} action='Add' placeholder='Add a Team'></Input>
-                    {this.isTeamsFilled(this.props.teams)}
+                    <Grid centered style={style.root}>
+                        <Grid.Row className={style.firstRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <h2 className={defaultStyle.textColor4}>Welcome back {this.props.user.username}</h2>
+                                <Divider />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row className={style.secondRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+
+                                <h3 className={defaultStyle.textColor4}>Your Boards</h3>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <CardBoards boards={this.props.boards}></CardBoards>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row className={style.thirdRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <h3 className={defaultStyle.textColor4}>Your Teams</h3>
+                                <Input type='text' onKeyPress={this.handleAddTeam} action='Add' placeholder='Add a Team'></Input>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                {this.isTeamsFilled(this.props.teams)}
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
                 </div>)
             }
         }

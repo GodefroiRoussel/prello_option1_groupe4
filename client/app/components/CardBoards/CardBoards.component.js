@@ -15,7 +15,7 @@ const CardBoards = (props) => {
                         return(<Card key={x.titleBoard} className={style.cardBoard}>
                             <Card.Content>
                                 <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
-                            <   Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                                <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>)
                     })}
@@ -26,7 +26,7 @@ const CardBoards = (props) => {
         }
     }
     return (
-    <div style={style.root}>
+    <div>
         <Card.Group>
             {boardsIsFilled(props.boards)}
             <div className={style.buttonAddBoardTeam}>
