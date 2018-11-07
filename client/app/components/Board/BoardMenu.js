@@ -27,16 +27,16 @@ export default class BoardMenu extends Component {
         const {displayParams} = this.state
 
         return(
-            <Menu stackable width={16}>
+            <Menu>
                 <Menu.Item
-                    name={this.state.board.titleBoard}>
+                    name={this.props.titleBoard}>
                 </Menu.Item>
                 <Menu.Item>
                     <Icon name='star outline'/>
                 </Menu.Item>
 
                 <Menu.Item
-                    name={'visbile for ' + this.state.board.visibilityBoard}
+                    name={'visbile for ' + this.props.visibilityBoard}
                     active={activeItem === 'visibility'}
                     onClick={this.handleItemClick}
                 >

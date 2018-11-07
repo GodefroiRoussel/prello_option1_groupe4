@@ -1,18 +1,29 @@
 import React from 'react';
-import {Card, Feed} from "semantic-ui-react";
+import {Button, Card, Grid} from "semantic-ui-react";
 
-const ListComponent = (props) => (
+const ListComponent = ({titleList}) => {
 
-    <Card>
-            <Card.Header>{props.titleList}</Card.Header>
+    return (
         <Card.Content>
-            <Feed>
-                <Feed.Content>
-                    <div>{props.titleList}</div>
-                </Feed.Content>
-            </Feed>
+            <Card.Header>
+                <Grid width={16}>
+                    <Grid.Row>
+                        <Grid.Column width={12}>
+                            {titleList}
+                        </Grid.Column>
+                        <Grid.Column width={2}>
+                            <Button size={"mini"}>
+                                ...
+                            </Button>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Card.Header>
+            <Card.Description>
+                Cards
+            </Card.Description>
         </Card.Content>
-    </Card>
-)
+    )
+}
 
 export default ListComponent;

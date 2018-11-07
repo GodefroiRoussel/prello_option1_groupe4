@@ -1,51 +1,25 @@
 import React, {Component} from 'react';
 //import ListComponent from '../../components/List.component'
-import l from '../../common/dataTest'
 import {Card, Button, Grid, Form, Input} from "semantic-ui-react";
+import AddCardComponent from './AddCard'
+import ListComponent from '../../components/List.component'
 import style from './List.styl'
+import {connect} from "react-redux";
 
-
-export default class List extends Component {
+class ListCont extends Component {
 
     state = {
-        list: l,
         addCardInput: false
     }
 
     displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
 
-    handlecreateCard = (e) => {
-        console.log(e.target.cardName.value);
-        const elem = e.target;
-        e.preventDefault();
-        if (elem.cardName.value) {
-            //dispatchCallEditBoard(elem.boardname.value);
-            elem.cardName.value = '';
-        }
-    }
+
 
     render () {
         return (
             <Card>
-                <Card.Content>
-                    <Card.Header>
-                        <Grid width={16}>
-                            <Grid.Row>
-                                <Grid.Column width={12}>
-                                    {this.state.list.titleList}
-                                </Grid.Column>
-                                <Grid.Column width={2}>
-                                    <Button size={"mini"} position={"right"}>
-                                        ...
-                                    </Button>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Card.Header>
-                    <Card.Description>
-                        Cards
-                    </Card.Description>
-                </Card.Content>
+                <ListComponent titleList={this.props.titleList}/>
                 <Card.Content extra>
                     <div>
                         <a onClick={this.displayAddCard}>
@@ -54,11 +28,7 @@ export default class List extends Component {
                     </div>
                     {(this.state.addCardInput) ?
                         (
-                            <Form onSubmit={this.handlecreateCard}>
-                                <Form.Field>
-                                    <Input name="cardName" type="text" placeholder="card name"/>
-                                </Form.Field>
-                            </Form>
+                            <AddCardComponent/>
                         )
                         :
                         null
@@ -68,3 +38,17 @@ export default class List extends Component {
         )
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return({
+           // titleList: ownProps.titleList
+        }
+    )
+
+}
+
+const mapDispatchToProps = dispatch => ({
+    //dispatchCallEditBoard: data => dispatch(callEditBoard(data)),
+});
+
+export default connect(mapStateToProps)(ListCont)
