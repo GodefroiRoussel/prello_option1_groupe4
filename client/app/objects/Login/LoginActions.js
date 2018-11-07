@@ -14,3 +14,4 @@ export function unsetLoggedUser() {
     type: UNSET_USER,
   };
 }
+
