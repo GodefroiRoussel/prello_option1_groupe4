@@ -22,7 +22,7 @@ const ListMember = (props) => {
         props.members.map((x, i) =>{
             return(
 
-                    <List.Item>
+                    <List.Item key={i}>
                         <Image avatar src={logoAnonymous} />
                         <List.Content>
                         <List.Header className={defaultStyle.textColor1}>{x}</List.Header>

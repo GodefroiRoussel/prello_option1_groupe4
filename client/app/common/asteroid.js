@@ -3,7 +3,7 @@ import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
 import { addList, removeList } from '../objects/List/ListActions';
 import { addTeam } from '../objects/Team/TeamActions';
-import { getBoard } from '../objects/Board/BoardActions';
+import { addBoard } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
 import store from '../store';
 
@@ -20,9 +20,14 @@ asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
 asteroid.subscribe('board');
+asteroid.subscribe('team');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
+  if (doc.collection === 'board'){
+      const docObj = Object.assign({}, doc.fields, {_id: doc.id});
+      store.dispatch(addBoard(docObj));
+  }
   if (doc.collection === 'todo') {
     const docObj = Object.assign({}, doc.fields, { _id: doc.id });
     store.dispatch(addTodo(docObj));
