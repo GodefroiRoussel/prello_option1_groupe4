@@ -1,39 +1,54 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Button, Icon } from 'semantic-ui-react';
-import { callRemoveList } from '../../objects/List/ListAsyncActions';
-import Card from "semantic-ui-react/dist/commonjs/views/Card/Card";
-import Feed from "semantic-ui-react/dist/commonjs/views/Feed/Feed";
-import styleDefault from '../../styles/settings.styl';
-import style from './List.styl';
+import React, {Component} from 'react';
+//import ListComponent from '../../components/List.component'
+import {Card, Button, Grid, Form, Input} from "semantic-ui-react";
+import AddCardComponent from './AddCard'
+import ListComponent from '../../components/List.component'
+import style from './List.styl'
+import {connect} from "react-redux";
+
+class ListCont extends Component {
+
+    state = {
+        addCardInput: false
+    }
+
+    displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
 
 
-const List = (props) => {
 
-    const l = props;
+    render () {
+        return (
+            <Card>
+                <ListComponent titleList={this.props.titleList}/>
+                <Card.Content extra>
+                    <div>
+                        <a onClick={this.displayAddCard}>
+                            + Add card
+                        </a>
+                    </div>
+                    {(this.state.addCardInput) ?
+                        (
+                            <AddCardComponent/>
+                        )
+                        :
+                        null
+                    }
+                </Card.Content>
+            </Card>
+        )
+    }
+}
 
-    const list = () => (
-        <Card>
-            <Card.Content>
-                <Card.Header>{l.titleList}</Card.Header>
-            </Card.Content>
-            <Card.Content>
-                <Feed>
-                    <Feed.Content>
-                        <div>Cards</div>
-                    </Feed.Content>
-                </Feed>
-            </Card.Content>
-        </Card>
+const mapStateToProps = (state, ownProps) => {
+    return({
+           // titleList: ownProps.titleList
+        }
     )
-    return <div className={style.bundList}>{list()}</div>;
-};
 
-List.propTypes ={
-};
+}
 
-  const mapStateToProps = () => ({});
-  const mapDispatchToProps = dispatch => ({
-  });
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(List);
+const mapDispatchToProps = dispatch => ({
+    //dispatchCallEditBoard: data => dispatch(callEditBoard(data)),
+});
+
+export default connect(mapStateToProps)(ListCont)

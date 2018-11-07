@@ -7,15 +7,19 @@ import cssModules from 'react-css-modules';
 
 const CardBoards = (props) => {
 
-    const boardsIsFilled = (board)=>{
-        if(board){
+    const boardsIsFilled = (boards)=>{
+        if(boards){
             return (
-                <Card key={board.titleBoard} className={style.cardBoard}>
-                    <Card.Content>
-                        <Card.Header className={style.cardBoardHeader}>{board.titleBoard}</Card.Header>
-                        <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                    </Card.Content>
-                </Card>)
+                <div>
+                    {boards.map(x => {
+                        return(<Card key={x.titleBoard} className={style.cardBoard}>
+                            <Card.Content>
+                                <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
+                            <   Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                            </Card.Content>
+                        </Card>)
+                    })}
+                </div>)
         }
         else{
             return(<div/>)
