@@ -7,6 +7,7 @@ export const GET_ALL_TEAM = 'GET_ALL_TEAM';
 export const EDIT_TEAM_MEMBERS = 'EDIT_TEAM_MEMBERS';
 export const REMOVE_TEAM = 'REMOVE_TEAM';
 export const ACTIVE_INDEX = 'ACTIVE_INDEX';
+export const RESET='RESET';
 
 
 export function addTeam(data) {
@@ -43,4 +44,11 @@ export function setActiveIndex(data) {
         type: ACTIVE_INDEX,
         data,
     };
+}
+
+export function resetTeam(){
+    console.log("reset")
+    return{
+        type: RESET,
+    }
 }

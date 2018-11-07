@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
+import {resetTeam} from '../../objects/Team/TeamActions';
 
 import {
     Container,
@@ -47,14 +48,6 @@ const dropdowMenu = {
     color: 'white'
 }
 
-
-
-const handleLogout = () => {
-    asteroid.logout();
-};
-
-
-
 class Navbar extends Component {
 
     constructor(props) {
@@ -71,6 +64,12 @@ class Navbar extends Component {
 
 
     unStickTopMenu = () => this.setState({ menuFixed: false })
+
+    handleLogout = () => {
+        asteroid.logout();
+        this.props.dispatchCallResetTeam();
+        
+    };
 
     render() {
         const { menuFixed} = this.state
@@ -93,7 +92,7 @@ class Navbar extends Component {
                                         <Dropdown.Item onClick={() => browserHistory.push('/account')}>Settings</Dropdown.Item>
                                         <Dropdown.Item>API acces</Dropdown.Item>
                                         <Dropdown.Divider />
-                                        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                                        <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Menu.Menu>
@@ -139,4 +138,10 @@ const mapStateToProps = state => ({
     user: state.user,
 });
 
-export default connect(mapStateToProps)(cssModules(Navbar, style));
+function mapDispatchToProps(dispatch){
+    return{
+        dispatchCallResetTeam: () => dispatch(resetTeam()),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Navbar, style));

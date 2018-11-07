@@ -1,4 +1,4 @@
-import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM, ACTIVE_INDEX } from './TeamActions';
+import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM, ACTIVE_INDEX, RESET } from './TeamActions';
 import { add, edit, remove } from '../../common/helpers';
 
 const teams = (state = [], action) => {
@@ -28,7 +28,10 @@ const teams = (state = [], action) => {
       }
       else{
         return state.concat([action.data]);
-      }      
+      }
+    
+    case RESET:
+      return [];
 
     default:
       return state;

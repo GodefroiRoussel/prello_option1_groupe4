@@ -21,6 +21,17 @@ class Home extends React.Component {
         super(props)
     }
 
+    componentDidMount(){
+        asteroid.subscribe('team');
+    }
+
+    componentWillUnmount(){
+        asteroid.unsubscribe('team');
+        setTimeout(500);
+        console.log("hello")
+    }
+
+
     handleAddTeam = (e) => {
         if (e.key === 'Enter') {
             const elem = e.target;
