@@ -6,19 +6,25 @@ import style from './cardBoards.styl';
 import cssModules from 'react-css-modules';
 
 const CardBoards = (props) => {
+
+    const boardsIsFilled = (board)=>{
+        if(board){
+            return (
+                <Card key={board.titleBoard} className={style.cardBoard}>
+                    <Card.Content>
+                        <Card.Header className={style.cardBoardHeader}>{board.titleBoard}</Card.Header>
+                        <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                    </Card.Content>
+                </Card>)
+        }
+        else{
+            return(<div/>)
+        }
+    }
     return (
     <div style={style.root}>
         <Card.Group>
-            {props.boards.map(x => {
-                    return (
-                    <Card key={x} className={style.cardBoard}>
-                        <Card.Content>
-                            <Card.Header className={style.cardBoardHeader}>{x}</Card.Header>
-                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                        </Card.Content>
-                    </Card>)
-                })
-            }
+            {boardsIsFilled(props.boards)}
             <div className={style.buttonAddBoardTeam}>
                 <Button  icon>
                     <Icon name='add' />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card} from 'semantic-ui-react';
+import { Link, browserHistory } from 'react-router';
 
 const CardTeams = (props) => {
     const visibility = (x)=>{
@@ -22,7 +23,7 @@ const CardTeams = (props) => {
                     </Card.Content>
                     <Card.Content extra>
                         <div className='link team button'>
-                            <Button>Boards</Button>
+                            <Button onClick={() => browserHistory.push({pathname: '/team', state:{team: x._id}})}>Boards</Button>
                             <Button>Members</Button>
                             <Button>Settings</Button>
                         </div>

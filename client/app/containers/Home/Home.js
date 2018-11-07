@@ -14,7 +14,7 @@ import { callAddList } from '../../objects/List/ListAsyncActions';
 import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
 import { callEditBoard} from '../../objects/Board/BoardAsyncActions';
 import CardTeamsComponent from '../../components/CardTeams.component';
-import CardBoardsComponent from '../../components/CardBoards.component';
+import CardBoards from '../../components/CardBoards/CardBoards.component';
 
 class Home extends React.Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class Home extends React.Component {
             else{
                 return(<div>
                     <h1>Boards</h1>
-                    <CardBoardsComponent boards={this.props.boards}></CardBoardsComponent>
+                    <CardBoards boards={this.props.boards}></CardBoards>
                     <h1>Teams</h1>
                     <Input type='text' onKeyPress={this.handleAddTeam} action='Add' placeholder='Add a Team'></Input>
                     {this.isTeamsFilled(this.props.teams)}
