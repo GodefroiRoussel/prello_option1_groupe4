@@ -1,12 +1,13 @@
 import { GET_BOARD } from './BoardActions';
 import bo from '../../common/dataTest'
+import boardsTest from '../../common/dataTest'
 //import { remove, edit, add } from '../../common/helpers';
 
-const boards = (state = bo, action) => {
+const boards = (state = boardsTest, action) => {
     switch (action.type) {
-        case GET_BOARD:
+        /*case GET_BOARD:
             console.log("boardred")
-            return action.data;
+            return action.data;*/
         default:
             return state;
     }

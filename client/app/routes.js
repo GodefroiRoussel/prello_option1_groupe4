@@ -7,6 +7,7 @@ import Registration from "./containers/Registration/Registration";
 import Login from "./containers/Login/Login";
 import Board from "./containers/Board/Board";
 import Team from './containers/Team/Team';
+import BoardParameters from './components/BoardParameters/BoardParameters';
 import Account from './containers/Account/Account';
 import List from './containers/List/List';
 
@@ -21,6 +22,7 @@ const Root = (
         <Route path = "createBoard" component={CreateBoard}/>
         <Route path = "board/:idBoard" component={Board}/>
         <Route path = "list" component={List}/>
+        <Route path = "test" component={BoardParameters}/>
     </Route>
 
 
