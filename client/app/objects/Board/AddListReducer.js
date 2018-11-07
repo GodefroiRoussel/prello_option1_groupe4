@@ -1,4 +1,4 @@
-/*//import { ADD_CARD} from './ListActions';
+//import { ADD_CARD} from './ListActions';
 //import { remove, edit, add } from '../../common/helpers';
 import boardsTest from '../../common/dataTest'
 
@@ -10,4 +10,4 @@ const addlists = (state = 'board', action) => {
     }
 };
 
-export default addlists;*/
+export default addlists;

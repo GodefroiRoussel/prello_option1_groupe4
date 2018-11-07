@@ -49,6 +49,7 @@ const BoardComponent = () => {
 
                 {l.map(list =>
                     <ListCont titleList={list.titleList}/>)}
+                    <AddList/>
             </Card.Group>
             </div>
         </Grid.Row>

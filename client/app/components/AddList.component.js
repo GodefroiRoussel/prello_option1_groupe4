@@ -1,4 +1,4 @@
-/*import React from 'react';
+import React from 'react';
 import {Form, Input} from "semantic-ui-react";
 
 
@@ -24,6 +24,4 @@ const AddListComponent = (props) => {
 
 
 };
-
-
-export default AddListComponent;*/
+export default AddListComponent;
