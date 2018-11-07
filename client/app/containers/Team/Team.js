@@ -1,78 +1,117 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
-import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown} from 'semantic-ui-react';
-import ListMember from '../../components/ListMember.component';
-import CardBoards from '../../components/CardBoards.component';
+import { Tab, Card, Image, List, Button ,Form, Grid, Segment,Select} from 'semantic-ui-react';
+import ListMember from '../../components/ListMember/ListMember.component';
+import CardBoards from '../../components/CardBoards/CardBoards.component';
 import { callAddMember, callRemoveTeam } from '../../objects/Team/TeamAsyncActions';
-import { setActiveIndex } from '../../objects/Team/TeamActions';
+import {callGetAllUser} from '../../objects/User/UserAsyncActions';
 import { browserHistory } from 'react-router';
+import style from './team.styl';
+import defaultStyle from "../../styles/settings.styl";
+
+
+import classNames from 'classnames'
+
+const options = [
+    {key:'0', text: 'private', value: "false"},
+    {key:'1', text: 'public', value: "true"},
+]
 
 
 class Team extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            team: "",
+            privacy: "false"
+        };
     }
 
-    handleTabChange = (e, { activeIndex }) => {
-        console.log(this.props);
-        this.props.DispatchCallActiveIndex(activeIndex)
+    changePrivacyValue=(e, {value})=>{
+        this.setState({
+            privacy: value
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props != nextProps) {
+            if(nextProps.team.visibilityTeam)
+            {
+                this.setState({
+                    privacy: nextProps.team.visibilityTeam
+                });
+            }
+
+        }
     }
 
     render() {
-        if(!this.props.team || !this.props.activeIndex){
+        if(!this.props.team){
             return <div/>
         }
         else{
+            this.state.team = this.props.team;
             return (
-                <div>
-                    <h1>{this.props.team.nameTeam}</h1>
-                    <div>
-                        <Tab panes={this.panes} activeIndex={this.props.activeIndex} onTabChange={this.handleTabChange}/>
-                    </div>
-                </div>
+                <Grid centered style={style.root}>
+                    <Grid.Column mobile={16} tablet={8} computer={6}>
+                        <h1 className={defaultStyle.textColor4}>{this.props.team.nameTeam}</h1>
+                    </Grid.Column>
+                    <Grid.Column mobile={15} tablet={12} computer={12}>
+                        <div className={style.teamBox}>
+                            <Tab className={style.tabTeam} panes={this.panes} />
+                        </div>
+                    </Grid.Column>
+                </Grid>
             )
         }
     }
 
     panes = [
-        { menuItem: {key: 'boards', icon: 'table', content: 'Tableaux'}, render: () => <Tab.Pane><CardBoards boards={this.props.team.idBoards}/></Tab.Pane> },
-        { menuItem: {key: 'users', icon: 'users', content: 'Membres'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane> },
-        { menuItem: {key: 'setting', icon: 'setting', content: 'Paramètres'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
-      ]
+        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.team.idBoards}/></Tab.Pane> },
+        { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} ownerTeam={this.props.ownerTeam} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane>},
+        { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
+    ]
 
     settings = (
         <div>
-            <h3>Team visibility</h3>
-            <p><strong>Private</strong> This team is </p>
-            <span>
-                    visibility of the team is
-            </span>
-            <h3>Restrictions</h3>
-            <h3>Creating board Restrictions</h3>
-            <Button onClick={this.handleDeleteTeam.bind(this)}>delete</Button>
+            <h3 className={defaultStyle.textColor1}>Team visibility</h3>
+            <Form.Group inline>
+                <label className={defaultStyle.textColor4}>This team is </label>
+                <Select
+                    onChange={this.changePrivacyValue.bind(this)}
+                    options={options}
+                    name="privacy"
+                    className={style.privacySelect}
+                >
+                </Select>
+
+
+            </Form.Group>
+
+            <h3  className={defaultStyle.textColor1}>Actions</h3>
+
+            <Button onClick={this.handleDeleteTeam.bind(this)}>Delete the team</Button>
         </div>
     )
 
     handleDeleteTeam(){
         this.props.DispatchCallRemoveTeam({id: this.props.team._id});
-        browserHistory.push({pathname: '/' ,state: {team: this.props.team._id, activeIndex:1}});
+        browserHistory.push({pathname: '/'});
     }
 
 };
 
-
-  function mapStateToProps(state, ownProps){
-      return{
+function mapStateToProps(state, ownProps){
+    return{
         team: state.teams.find(el => el._id == ownProps.location.state.team),
-        activeIndex: ownProps.location.state.activeIndex,
-      }
-  };
+        teams: state.teams,
+    }
+};
 
-  const mapDispatchToProps = (dispatch)=> ({
-      DispatchCallAddMember: data => dispatch(callAddMember(data)),
-      DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
-      DispatchCallActiveIndex: data => dispatch(setActiveIndex(data)),
-  });
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Team);
+const mapDispatchToProps = (dispatch)=> ({
+    DispatchCallAddMember: data => dispatch(callAddMember(data)),
+    DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Team, style));

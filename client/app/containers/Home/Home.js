@@ -110,7 +110,7 @@ function mapDispatchToProps(dispatch){
                         {
                             teams.map(team =>
                                 <div key={team._id}>
-                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team._id, activeIndex:0}})}>{team.nameTeam}</Button>
+                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team._id}})}>{team.nameTeam}</Button>
                                 </div>
                             )
                         }

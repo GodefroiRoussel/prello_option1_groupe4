@@ -20,7 +20,7 @@ const teams = (state = [], action) => {
       return state;
 
     case REMOVE_TEAM:
-      return remove(state, action);
+      return remove(state, action);  
 
     case ACTIVE_INDEX:
       if(state.activeIndex){
