@@ -7,42 +7,89 @@ import List from '../List/List';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
-import { Button, Input } from 'semantic-ui-react';
+import { Button, Input , Card} from 'semantic-ui-react';
 
 import { callAddTodo } from '../../objects/Todo/TodoAsyncActions';
 import { callAddList } from '../../objects/List/ListAsyncActions';
 import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
+import { callEditBoard} from '../../objects/Board/BoardAsyncActions';
+import CardTeamsComponent from '../../components/CardTeams.component';
+import CardBoardsComponent from '../../components/CardBoards.component';
 
-const Home = (props) => {
-    const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
+class Home extends React.Component {
+    constructor(props) {
+        super(props)
+    }
 
-    const handleAddTeam = (e) => {
+    handleAddTeam = (e) => {
         if (e.key === 'Enter') {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
-                dispatchCallAddTeam({name: elem.value, user: user.username});
+                this.props.dispatchCallAddTeam({name: elem.value, user: this.props.user.username});
                 elem.value = '';
             }
         }
     }
 
-    const handleAddTodo = (e) => {
-        if (e.key === 'Enter') {
-            const elem = e.target;
-            e.preventDefault();
-            if (elem.value) {
-                dispatchCallAddTodo(elem.value);
-                elem.value = '';
-            }
-        }
-    };
-    const handleLogout = () => {
+    handleLogout = () => {
         asteroid.logout();
     };
-    const handleAddList = () => {
-        dispatchCallAddList("hello");
+
+    render() {
+        if(this.props.user && this.props.user.username){
+            if(!this.props.teams || !this.props.boards){
+                return <div/>
+            }
+            else{
+                return(<div>
+                    <h1>Boards</h1>
+                    <CardBoardsComponent boards={this.props.boards}></CardBoardsComponent>
+                    <h1>Teams</h1>
+                    <Input type='text' onKeyPress={this.handleAddTeam} action='Add' placeholder='Add a Team'></Input>
+                    {this.isTeamsFilled(this.props.teams)}
+                </div>)
+            }
+        }
+        else{
+            return <Login/>
+        }
     }
+
+    isTeamsFilled = (teams) =>{
+        if(teams.length>0){
+            return(<CardTeamsComponent teams={teams}></CardTeamsComponent>)
+        }
+        else{return(<div></div>)}
+    }
+
+    
+}
+
+Home.propTypes = {
+    teams: React.PropTypes.array.isRequired,
+    dispatchCallAddTeam: React.PropTypes.func.isRequired,
+    user: React.PropTypes.object,
+};
+
+function mapStateToProps(state, ownProps){
+    return{
+        teams: state.teams,
+        user: state.user,
+        boards: state.boards,
+    }
+};
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
+        dispatchCallAddBoard: data => dispatch(callEditBoard(data)),
+    }
+};
+
+/*const Home = (props) => {
+    const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
+
     const home = () => {
         if (user && user.username) {
             return (
@@ -91,27 +138,7 @@ const Home = (props) => {
 };
 
 // Vérifier le type des varible
-Home.propTypes = {
-    teams: React.PropTypes.array.isRequired,
-    lists: React.PropTypes.array.isRequired,
-    todos: React.PropTypes.array.isRequired,
-    dispatchCallAddTeam: React.PropTypes.func.isRequired,
-    dispatchCallAddTodo: React.PropTypes.func.isRequired,
-    dispatchCallAddList: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
-};
-
-//Vairable observé en cas de changement d'état (state) afin que les données se reload que se soit par l'user ou par la BD
-const mapStateToProps = state => ({
-    teams: state.teams,
-    lists: state.lists,
-    todos: state.todos,
-    user: state.user,
-});
-const mapDispatchToProps = dispatch => ({
-    dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
-    dispatchCallAddList: data => dispatch(callAddList(data)),
-    dispatchCallAddTodo: data => dispatch(callAddTodo(data)),
-});
+Home.
+*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Home, style));
