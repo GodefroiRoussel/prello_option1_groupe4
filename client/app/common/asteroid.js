@@ -15,10 +15,10 @@ const asteroid = new Asteroid({
 
 // if you want realitme updates in all connected clients
 // subscribe to the publication
+
 asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
-asteroid.subscribe('team');
 asteroid.subscribe('board');
 
 asteroid.ddp.on('added', (doc) => {

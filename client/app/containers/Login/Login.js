@@ -7,6 +7,9 @@ import { Link, browserHistory } from 'react-router'
 import {Grid, Form, Button, Icon, Image} from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
 import style from './login.styl';
+import store from '../../store';
+
+
 
 class Login extends React.Component {
     constructor(){
@@ -15,6 +18,18 @@ class Login extends React.Component {
             username: '',
             password: ''
         }
+    }
+
+    componentDidMount(){
+        asteroid.unsubscribe('team');
+        console.log("hey")
+
+    }
+
+    componentWillUnmount(){
+        asteroid.subscribe('team');
+        console.log("hey")
+        console.log(store.getState().user)
     }
 
     handleLogin = (e) => {
