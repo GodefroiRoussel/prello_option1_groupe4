@@ -54,7 +54,7 @@ class Account extends Component {
         }).catch((error) => {
             Alert.error(error.message);
         });
-        browserHistory.push('/account');
+        Alert.success("Password updated")
     };
 
     changeGenderSelect=(e, {value})=>{
