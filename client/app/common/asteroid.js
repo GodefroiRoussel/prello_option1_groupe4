@@ -21,6 +21,7 @@ asteroid.subscribe('todo');
 asteroid.subscribe('user');
 asteroid.subscribe('board');
 asteroid.subscribe('team');
+asteroid.subscribe('card');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here
