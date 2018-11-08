@@ -8,6 +8,7 @@ import './List/index';
 import './Team/index';
 import './Board/index';
 import './User/index';
+import './Card/index';
 
 // declare MongoDB collection here
 //

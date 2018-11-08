@@ -4,9 +4,9 @@ import listsTest from '../../common/dataTest'
 
 const lists = (state = listsTest, action) => {
   switch (action.type) {
-    /*case ADD_LIST:
+    case ADD_LIST:
       return add(state, action);
-    case REMOVE_LIST:
+    /*case REMOVE_LIST:
       return remove(state, action);
     case GET_ALL_LIST:
       return action.data;*/

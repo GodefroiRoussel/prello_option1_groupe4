@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
+import List from './model';
 
-const List = new Meteor.Collection('list');
 
 Meteor.publish('list', function() {
     return List.find();

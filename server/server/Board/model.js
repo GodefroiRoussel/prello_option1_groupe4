@@ -1,5 +1,6 @@
 import {Meteor} from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
+import List from '../List/model';
 
 const Board = new Meteor.Collection('board');
 
@@ -20,6 +21,7 @@ const BoardSchema = new SimpleSchema({
     teams : {type: Array, optional: true},
     'teams.$':{type:String},
 });
+
 
 Board.attachSchema(BoardSchema);
 

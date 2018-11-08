@@ -12,6 +12,7 @@ import List from '../../containers/List/List'
 
 import AddCardComponent from "../../components/AddCard.component";
 import listsTest from '../../common/dataTest'
+import {callAddList} from '../../objects/List/ListAsyncActions'
 import defaultStyle from "../../styles/settings.styl";
 import style from './board.styl'
 
@@ -25,6 +26,7 @@ class Board extends Component {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
+                this.props.dispatchCallAddList({titleList: elem.value, positionList: this.props.lists.length});
                 elem.value = '';
             }
         }
@@ -41,8 +43,8 @@ class Board extends Component {
     }
 
     listsIsFilled = () => {
-        if(this.props.board.lists){
-            return(<div><BoardComponent board={bo}/></div>);
+        if(this.props.lists){
+            return(<div><BoardComponent lists={this.props.lists}/></div>);
         }
         else{
             return <div/>
@@ -51,8 +53,15 @@ class Board extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     return ({
-        lists: listsTest,
+        lists: state.lists,
         board: state.boards.find(el => el._id == ownProps.location.state.id),
     })
 }
-export default connect(mapStateToProps)(Board)
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatchCallAddList: data => dispatch(callAddList(data)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board)
