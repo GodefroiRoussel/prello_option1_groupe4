@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown, Modal, Icon} from 'semantic-ui-react';
 import defaultStyle from "../../styles/settings.styl";
 import style from './cardBoards.styl';
@@ -16,7 +17,7 @@ const CardBoards = (props) => {
                         if(x.teams){
                             console.log("helo")
                             if(x.teams.includes(props.team)){
-                                return(<Card key={x._id} className={style.cardBoard}>
+                                return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
                                     <Card.Content>
                                         <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
                                         <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
@@ -32,7 +33,7 @@ const CardBoards = (props) => {
                                 return <div/>
                             }
                             else{
-                                return(<Card key={x._id} className={style.cardBoard}>
+                                return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
                                     <Card.Content>
                                         <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
                                         <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
@@ -46,6 +47,10 @@ const CardBoards = (props) => {
         else{
             return(<div/>)
         }
+    }
+
+    const handleOnClick = (id) => {
+        browserHistory.push({pathname: '/board', state:{id}});
     }
 
     const handleAddBoard = (e)=> {

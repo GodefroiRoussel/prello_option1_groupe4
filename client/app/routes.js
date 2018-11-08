@@ -21,7 +21,7 @@ const Root = (
         <Route path="registration" component={Registration}/>
         <Route path="account" component={Account}/>
         <Route path = "createBoard" component={CreateBoard}/>
-        <Route path = "board/:idBoard" component={Board}/>
+        <Route path = "board" component={Board}/>
         <Route path = "list" component={List}/>
         <Route path = "test" component={BoardParameters}/>
         <Route path = "card" component={CardModal}/>
