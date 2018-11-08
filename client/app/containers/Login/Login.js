@@ -20,17 +20,6 @@ class Login extends React.Component {
         }
     }
 
-    componentDidMount(){
-        asteroid.unsubscribe('team');
-        console.log("hey")
-
-    }
-
-    componentWillUnmount(){
-        asteroid.subscribe('team');
-        console.log("hey")
-        console.log(store.getState().user)
-    }
 
     handleLogin = (e) => {
         e.preventDefault();

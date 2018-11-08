@@ -2,17 +2,12 @@ import React from 'react';
 import cssModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import Todo from '../Todo/Todo';
-import List from '../List/List';
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
 import {Button, Input, Card, Grid, Divider} from 'semantic-ui-react';
-
-import { callAddTodo } from '../../objects/Todo/TodoAsyncActions';
-import { callAddList } from '../../objects/List/ListAsyncActions';
 import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
-import { callEditBoard} from '../../objects/Board/BoardAsyncActions';
+import { callAddBoard} from '../../objects/Board/BoardAsyncActions';
 import CardTeamsComponent from '../../components/CardTeams/CardTeams.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
 import defaultStyle from "../../styles/settings.styl";
@@ -23,23 +18,12 @@ class Home extends React.Component {
         super(props)
     }
 
-    componentDidMount(){
-        asteroid.subscribe('team');
-    }
-
-    componentWillUnmount(){
-        asteroid.unsubscribe('team');
-        setTimeout(500);
-        console.log("hello")
-    }
-
-
     handleAddTeam = (e) => {
         if (e.key === 'Enter') {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
-                this.props.dispatchCallAddTeam({name: elem.value, user: this.props.user.username});
+                this.props.dispatchCallAddTeam({nameTeam: elem.value, user: this.props.user.username});
                 elem.value = '';
             }
         }
@@ -71,7 +55,7 @@ class Home extends React.Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <CardBoards boards={this.props.boards}></CardBoards>
+                                <CardBoards boards={this.props.boards} user={this.props.user.username} dispatchFunc={this.props.dispatchCallAddBoard}></CardBoards>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row className={style.thirdRowHome}>
@@ -102,11 +86,21 @@ class Home extends React.Component {
         else{return(<div></div>)}
     }
 
+    /*isBoardsFilled = (boards) =>{
+        if(boards.length>0){
+            return()
+        }
+        else{
+            return(<div/>)
+        }
+    }*/
+
     
 }
 
 Home.propTypes = {
     teams: React.PropTypes.array.isRequired,
+    boards: React.PropTypes.array.isRequired,
     dispatchCallAddTeam: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
 };
@@ -122,62 +116,8 @@ function mapStateToProps(state, ownProps){
 function mapDispatchToProps(dispatch){
     return{
         dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
-        dispatchCallAddBoard: data => dispatch(callEditBoard(data)),
+        dispatchCallAddBoard: data => dispatch(callAddBoard(data)),
     }
 };
-
-/*const Home = (props) => {
-    const {teams, lists, todos, dispatchCallAddTodo, dispatchCallAddList, dispatchCallAddTeam, user } = props;
-
-    const home = () => {
-        if (user && user.username) {
-            return (
-                <div styleName="todo-wrapper">
-
-                    <div>
-                        {
-                            teams.map(team =>
-                                <div key={team._id}>
-                                    <Button onClick={() => browserHistory.push({pathname: '/team', state: {team: team._id}})}>{team.nameTeam}</Button>
-                                </div>
-                            )
-                        }
-                    </div>
-                    <div>
-                        <Input type='text' onKeyPress={handleAddTeam} icon='users' iconPosition='left' placeholder='Add Team' />
-                    </div>
-                    <div>
-                        <Button onClick={handleAddList}>Click Here</Button>
-                    </div>
-                    <div>
-                        {
-                            lists.map((l, i) =>
-                                <List id={l._id} key={l._id} message={l.message}/>
-                            )
-                        }
-                    </div>
-                    <div>
-                        <input
-                            type="text"
-                            styleName="add-todo-input"
-                            placeholder="Add todo item ..."
-                            onKeyPress={handleAddTodo}
-                        />
-                    </div>
-                    <div>
-                        {todos.map((t, i) =>
-                            <Todo id={t._id} message={t.message} finished={t.finished} key={t._id} />)}
-                    </div>
-                </div>
-            );
-        }
-        return <Login/>;
-    };
-    return <div>{home()}</div>;
-};
-
-// Vérifier le type des varible
-Home.
-*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Home, style));

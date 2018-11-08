@@ -3,7 +3,6 @@ import Team from './model';
 
 Meteor.methods({
     addTeam(team){
-        Team.schema.validate(team);
         return Team.insert(team);
     },
     getTeams() {

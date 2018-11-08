@@ -3,16 +3,15 @@ import Board from './model';
 
 
 Meteor.methods({
-    addBoard(message) {
-        console.log("ser");
-        const board = {
-            titleBoard: message
-       };
-        return Board.insert(board)
+    addBoard(data) {
+        return Board.insert(data);
     },
     getBoard(id) {
         console.log("coucou");
         return Board.findOne(id);
+    },
+    getAllBoard(){
+        return Board.find();
     }
 });
 

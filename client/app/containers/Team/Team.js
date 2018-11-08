@@ -6,6 +6,7 @@ import ListMember from '../../components/ListMember/ListMember.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
 import { callAddMember, callRemoveTeam } from '../../objects/Team/TeamAsyncActions';
 import {callGetAllUser} from '../../objects/User/UserAsyncActions';
+import {callAddBoard} from '../../objects/Board/BoardAsyncActions';
 import { browserHistory } from 'react-router';
 import style from './team.styl';
 import defaultStyle from "../../styles/settings.styl";
@@ -47,7 +48,7 @@ class Team extends React.Component {
     }
 
     render() {
-        if(!this.props.team){
+        if(!this.props.team || !this.props.user){
             return <div/>
         }
         else{
@@ -68,7 +69,7 @@ class Team extends React.Component {
     }
 
     panes = [
-        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.team.idBoards}/></Tab.Pane> },
+        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} dispatchFunc={this.props.DispatchCallAddBoard} team={this.props.team._id} user={this.props.user.username}/></Tab.Pane> },
         { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} ownerTeam={this.props.ownerTeam} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane>},
         { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
     ]
@@ -106,10 +107,13 @@ function mapStateToProps(state, ownProps){
     return{
         team: state.teams.find(el => el._id == ownProps.location.state.team),
         teams: state.teams,
+        user: state.user,
+        boards: state.boards
     }
 };
 
 const mapDispatchToProps = (dispatch)=> ({
+    DispatchCallAddBoard: data=> dispatch(callAddBoard(data)),
     DispatchCallAddMember: data => dispatch(callAddMember(data)),
     DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
 });
