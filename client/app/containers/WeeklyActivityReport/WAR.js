@@ -174,7 +174,7 @@ const WeeklyActivityReport = () => {
 
                 <Grid.Row>
                     <Grid.Column>
-                        <div>
+                        <div className={style.maxWidth}>
                             <h2>Number of hour per label per day</h2>
                             <Bar
                                 data={dataBarPlot}

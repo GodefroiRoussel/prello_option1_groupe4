@@ -11,6 +11,7 @@ import BoardParameters from './components/BoardParameters/BoardParameters';
 import Account from './containers/Account/Account';
 import List from './containers/List/List';
 import CardModal from './containers/CardModal/CardModal';
+import War from './containers/WeeklyActivityReport/WAR';
 
 
 const Root = (
@@ -25,6 +26,7 @@ const Root = (
         <Route path = "list" component={List}/>
         <Route path = "test" component={BoardParameters}/>
         <Route path = "card" component={CardModal}/>
+        <Route path = "war" component={War}/>
     </Route>
 
 

@@ -1,4 +1,4 @@
-import { GET_BOARD, ADD_BOARD } from './BoardActions';
+import { GET_BOARD, ADD_BOARD, RESET } from './BoardActions';
 import bo from '../../common/dataTest'
 import boardsTest from '../../common/dataTest'
 import { add } from '../../common/helpers';
@@ -11,6 +11,8 @@ const boards = (state = [], action) => {
             return action.data;*/
         case ADD_BOARD:
             return add(state, action);
+        case RESET:
+            return [];
         default:
             return state;
     }

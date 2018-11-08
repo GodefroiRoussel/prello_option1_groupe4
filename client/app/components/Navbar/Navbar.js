@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
 import {resetTeam} from '../../objects/Team/TeamActions';
+import {resetBoard} from '../../objects/Board/BoardActions';
 import PropTypes from 'prop-types';
 
 import {
@@ -69,6 +70,7 @@ class Navbar extends Component {
     handleLogout = () => {
         asteroid.logout();
         this.props.dispatchCallResetTeam();
+        this.props.dispatchCallResetBoard();
         
     };
 
@@ -142,6 +144,7 @@ const mapStateToProps = state => ({
 function mapDispatchToProps(dispatch){
     return{
         dispatchCallResetTeam: () => dispatch(resetTeam()),
+        dispatchCallResetBoard: () => dispatch(resetBoard()),
     }
 };
 

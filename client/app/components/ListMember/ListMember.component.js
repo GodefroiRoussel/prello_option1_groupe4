@@ -7,14 +7,16 @@ import defaultStyle from "../../styles/settings.styl";
 
 const ListMember = (props) => {
 
-    const callAddMember = () =>{
-        var l = [...props.members, "test"]
-        props.addMembers({id: props.id, members: l})
+    const callAddMember = (e) =>{
+        if (e.key === 'Enter') {
+            var l = [...props.members, e.target.value]
+            props.addMembers({id: props.id, members: l})
+        }
     }
     
     return (<div>
         <div>
-            <Input list='members' placeholder='Choose members to add...' />
+            <Input list='members' placeholder='Choose members to add...' onKeyPress={callAddMember}/>
             <Button onClick={callAddMember}>ADD</Button>
         </div>
     <List animated verticalAlign='middle'>
