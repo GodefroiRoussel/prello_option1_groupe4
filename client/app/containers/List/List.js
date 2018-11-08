@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Button, Grid, Form, Input, List} from "semantic-ui-react";
+import {Card, Button, Modal,Grid, Form, Input, List,Icon,Header} from "semantic-ui-react";
 import ListComponent from '../../components/List/List.component';
 import style from './List.styl';
 import {connect} from "react-redux";
@@ -22,8 +22,15 @@ class ListC extends Component {
     }
 
     state = {
-        addCardInput: false
+        addCardInput: false,
+        modalOpen: false
     }
+
+
+    handleOpen = () => this.setState({ modalOpen: true })
+
+    handleClose = () => this.setState({ modalOpen: false })
+
 
     displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
 
@@ -40,17 +47,25 @@ class ListC extends Component {
                 </div>
                 <Card.Content extra>
                     <div>
-                        <a onClick={this.displayAddCard}>
-                            + Add card
-                        </a>
+                        <Modal  trigger={<a onClick={this.handleOpen}>+ Add card</a>}
+                                open={this.state.modalOpen}
+                                onClose={this.handleClose}
+                                basic
+                                size='small'>
+                            <Header icon='add'>
+                                New card in {this.props.titleList}
+                            </Header>
+                            <Modal.Content>
+                                <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'></Input>
+                            </Modal.Content>
+                            <Modal.Actions>
+                                <Button basic color='red' onClick={this.handleClose} inverted>
+                                    <Icon name='remove' /> Cancel
+                                </Button>
+                            </Modal.Actions>
+                        </Modal>
+
                     </div>
-                    {(this.state.addCardInput) ?
-                        (
-                            <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='Add a card'></Input>
-                        )
-                        :
-                        null
-                    }
                 </Card.Content>
             </Card>
         )
