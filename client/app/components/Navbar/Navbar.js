@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
 import {resetTeam} from '../../objects/Team/TeamActions';
+import PropTypes from 'prop-types';
 
 import {
     Container,
@@ -131,7 +132,7 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    user: React.PropTypes.object,
+    user: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

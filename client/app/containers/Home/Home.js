@@ -1,6 +1,7 @@
 import React from 'react';
 import cssModules from 'react-css-modules';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Todo from '../Todo/Todo';
 import List from '../List/List';
@@ -106,9 +107,9 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    teams: React.PropTypes.array.isRequired,
-    dispatchCallAddTeam: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
+    teams: PropTypes.array.isRequired,
+    dispatchCallAddTeam: PropTypes.func.isRequired,
+    user: PropTypes.object,
 };
 
 function mapStateToProps(state, ownProps){

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import bo from '../../common/dataTest';
+import PropTypes from 'prop-types';
 //import listsTest from '../../common/dataTest';
 import { Grid } from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';

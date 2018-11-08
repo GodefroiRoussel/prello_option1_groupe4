@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Alert from 'react-s-alert';
 import asteroid from '../../common/asteroid';
 import { Link, browserHistory } from 'react-router'
+import PropTypes from 'prop-types';
 
 import {Grid, Form, Button, Icon, Image, Select} from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
@@ -163,9 +164,9 @@ class Account extends Component {
 };
 
 Account.propType = {
-    dispatchCallUpdateUserProfile: React.PropTypes.func.isRequired,
-    dispatchCallUpdateUserPassword: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object
+    dispatchCallUpdateUserProfile: PropTypes.func.isRequired,
+    dispatchCallUpdateUserPassword: PropTypes.func.isRequired,
+    user: PropTypes.object
 };
 
 

@@ -10,7 +10,7 @@ import defaultStyle from '../../styles/settings.styl'
 import style from './registration.styl';
 
 import {callAddUser} from "../../objects/User/UserAsyncActions";
-
+import PropTypes from 'prop-types';
 
 const options = [
     { key: 'm', text: 'Male', value: 'male' },
@@ -134,7 +134,7 @@ class Registration extends Component {
 };
 
 Registration.propType = {
-    dispatchCallAddUser: React.PropTypes.func.isRequired
+    dispatchCallAddUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -240,7 +240,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(cssModules(Registrati
 };
 
  Registration.propType = {
-    dispatchCallAddUser: React.PropTypes.func.isRequired
+    dispatchCallAddUser: PropTypes.func.isRequired
 };
 
  const mapStateToProps = state => ({
