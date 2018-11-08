@@ -1,17 +1,27 @@
 import {Meteor} from 'meteor/meteor';
-import List from './publications';
+import List from './model';
 
 Meteor.methods({
     getList(id) {
         return List.findOne(id);
     },
-    getList() {
+    getLists() {
         return List.find().fetch();
     },
+    getCards(id) {
+        return List.find({id}).cards
+    },
+    //TODO: take care of position list (change model too)
     addList(message) {
-        return List.insert({message: message});
+        console.log("addList");
+        const list = {
+            titleList: message
+        };
+        return List.insert(list);
     },
     removeList(id){
         return List.remove({_id: id});
     },
 })
+
+export default List;

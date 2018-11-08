@@ -1,5 +1,6 @@
 import React from 'react';
 import {Form, Input} from "semantic-ui-react";
+import {callAddCard} from "../objects/List/ListAsyncActions";
 
 
 const AddCardComponent = (props) => {
@@ -9,7 +10,8 @@ const handleCreateCard = (e) => {
     const elem = e.target;
     e.preventDefault();
     if (elem.cardName.value) {
-        //dispatchCallEditBoard(elem.boardname.value);
+        console.log('coucou toi')
+        callAddCard(elem.cardName.value);
         elem.cardName.value = '';
     }
 }

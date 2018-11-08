@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import AddListComponent from '../../components/AddList.component'
 import {Form, Input, Card} from "semantic-ui-react";
+import {callAddList} from "../../objects/Board/BoardAsyncActions";
 
 class AddList extends Component {
     state = {
@@ -13,7 +14,8 @@ class AddList extends Component {
         const elem = e.target;
         e.preventDefault();
         if (elem.listName.value) {
-            //dispatchCallEditBoard(elem.boardname.value);
+            //this.props.dispatchCallAddList(elem.listName.value);
+            callAddList(elem.listName.value);
             elem.listName.value = '';
         }
     }
@@ -21,12 +23,13 @@ class AddList extends Component {
     displayAddList = (e) => this.setState({addListInput: !this.state.addListInput})
 
     render () {
+        console.log(this)
         return (
             <Card>
                 <Card.Content>
                     <div>
                         <a onClick={this.displayAddList}>
-                            + Add card
+                            + Add list
                         </a>
                     </div>
                     {(this.state.addListInput) ?
@@ -45,14 +48,18 @@ class AddList extends Component {
         )
     }
 }
+AddList.propTypes = {
+    dispatchCallAddList: React.PropTypes.func.isRequired,
+}
+
 const mapStateToProps = (state, props) => {
     return ({
         board: state.addlists
     })
 }
 
-const mapDispatchToProps = dispatch => ({
-    //dispatchCallEditBoard: data => dispatch(callEditBoard(data)),
+const mapDispatchToProps = (dispatch) => ({
+    dispatchCallAddList: data => dispatch(callAddList(data)),
 });
 
-export default connect(mapStateToProps)(AddList)
+export default connect(mapDispatchToProps,mapStateToProps)(AddList)

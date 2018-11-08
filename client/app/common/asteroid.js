@@ -1,9 +1,9 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
-import { addList, removeList } from '../objects/List/ListActions';
+import { addCard, removeList } from '../objects/List/ListActions';
 import { addTeam } from '../objects/Team/TeamActions';
-import { getBoard } from '../objects/Board/BoardActions';
+import { getBoard, addList } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
 import store from '../store';
 
@@ -20,6 +20,7 @@ asteroid.subscribe('list');
 asteroid.subscribe('todo');
 asteroid.subscribe('user');
 asteroid.subscribe('board');
+asteroid.subscribe('card');
 
 asteroid.ddp.on('added', (doc) => {
   // we need proper document object format here

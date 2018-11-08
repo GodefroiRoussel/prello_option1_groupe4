@@ -2,7 +2,7 @@
  * action types
  */
 
-export const ADD_LIST = 'ADD_LIST';
+export const ADD_CARD = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const GET_ALL_LIST = 'GET_ALL_LIST';
 
@@ -10,9 +10,9 @@ export const GET_ALL_LIST = 'GET_ALL_LIST';
  * action creators
  */
 
-export function addList(data) {
+export function addCard(data) {
     return {
-      type: ADD_LIST,
+      type: ADD_CARD,
       data,
     };
 }

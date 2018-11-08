@@ -1,9 +1,6 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor'
+import List from './model'
 
-const List = new Meteor.Collection('list');
-
-Meteor.publish('list', function() {
+Meteor.publish('List', function() {
     return List.find();
 });
-
-export default List;

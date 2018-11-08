@@ -1,15 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddCardComponent from '../../components/AddCard.component'
+//import {callAddCard} from "../../objects/List/ListAsyncActions";
 
 const mapStateToProps = (state, props) => {
     return ({
-        listId: state.addcards[props]
+        //listId: state.addcards
     })
 }
+/*CreateBoard.propTypes = {
+    dispatchCallEditBoard: React.PropTypes.func.isRequired,
+}*/
 
 const mapDispatchToProps = dispatch => ({
-    //dispatchCallEditBoard: data => dispatch(callEditBoard(data)),
+    /*callAddCard: message => {
+        dispatch(callAddCard(message));
+    }*/
 });
 
-export default connect(mapStateToProps)(AddCardComponent)
+
+
+export default connect(mapDispatchToProps,mapStateToProps)(AddCardComponent)
