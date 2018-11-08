@@ -1,6 +1,6 @@
-import {Menu} from "semantic-ui-react";
-//import style from "./Board.styl";
-import {Icon} from "semantic-ui-react";
+import style from "./boardMenu.styl";
+import defaultStyle from "../../styles/settings.styl";
+import {Icon, Input,Menu} from "semantic-ui-react";
 import React, { Component } from 'react';
 import bo from '../../common/dataTest'
 //import BoardParameters from '../BoardParameters/BoardParameters'
@@ -27,22 +27,21 @@ export default class BoardMenu extends Component {
         const {displayParams} = this.state
 
         return(
-            <Menu>
-                <Menu.Item
-                    name={this.props.titleBoard}>
+            <Menu className={style.menuCustom}>
+                <Menu.Item>
+                    <Icon className={defaultStyle.textColor3} name='home outline'/>
                 </Menu.Item>
                 <Menu.Item>
-                    <Icon name='star outline'/>
+                    <Input className='icon' icon='search' placeholder='Search...' />
+                </Menu.Item>
+                <Menu.Item
+                    className={style.titleBoard}
+                    borderless={'true'}
+                    name={this.props.titleBoard}>
                 </Menu.Item>
 
                 <Menu.Item
-                    name={'visbile for ' + this.props.visibilityBoard}
-                    active={activeItem === 'visibility'}
-                    onClick={this.handleItemClick}
-                >
-                </Menu.Item>
-
-                <Menu.Item
+                    className={defaultStyle.textColor3}
                     position='right'
                     name='parameters'
                     onClick={this.displayParams}

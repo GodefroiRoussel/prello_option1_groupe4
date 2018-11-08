@@ -9,9 +9,11 @@ import BoardComponent from '../../components/Board/Board.component';
 import CardBoards from '../../components/Board/Board.component';
 import BoardMenu from '../../components/Board/BoardMenu';
 import List from '../../containers/List/List'
-import style from './Board.styl'
+
 import AddCardComponent from "../../components/AddCard.component";
 import listsTest from '../../common/dataTest'
+import defaultStyle from "../../styles/settings.styl";
+import style from './board.styl'
 
 class Board extends Component {
     constructor(props) {
@@ -30,7 +32,7 @@ class Board extends Component {
 
     render () {
         return(
-            <div>
+            <div className={style.generalBoardRendering}>
                 <BoardMenu visibilityBoard={'All'} titleBoard={'hello'}/>
                 {this.listsIsFilled()}
                 <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>

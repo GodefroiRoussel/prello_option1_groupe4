@@ -164,6 +164,18 @@ class CardModal extends React.Component {
                             </Grid.Column>
                             <Grid.Column mobile={16} tablet={6} computer={4}>
                                 <h3 className={defaultStyle.textColor4}>Settings</h3>
+                                <Form>
+                                    <Form.Group inline>
+                                        <label>Billable</label>
+                                        <Form.Radio
+                                            label='Yes'
+                                            checked={true}
+                                        />
+                                        <Form.Radio label='No'
+                                            checked={false}
+                                        />
+                                    </Form.Group>
+                                </Form>
                                 <List>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >

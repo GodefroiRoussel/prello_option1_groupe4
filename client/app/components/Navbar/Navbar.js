@@ -21,7 +21,7 @@ import {
     Visibility,
 } from 'semantic-ui-react'
 
-import logo from '../../styles/assets/logo_polytech.png'
+import logo from '../../styles/assets/prelloblanc.png'
 import defaultStyle from '../../styles/settings.styl'
 import style from './navbar.styl';
 import {browserHistory} from "react-router";
