@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import bo from '../../common/dataTest';
 //import listsTest from '../../common/dataTest';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Input } from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import CardBoards from '../../components/Board/Board.component';
@@ -12,21 +12,34 @@ import style from './Board.styl'
 import AddCardComponent from "../../components/AddCard.component";
 import listsTest from '../../common/dataTest'
 
-//const idBoard = this.props.match.params.idBoard
 class Board extends Component {
-    /*state = {
-    }*/
+    constructor(props) {
+        super(props)
+    }
+
+    handleAddList=(e)=>{
+        if (e.key === 'Enter') {
+            const elem = e.target;
+            e.preventDefault();
+            if (elem.value) {
+                elem.value = '';
+            }
+        }
+    }
+
     render () {
         return(
             <div>
+                <BoardMenu visibilityBoard={'All'} titleBoard={'hello'}/>
                 {this.listsIsFilled()}
+                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
             </div>
         )
     }
 
     listsIsFilled = () => {
-        if(this.props.lists){
-            return(<div><BoardComponent board={bo}/></div>);//give props  lists={listsTest}
+        if(this.props.board.lists){
+            return(<div><BoardComponent board={bo}/></div>);
         }
         else{
             return <div/>
@@ -34,12 +47,9 @@ class Board extends Component {
     }
 }
 const mapStateToProps = (state, ownProps) => {
-    //const boardid = this.props.match.params.idBoard
     return ({
-        //titleBoard: 'hey',
-        lists: listsTest
-        // state.lists,
-        //boardId: state.boards[idBoard].id*/
+        lists: listsTest,
+        board: state.boards.find(el => el._id == ownProps.location.state.id),
     })
 }
 export default connect(mapStateToProps)(Board)

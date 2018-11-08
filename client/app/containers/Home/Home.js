@@ -86,15 +86,6 @@ class Home extends React.Component {
         else{return(<div></div>)}
     }
 
-    /*isBoardsFilled = (boards) =>{
-        if(boards.length>0){
-            return()
-        }
-        else{
-            return(<div/>)
-        }
-    }*/
-
     
 }
 
