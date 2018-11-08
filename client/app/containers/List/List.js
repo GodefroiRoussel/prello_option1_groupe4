@@ -38,36 +38,39 @@ class ListC extends Component {
 
     render () {
         return (
-            <Card>
-                <ListComponent titleList={this.props.titleList}/>
-                <div><List>
-                {this.isCardFilled}
+            <div className={style.cardCustom}>
+                <Card >
+                    <ListComponent titleList={this.props.titleList}/>
+                    <div><List>
+                        {this.isCardFilled}
 
-                </List>
-                </div>
-                <Card.Content extra>
-                    <div>
-                        <Modal  trigger={<a onClick={this.handleOpen}>+ Add card</a>}
-                                open={this.state.modalOpen}
-                                onClose={this.handleClose}
-                                basic
-                                size='small'>
-                            <Header icon='add'>
-                                New card in {this.props.titleList}
-                            </Header>
-                            <Modal.Content>
-                                <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'></Input>
-                            </Modal.Content>
-                            <Modal.Actions>
-                                <Button basic color='red' onClick={this.handleClose} inverted>
-                                    <Icon name='remove' /> Cancel
-                                </Button>
-                            </Modal.Actions>
-                        </Modal>
-
+                    </List>
                     </div>
-                </Card.Content>
-            </Card>
+                    <Card.Content extra>
+                        <div>
+                            <Modal  trigger={<a onClick={this.handleOpen}>+ Add card</a>}
+                                    open={this.state.modalOpen}
+                                    onClose={this.handleClose}
+                                    basic
+                                    size='small'>
+                                <Header icon='add'>
+                                    New card in {this.props.titleList}
+                                </Header>
+                                <Modal.Content>
+                                    <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'></Input>
+                                </Modal.Content>
+                                <Modal.Actions>
+                                    <Button basic color='red' onClick={this.handleClose} inverted>
+                                        <Icon name='remove' /> Cancel
+                                    </Button>
+                                </Modal.Actions>
+                            </Modal>
+
+                        </div>
+                    </Card.Content>
+                </Card>
+            </div>
+
         )
     }
 

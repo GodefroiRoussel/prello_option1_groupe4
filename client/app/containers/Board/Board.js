@@ -30,9 +30,9 @@ class Board extends Component {
     render () {
         return(
             <div className={style.generalBoardRendering}>
-                <BoardMenu visibilityBoard={'All'} titleBoard={'hello'}/>
-                {this.listsIsFilled()}
+                <BoardMenu visibilityBoard={'All'} titleBoard={'Title of the board'}/>
                 <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                {this.listsIsFilled()}
             </div>
         )
     }
