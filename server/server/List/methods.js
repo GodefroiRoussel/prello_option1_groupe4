@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import List from './publications';
+import List from './model';
 
 Meteor.methods({
     getList(id) {
@@ -8,8 +8,8 @@ Meteor.methods({
     getList() {
         return List.find().fetch();
     },
-    addList(message) {
-        return List.insert({message: message});
+    addList(data) {
+        return List.insert(data);
     },
     removeList(id){
         return List.remove({_id: id});

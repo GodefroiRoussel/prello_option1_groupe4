@@ -1,9 +1,9 @@
 import asteroid from '../../common/asteroid';
 import { addList, getAllList, removeList } from './ListActions';
 
-export function callAddList(message) {
-  return dispatch => asteroid.call('addList', message)
-      .then(result => dispatch(addList({ _id: result, message })));
+export function callAddList(data) {
+  return dispatch => asteroid.call('addList', data)
+      .then(result => dispatch(addList({ ...{_id: result}, ...data })));
 }
 export function callGetAllList() {
     return dispatch => asteroid.call('getList')
