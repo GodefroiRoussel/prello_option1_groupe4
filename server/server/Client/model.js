@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-const Client = new Meteor.Collection('client');
+const Client = new Meteor.Collection('clients');
 
 Client.schema = new SimpleSchema({
     id: { type: String },

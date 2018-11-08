@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-const AuthorizationToken = new Meteor.Collection('client');
+const AuthorizationToken = new Meteor.Collection('authorizationcodes');
 
 AuthorizationToken.schema = new SimpleSchema({
     authorizationCode: { type: String },
