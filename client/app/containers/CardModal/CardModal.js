@@ -27,7 +27,7 @@ class CardModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            openModal: true,
+            openModal: false,
             card:{
                 titleCard: "The title of this card",
                 descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
@@ -43,7 +43,18 @@ class CardModal extends React.Component {
     render() {
         const { openModal } = this.state;
         return (
-            <Modal  className={style.modalCustom} centered={false} open={openModal} closeIcon onClose={this.toggleModal}>
+
+            <Modal
+                trigger={
+                    <a onClick={this.toggleModal}>
+                        <Icon name='edit' size='large' />
+                    </a>
+                }
+                className={style.modalCustom}
+                centered={false}
+                open={openModal}
+                closeIcon
+                onClose={this.toggleModal}>
                 <Modal.Header className={defaultStyle.textColor1}>
                     {this.state.card.titleCard} -
                     <span className={defaultStyle.textColor2}> General List</span>
