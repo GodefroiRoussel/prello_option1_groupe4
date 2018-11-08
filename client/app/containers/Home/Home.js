@@ -1,6 +1,7 @@
 import React from 'react';
 import cssModules from 'react-css-modules';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Login from '../Login/Login';
 import asteroid from '../../common/asteroid';
@@ -99,10 +100,10 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    teams: React.PropTypes.array.isRequired,
-    boards: React.PropTypes.array.isRequired,
-    dispatchCallAddTeam: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
+    dispatchCallAddTeam: PropTypes.func.isRequired,
+    boards: PropTypes.array.isRequired,
+    user: PropTypes.object,
+    teams: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state, ownProps){

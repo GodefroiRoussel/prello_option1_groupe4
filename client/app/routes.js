@@ -10,6 +10,7 @@ import Team from './containers/Team/Team';
 import BoardParameters from './components/BoardParameters/BoardParameters';
 import Account from './containers/Account/Account';
 import List from './containers/List/List';
+import CardModal from './containers/CardModal/CardModal';
 
 
 const Root = (
@@ -23,6 +24,7 @@ const Root = (
         <Route path = "board/:idBoard" component={Board}/>
         <Route path = "list" component={List}/>
         <Route path = "test" component={BoardParameters}/>
+        <Route path = "card" component={CardModal}/>
     </Route>
 
 

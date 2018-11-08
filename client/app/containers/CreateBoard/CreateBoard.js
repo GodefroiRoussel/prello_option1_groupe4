@@ -3,6 +3,7 @@ import React from 'react';
 import {Grid, Form, Button, Icon} from 'semantic-ui-react';
 import {callEditBoard} from "../../objects/CreateBoard/CreateBoardAsyncAction";
 import {connect} from "react-redux";
+import PropTypes from 'prop-types';
 
 
 const CreateBoard = (props) => {
@@ -43,7 +44,7 @@ const CreateBoard = (props) => {
 };
 
 CreateBoard.propTypes = {
-    dispatchCallEditBoard: React.PropTypes.func.isRequired,
+    dispatchCallEditBoard: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

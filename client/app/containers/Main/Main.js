@@ -5,6 +5,7 @@ import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import Alert from 'react-s-alert';
 import style from './main.styl';
 import Navbar from './../../components/Navbar/Navbar'
+import PropTypes from 'prop-types';
 import {
     Container
 } from 'semantic-ui-react'
@@ -32,7 +33,7 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  children: React.PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default cssModules(Main, style);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { callRemoveTodo, callEditTodo } from '../../objects/Todo/TodoAsyncActions';
 import style from './todo.styl';
+import PropTypes from 'prop-types';
 
 const Todo = (props) => {
   const { id, finished, message, dispatchCallRemoveTodo, dispatchCallEditTodo } = props;
@@ -30,11 +31,12 @@ const Todo = (props) => {
 };
 
 Todo.propTypes = {
-  message: React.PropTypes.string.isRequired,
-  id: React.PropTypes.string.isRequired,
-  finished: React.PropTypes.bool,
-  dispatchCallRemoveTodo: React.PropTypes.func.isRequired,
-  dispatchCallEditTodo: React.PropTypes.func.isRequired,
+  /* James : Je met en commentaire car erreur avec react 16
+  message: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,*/
+  finished: PropTypes.bool,
+  dispatchCallRemoveTodo: PropTypes.func.isRequired,
+  dispatchCallEditTodo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () => ({});
