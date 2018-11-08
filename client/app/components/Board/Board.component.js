@@ -20,7 +20,6 @@ const BoardComponent = (props) => {
                     
                 </div>
             </Grid.Column>
-
         </Grid.Row>
         <Grid.Row computer={14}>
             <div className={style.margin}>

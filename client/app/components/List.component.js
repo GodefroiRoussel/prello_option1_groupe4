@@ -1,5 +1,7 @@
 import React from 'react';
 import {Button, Card, Grid} from "semantic-ui-react";
+import CardModal from "../containers/CardModal/CardModal";
+import { Link, browserHistory } from 'react-router'
 
 const ListComponent = ({titleList}) => {
 
@@ -12,7 +14,7 @@ const ListComponent = ({titleList}) => {
                             {titleList}
                         </Grid.Column>
                         <Grid.Column width={2}>
-                            <Button size={"mini"}>
+                            <Button size={"mini"} onClick={() => browserHistory.push('/card')}>
                                 ...
                             </Button>
                         </Grid.Column>

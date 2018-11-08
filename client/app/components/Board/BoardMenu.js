@@ -4,6 +4,7 @@ import {Icon, Input,Menu} from "semantic-ui-react";
 import React, { Component } from 'react';
 import bo from '../../common/dataTest'
 //import BoardParameters from '../BoardParameters/BoardParameters'
+import { Link, browserHistory } from 'react-router'
 
 export default class BoardMenu extends Component {
 
@@ -44,7 +45,7 @@ export default class BoardMenu extends Component {
                     className={defaultStyle.textColor3}
                     position='right'
                     name='parameters'
-                    onClick={this.displayParams}
+                    onClick={() => browserHistory.push('/test')}
                 >
                 </Menu.Item>
             </Menu>
