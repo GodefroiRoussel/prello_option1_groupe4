@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Card, Grid} from "semantic-ui-react";
-import CardModal from "../containers/CardModal/CardModal";
 import { Link, browserHistory } from 'react-router'
 
 const ListComponent = ({titleList}) => {

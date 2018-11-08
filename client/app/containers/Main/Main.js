@@ -4,7 +4,7 @@ import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import Alert from 'react-s-alert';
 import style from './main.styl';
-import Navbar from './../../components/Navbar/Navbar'
+import Navbar from '../Navbar/Navbar';
 import PropTypes from 'prop-types';
 import {
     Container

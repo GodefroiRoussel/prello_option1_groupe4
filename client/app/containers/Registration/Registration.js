@@ -30,9 +30,7 @@ class Registration extends Component {
 
 
     handleGenderChange(e) {
-        console.log(e.target.value);
         this.setState({ genderValue: e.target.value });
-        console.log(e.target.genderValue);
     }
 
     handleRegistration  = (e) =>  {

@@ -9,7 +9,6 @@ export function getCard(_id) {
 }
 
 export function addCard(data){
-    console.log("helo");
     return{
         type: ADD_CARD,
         data,

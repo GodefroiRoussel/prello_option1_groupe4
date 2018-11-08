@@ -47,7 +47,6 @@ export function setActiveIndex(data) {
 }
 
 export function resetTeam(){
-    console.log("reset")
     return{
         type: RESET,
     }

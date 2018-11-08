@@ -33,7 +33,6 @@ class Account extends Component {
 
     updateProfile (e) {
         e.preventDefault();
-         console.log(this.state.genderValue);
 
         this.props.dispatchCallUpdateUserProfile({
             genderUser: this.state.genderValue,
@@ -171,7 +170,6 @@ Account.propType = {
 
 
 function mapStateToProps(state,ownProps){
-    console.log(state)
     return{
         user: state.user,
     }

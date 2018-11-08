@@ -18,7 +18,6 @@ export default class BoardMenu extends Component {
 
     displayParams = (e, {name}) => {
         if (name === 'parameters') {
-            console.log('hey hey');
         }
         this.handleItemClick(e, {name});
     }
@@ -30,7 +29,7 @@ export default class BoardMenu extends Component {
         return(
             <Menu className={style.menuCustom}>
                 <Menu.Item>
-                    <Icon className={defaultStyle.textColor3} name='home outline'/>
+                    <Icon className={defaultStyle.textColor3}/>
                 </Menu.Item>
                 <Menu.Item>
                     <Input className='icon' icon='search' placeholder='Search...' />

@@ -15,7 +15,6 @@ const CardBoards = (props) => {
                 <div>
                     {props.boards.map(x => {
                         if(x.teams){
-                            console.log("helo")
                             if(x.teams.includes(props.team)){
                                 return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
                                     <Card.Content>

@@ -7,7 +7,6 @@ Meteor.methods({
         return Board.insert(data);
     },
     getBoard(id) {
-        console.log("coucou");
         return Board.findOne(id);
     },
     getAllBoard(){

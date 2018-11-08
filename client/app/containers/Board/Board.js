@@ -6,14 +6,9 @@ import PropTypes from 'prop-types';
 import { Grid, Input } from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
-import CardBoards from '../../components/Board/Board.component';
-import BoardMenu from '../../components/Board/BoardMenu';
-import List from '../../containers/List/List'
+import BoardMenu from './BoardMenu';
 
-import AddCardComponent from "../../components/AddCard.component";
-import listsTest from '../../common/dataTest'
 import {callAddList} from '../../objects/List/ListAsyncActions'
-import defaultStyle from "../../styles/settings.styl";
 import style from './board.styl'
 
 class Board extends Component {

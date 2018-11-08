@@ -4,10 +4,8 @@ import List from "../../containers/List/List";
 import {Grid} from "semantic-ui-react";
 import {Card} from "semantic-ui-react";
 import React from "react";
-import BoardMenu from './BoardMenu'
 import ListCont from "../../containers/List/List";
 import style from '../../containers/Board/board.styl'
-import AddList from "../../containers/Board/AddList";
 
 
 const BoardComponent = (props) => {

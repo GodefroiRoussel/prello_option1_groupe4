@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-//import ListComponent from '../../components/List.component'
 import {Card, Button, Grid, Form, Input, List} from "semantic-ui-react";
-import AddCardComponent from './AddCard'
-import ListComponent from '../../components/List.component'
-import style from './List.styl'
+import ListComponent from '../../components/List/List.component';
+import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
 
@@ -32,7 +30,6 @@ class ListC extends Component {
 
 
     render () {
-        console.log(this.props);
         return (
             <Card>
                 <ListComponent titleList={this.props.titleList}/>
@@ -60,7 +57,6 @@ class ListC extends Component {
     }
 
     isCardFilled = () =>{
-        console.log("hlodddd");
         if(this.props.cards){
             this.props.cards.map(x => {
                 return(
