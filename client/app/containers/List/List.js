@@ -4,6 +4,7 @@ import ListComponent from '../../components/List/List.component';
 import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
+import BoardComponent from "../../components/Board/Board.component";
 
 class ListC extends Component {
     constructor(props) {
@@ -23,28 +24,34 @@ class ListC extends Component {
 
     state = {
         addCardInput: false,
-        modalOpen: false
+        modalOpen: false,
+        editListTitle: false
     }
 
 
     handleOpen = () => this.setState({ modalOpen: true })
 
+
+
     handleClose = () => this.setState({ modalOpen: false })
+
+    toggleEditListTitle = () => this.setState({ editListTitle: !this.state.editListTitle })
 
 
     displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
-
 
 
     render () {
         return (
             <div className={style.cardCustom}>
                 <Card >
-                    <ListComponent titleList={this.props.titleList}/>
-                    <div><List>
-                        {this.isCardFilled}
+                    {this.titleListMode()}
 
-                    </List>
+
+                    <div>
+                        <List>
+                            {this.isCardFilled}
+                        </List>
                     </div>
                     <Card.Content extra>
                         <div>
@@ -72,6 +79,21 @@ class ListC extends Component {
             </div>
 
         )
+    }
+
+    titleListMode = () => {
+        if(!this.state.editListTitle){
+            return(<h4 className={style.TitleList} onClick={this.toggleEditListTitle}>{this.props.titleList}</h4>);
+        }
+        else{
+            return (
+                <Form onSubmit={this.toggleEditListTitle}>
+                    <Form.Field>
+                        <Input action='Save' name="titleList" type="text" value={this.props.titleList}></Input>
+                    </Form.Field>
+                </Form>
+                );
+        }
     }
 
     isCardFilled = () =>{
