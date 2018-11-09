@@ -10,15 +10,16 @@ import HistoryBoard from './HistoryBoard';
 import OtherParameters from './OtherParameters';
 import defaultStyle from "../../styles/settings.styl";
 import style from './boardParameters.styl';
+import BackgroundParameters from "./BackgroundParameters";
 
 const BoardParameters = () => {
 
 
     const panes = [
         { menuItem: 'General', render: () => <Tab.Pane><CommentsParameters/><InvitationParameters/><JoinBoardParameters/></Tab.Pane> },
-        { menuItem: 'Background', render: () => <Tab.Pane>background</Tab.Pane> },
+        { menuItem: 'Background', render: () => <Tab.Pane><BackgroundParameters/></Tab.Pane> },
         { menuItem: 'Teams', render: () => <Tab.Pane><TeamsParameters/></Tab.Pane> },
-        { menuItem: 'Labels', render: () => <Tab.Pane>labels</Tab.Pane> },
+        { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters/></Tab.Pane> },
         { menuItem: 'Archived elements', render: () => <Tab.Pane><ArchievedElements/></Tab.Pane> },
         { menuItem: 'History', render: () => <Tab.Pane><HistoryBoard/></Tab.Pane> },
         { menuItem: 'Others', render: () => <Tab.Pane><OtherParameters/></Tab.Pane> },

@@ -14,9 +14,6 @@ export default class TeamsParameters extends Component {
                     <Form.Field>
                         <Dropdown placeholder='Teams' fluid multiple search selection options={this.state.teams} />
                     </Form.Field>
-                    <Form.Field>
-                        <Button>OK</Button>
-                    </Form.Field>
                 </Form.Group>
                 <Divider/>
             </Form>
