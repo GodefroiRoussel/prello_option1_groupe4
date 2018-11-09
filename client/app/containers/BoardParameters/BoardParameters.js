@@ -11,6 +11,7 @@ import OtherParameters from './OtherParameters';
 import defaultStyle from "../../styles/settings.styl";
 import style from './boardParameters.styl';
 import BackgroundParameters from "./BackgroundParameters";
+import BoardMenu from "../Board/BoardMenu";
 
 const BoardParameters = () => {
 
@@ -28,12 +29,15 @@ const BoardParameters = () => {
     const MenuParams = () => <Tab className={style.tabTeam} panes={panes} />
 
     return (
-        <Grid centered>
-            <Grid.Column mobile={12} tablet={12} computer={12} className={style.SettingsBoard}>
-                {MenuParams()}
-            </Grid.Column>
+        <div className={style.generalBoardRendering}>
+            <BoardMenu visibilityBoard={'All'} titleBoard={'Title of the board'}/>
+            <Grid centered>
+                <Grid.Column mobile={14} tablet={14} computer={14} className={style.SettingsBoard}>
+                    {MenuParams()}
+                </Grid.Column>
 
-        </Grid>)
+            </Grid>
+        </div>)
 
 };
 
