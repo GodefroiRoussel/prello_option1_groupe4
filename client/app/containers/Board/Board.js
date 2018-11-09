@@ -28,13 +28,18 @@ class Board extends Component {
     }
 
     render () {
-        return(
-            <div className={style.generalBoardRendering}>
-                <BoardMenu visibilityBoard={'All'} titleBoard={'Title of the board'}/>
-                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
-                {this.listsIsFilled()}
-            </div>
-        )
+        if(this.props.board){
+            return(
+                <div className={style.generalBoardRendering}>
+                    <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                    <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                    {this.listsIsFilled()}
+                </div>
+            )
+        }
+        else{
+            return <div/>
+        }
     }
 
     listsIsFilled = () => {
