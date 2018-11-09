@@ -13,7 +13,7 @@ export default class JoinBoardParameters extends Component {
                 <h4>Join the board</h4>
                 <Form.Group inline>
                     <Form.Field>
-                        Enable members to join the board: <b>{this.state.value}</b>
+                        Enable members to join the board :
                     </Form.Field>
                     <Form.Field>
                         <Radio
@@ -32,9 +32,6 @@ export default class JoinBoardParameters extends Component {
                             checked={this.state.value === 'no'}
                             onChange={this.handleChange}
                         />
-                    </Form.Field>
-                    <Form.Field>
-                        <Button>OK</Button>
                     </Form.Field>
                 </Form.Group>
                 <Divider/>

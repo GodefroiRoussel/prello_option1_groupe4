@@ -8,6 +8,8 @@ import LabelsParameters from './LabelsParameters';
 import ArchievedElements from './ArchievedElements';
 import HistoryBoard from './HistoryBoard';
 import OtherParameters from './OtherParameters';
+import defaultStyle from "../../styles/settings.styl";
+import style from './boardParameters.styl';
 
 const BoardParameters = () => {
 
@@ -22,13 +24,15 @@ const BoardParameters = () => {
         { menuItem: 'Others', render: () => <Tab.Pane><OtherParameters/></Tab.Pane> },
     ];
 
-    const MenuParams = () => <Tab panes={panes} />
+    const MenuParams = () => <Tab className={style.tabTeam} panes={panes} />
 
-    return (<Grid centered>
-        <Grid.Column mobile={12} tablet={12} computer={12}>{MenuParams()}
-        </Grid.Column>
+    return (
+        <Grid centered>
+            <Grid.Column mobile={12} tablet={12} computer={12} className={style.SettingsBoard}>
+                {MenuParams()}
+            </Grid.Column>
 
-    </Grid>)
+        </Grid>)
 
 };
 

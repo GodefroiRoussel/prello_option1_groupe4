@@ -13,7 +13,7 @@ export default class InvitationParameters extends Component {
                 <h4>Invitation authorizations</h4>
                 <Form.Group inline>
                     <Form.Field>
-                        Enable teams management: <b>{this.state.value}</b>
+                        Enable teams management :
                     </Form.Field>
                     <Form.Field>
                         <Radio
@@ -32,9 +32,6 @@ export default class InvitationParameters extends Component {
                             checked={this.state.value === 'all members'}
                             onChange={this.handleChange}
                         />
-                    </Form.Field>
-                    <Form.Field>
-                        <Button>OK</Button>
                     </Form.Field>
                 </Form.Group>
                 <Divider/>
