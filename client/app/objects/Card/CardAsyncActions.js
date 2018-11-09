@@ -7,7 +7,7 @@ export function callGetCard(idCard) {
 }
 
 export function callAddCard(data) {
-    /*return dispatch => asteroid.call('addCard', data)
-        .then(result => dispatch(addCard(data)));*/
-        return(dispatch => dispatch(addCard(data)));
+    console.log("hello")
+    return dispatch => asteroid.call('addCard', data)
+        .then(result => dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false}})));
 }

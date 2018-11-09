@@ -26,6 +26,7 @@ export function resetBoard(data){
 export function updateBoardListId(data){
     return{
         type: UPDATE_BOARD_LIST,
-        data,
+        id: data.id,
+        listId: data.listsid,
     }
 }

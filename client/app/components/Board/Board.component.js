@@ -17,7 +17,7 @@ const BoardComponent = (props) => {
                     <div className={style.listBox}>
 
                         {props.lists.map(list =>
-                            <ListCont titleList={list.titleList}/>)}
+                            <ListCont list={list}/>)}
                     </div>
                 </div>
             </Grid.Column>
