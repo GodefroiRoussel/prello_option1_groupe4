@@ -20,6 +20,8 @@ const BoardSchema = new SimpleSchema({
     'members.$':{type: String},
     teams : {type: Array, optional: true},
     'teams.$':{type:String},
+    listsId : {type: Array, defaultValue: []},
+    'listsId.$':{type:String},
 });
 
 
