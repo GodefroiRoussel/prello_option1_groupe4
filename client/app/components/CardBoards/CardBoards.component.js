@@ -34,7 +34,11 @@ const CardBoards = (props) => {
                             else{
                                 return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
                                     <Card.Content>
-                                        <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
+                                        <Card.Header className={style.cardBoardHeader}>
+                                            {x.titleBoard}
+                                            <Icon className={defaultStyle.textColor3} name='star' />
+                                            <Icon className={defaultStyle.textColor5} name='star' />
+                                        </Card.Header>
                                         <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                                     </Card.Content>
                                 </Card>)
