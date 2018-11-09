@@ -5,6 +5,7 @@ import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
 import BoardComponent from "../../components/Board/Board.component";
+import CardModal from "../CardModal/CardModal";
 
 class ListC extends Component {
     constructor(props) {
@@ -44,12 +45,21 @@ class ListC extends Component {
     render () {
         return (
             <div className={style.cardCustom}>
-                <Card >
+                <Card className={style.ListCard}>
                     {this.titleListMode()}
 
 
                     <div>
                         <List>
+                            <List.Item>
+                                <Card key={"test1"} className={style.cardBoard}>
+                                    <Card.Content>
+                                        <Card.Header className={style.cardBoardHeader}>Title of a card <CardModal/></Card.Header>
+                                        <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                                    </Card.Content>
+                                </Card>
+                            </List.Item>
+
                             {this.isCardFilled}
                         </List>
                     </div>
