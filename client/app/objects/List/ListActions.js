@@ -5,7 +5,6 @@
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const GET_ALL_LIST = 'GET_ALL_LIST';
-
 /*
  * action creators
  */
