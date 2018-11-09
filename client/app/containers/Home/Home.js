@@ -51,7 +51,18 @@ class Home extends React.Component {
                         <Grid.Row className={style.secondRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
 
-                                <h3 className={defaultStyle.textColor4}>Your Boards</h3>
+                                <h3 className={defaultStyle.textColor4}>Your boards favorites (to implement)</h3>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <CardBoards boards={this.props.boards} user={this.props.user.username} dispatchFunc={this.props.dispatchCallAddBoard}></CardBoards>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row className={style.secondRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+
+                                <h3 className={defaultStyle.textColor4}>Your created Boards</h3>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -68,6 +79,17 @@ class Home extends React.Component {
                         <Grid.Row>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
                                 {this.isTeamsFilled(this.props.teams)}
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row className={style.secondRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+
+                                <h3 className={defaultStyle.textColor4}>All your Boards (to implement)</h3>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <CardBoards boards={this.props.boards} user={this.props.user.username} dispatchFunc={this.props.dispatchCallAddBoard}></CardBoards>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
