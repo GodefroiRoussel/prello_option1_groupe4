@@ -27,7 +27,7 @@ export default class BoardMenu extends Component {
         const {displayParams} = this.state
 
         return(
-            <Menu className={style.menuCustom}>
+            <Menu borderless className={style.menuCustom}>
                 <Menu.Item>
                     <Icon className={defaultStyle.textColor3}/>
                 </Menu.Item>

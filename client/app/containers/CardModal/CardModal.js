@@ -15,7 +15,7 @@ import {
     Modal,
     Header,
     Divider,
-    Icon
+    Icon, Input
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
@@ -27,7 +27,8 @@ class CardModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            openModal: true,
+            openModal: false,
+            editTitle: false,
             card:{
                 titleCard: "The title of this card",
                 descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
@@ -40,13 +41,25 @@ class CardModal extends React.Component {
 
     toggleModal = () => this.setState(state => ({ openModal: !state.openModal }));
 
+    toggleEditCardTitle = () => this.setState({ editTitle: !this.state.editTitle })
+
     render() {
         const { openModal } = this.state;
         return (
-            <Modal  className={style.modalCustom} centered={false} open={openModal} closeIcon onClose={this.toggleModal}>
+
+            <Modal
+                trigger={
+                    <a onClick={this.toggleModal}>
+                        <Icon name='edit' size='large' />
+                    </a>
+                }
+                className={style.modalCustom}
+                centered={false}
+                open={openModal}
+                closeIcon
+                onClose={this.toggleModal}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                    {this.state.card.titleCard} -
-                    <span className={defaultStyle.textColor2}> General List</span>
+                    {this.titleCardMode()}
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
@@ -231,6 +244,25 @@ class CardModal extends React.Component {
             </Modal>
 
         );
+    }
+
+    titleCardMode = () => {
+        if(!this.state.editTitle){
+            return(
+                <h4 onClick={this.toggleEditCardTitle}>
+                    {this.state.card.titleCard} - <span className={defaultStyle.textColor2}> General List</span>
+                </h4>
+            );
+        }
+        else{
+            return (
+                <Form onSubmit={this.toggleEditCardTitle}>
+                    <Form.Field className={style.inputEditTitle}>
+                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}></Input>
+                    </Form.Field>
+                </Form>
+            );
+        }
     }
 }
 

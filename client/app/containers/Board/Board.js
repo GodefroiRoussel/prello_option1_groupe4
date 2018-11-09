@@ -21,20 +21,25 @@ class Board extends Component {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
-                this.props.dispatchCallAddList({titleList: elem.value, positionList: this.props.lists.length});
+                this.props.dispatchCallAddList(({titleList: elem.value, positionList: 0}), this.props.board);
                 elem.value = '';
             }
         }
     }
 
     render () {
-        return(
-            <div className={style.generalBoardRendering}>
-                <BoardMenu visibilityBoard={'All'} titleBoard={'hello'}/>
-                {this.listsIsFilled()}
-                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
-            </div>
-        )
+        if(this.props.board){
+            return(
+                <div className={style.generalBoardRendering}>
+                    <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                    <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                    {this.listsIsFilled()}
+                </div>
+            )
+        }
+        else{
+            return <div/>
+        }
     }
 
     listsIsFilled = () => {
@@ -47,15 +52,25 @@ class Board extends Component {
     }
 }
 const mapStateToProps = (state, ownProps) => {
+    let listB=[];
+    state.lists.find(x => {
+        let board = state.boards.find(el => el._id == ownProps.location.state.id);
+        if(board){
+            if(board.listsId.includes(x._id)){
+                listB.push(x);
+            };
+        }
+    })
     return ({
-        lists: state.lists,
+        lists: listB,
         board: state.boards.find(el => el._id == ownProps.location.state.id),
+        boards: state.boards
     })
 }
 
 function mapDispatchToProps(dispatch){
     return{
-        dispatchCallAddList: data => dispatch(callAddList(data)),
+        dispatchCallAddList: (data, board) => dispatch(callAddList(data, board)),
     }
 };
 
