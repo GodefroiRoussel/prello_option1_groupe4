@@ -16,4 +16,6 @@ const clientSchema = new SimpleSchema({
     websiteClient: { type: String }
 });
 
+Client.attachSchema(clientSchema);
+
 export default Client;
