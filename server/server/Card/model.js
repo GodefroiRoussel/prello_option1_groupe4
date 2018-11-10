@@ -41,7 +41,10 @@ const CardSchema = new SimpleSchema({
     assignedUser: {
         type: String,
         optional: true
-    }
+    },
+    listId: {
+        type: String,
+    },
 
 });
 

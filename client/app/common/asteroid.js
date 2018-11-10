@@ -5,6 +5,7 @@ import { addList, removeList } from '../objects/List/ListActions';
 import { addTeam } from '../objects/Team/TeamActions';
 import { addBoard } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
+import { addCard } from '../objects/Card/CardActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -48,6 +49,10 @@ asteroid.ddp.on('added', (doc) => {
   if (doc.collection === 'users') {
     store.dispatch(setLoggedUser(doc.fields));
   }
+  if (doc.collection === 'card'){
+    const docObj = Object.assign({}, doc.fields, {_id: doc.id});
+    store.dispatch(addCard(docObj));
+}
 });
 
 asteroid.ddp.on('removed', (removedDoc) => {

@@ -7,17 +7,15 @@ export function callGetBoard(idBoard) {
 }
 
 export function callAddBoard(data) {
-    let finaldata = {...data, ...{admins:[data.user], members:[data.user]}};
+    let finaldata = {...data, ...{admins:[data.user], members:[data.user], listsId:[]}};
     if(data.team){
-        finaldata = {...data, ...{teams:[data.team], admins:[data.user], members:[data.user]}}
+        finaldata = {...data, ...{teams:[data.team], admins:[data.user], members:[data.user], listsId:[]}}
     }
     return dispatch => asteroid.call('addBoard', finaldata)
         .then(result => dispatch(addBoard({ ...{_id: result}, ...finaldata})));
 }
 
 export function callUpdateBoardListId(id, board){
-    console.log(id)
-    console.log(board)
     return dispatch => asteroid.call('updateBoardListId', {id: board._id, listId: id})
-        .then(/*dispatch(updateBoardListId({id: board._id, listid: id}))*/);
+        .then(dispatch(updateBoardListId({id: board._id, listsid: id})));
 }
