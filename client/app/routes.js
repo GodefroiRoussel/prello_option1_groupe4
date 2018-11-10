@@ -11,20 +11,24 @@ import Account from './containers/Account/Account';
 import List from './containers/List/List';
 import CardModal from './containers/CardModal/CardModal';
 import War from './containers/WeeklyActivityReport/WAR';
+import Client from './containers/Client/Client';
+import ClientRegistration from './containers/Client/ClientRegistration';
 
 
 const Root = (
     <Route path="/" component={Main}>
         <IndexRoute component={Home} />
-        <Route path="team" component={Team}/>
-        <Route path="login" component={Login}/>
-        <Route path="registration" component={Registration}/>
-        <Route path="account" component={Account}/>
-        <Route path = "board" component={Board}/>
-        <Route path = "list" component={List}/>
-        <Route path = "test" component={BoardParameters}/>
-        <Route path = "card" component={CardModal}/>
-        <Route path = "war" component={War}/>
+        <Route path="team" component={Team} />
+        <Route path="login" component={Login} />
+        <Route path="registration" component={Registration} />
+        <Route path="account" component={Account} />
+        <Route path="board" component={Board} />
+        <Route path="list" component={List} />
+        <Route path="test" component={BoardParameters} />
+        <Route path="card" component={CardModal} />
+        <Route path="war" component={War} />
+        <Route path="oauth/clients" component={Client} />
+        <Route path="oauth/clients/registration" component={ClientRegistration} />
     </Route>
 
 
