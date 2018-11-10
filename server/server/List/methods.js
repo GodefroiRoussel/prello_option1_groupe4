@@ -21,6 +21,6 @@ Meteor.methods({
     updateList(data) {
         return List.update(
             {_id:  data._id},
-            {$set: {titleList: data.titleList, positionList: data.positionList, isDeletedList: data.isDeletedList,/* isArchivedList: data.isArchivedList, */cards: data.cards}})
+            {$set: {titleList: data.titleList, positionList: data.positionList, isDeletedList: data.isDeletedList, isArchivedList: data.isArchivedList, cards: data.cards}})
     }
 });

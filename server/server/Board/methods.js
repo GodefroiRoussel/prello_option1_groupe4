@@ -37,18 +37,14 @@ Meteor.methods({
                 let arrayNotDisplayedLists = []
                 listId.map(listId => {
                     if(listId !== data.idList) {
-                        console.log("azertyuiop")
                         const l = Meteor.call('findOneList',listId)
-                        if(l.isDeletedList === false /*&& l.isArchived === false*/) {
-                            console.log('a')
+                        if(l.isDeletedList === false && l.isArchived === false) {
                             arrayLists.push(l)
                         } else {
-                            console.log('b')
                             arrayNotDisplayedLists.push(l._id)
                         }
                     }
                 })
-                console.log(arrayLists)
                 // order lists by position
                 arrayLists.sort((l1, l2) => (l1.positionList > l2.positionList) ? 1 : -1)
                 // array of the positions possible for the board
@@ -61,16 +57,48 @@ Meteor.methods({
                     Meteor.call('updatePosition', {idList: list._id, position: arrayPos[arrayLists.indexOf(list)]})
                     newListsBoard.push(list._id)
                 })
-                console.log(newListsBoard)
-
                 // add the list which changed position
                 newListsBoard.splice(newPos - 1, 0, data.idList)
-                console.log('*', newListsBoard)
                 newListsBoard = [...newListsBoard, ...arrayNotDisplayedLists]
-                console.log('**', newListsBoard)
                 // update the board's lists
                 return Board.update({_id: board._id}, {$set: {listsId: newListsBoard}})
             }
+        }
+    },
+    //change position after delete or archive
+    updateListsPositionsAfterArchiveOrDelete(data) { // data = board, idListArchived
+        if(data.board._id && data.idListArchived) {
+            const position = Meteor.call('findOneList', data.idListArchived).positionList
+            console.log(position)
+            const listsId = data.board.listsId
+            let listsToUpdate = []
+            let anteriorLists = []
+            let listsNotDisplayed = []
+            listsId.map(idList => {
+                const list = Meteor.call('findOneList', idList)
+                console.log(list.isArchivedList)
+                if(list.isArchivedList === false && list.isDeletedList === false) {
+                    if (list.positionList > position) {
+                        listsToUpdate.push(list)
+                    } else {
+                        anteriorLists.push(list._id)
+                    }
+                } else {
+                    listsNotDisplayed.push(list._id)
+                }
+            })
+            console.log(listsToUpdate)
+            console.log(anteriorLists)
+            console.log(listsNotDisplayed)
+            let ids = []
+            listsToUpdate.map(list => {
+                Meteor.call('updatePosition', {idList: list._id, position: list.positionList - 1})
+                ids.push(list._id)
+            })
+            console.log(ids)
+            const listsOfBoard = [...anteriorLists, ...ids, ...listsNotDisplayed]
+            console.log(listsOfBoard)
+            return Board.update({_id: data.board._id}, {$set: {listsId: listsOfBoard}})
         }
     }
 });
