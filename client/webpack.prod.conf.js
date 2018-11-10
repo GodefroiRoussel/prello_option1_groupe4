@@ -1,11 +1,13 @@
 var webpack = require('webpack');
 var config = require('./webpack.config.js');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
+  minimize: true
+});
 
 var productionPlugin = new webpack.DefinePlugin({
   'process.env': {
-    'NODE_ENV': JSON.stringify('production')
+    'NODE_ENV': JSON.stringify('production'),
   }
 });
 
@@ -13,10 +15,11 @@ var cssExtractPlugin = new ExtractTextPlugin('styles.css');
 
 config.devtool = '';
 config.output.pathinfo = false;
-config.output.publicPath = '/';
+config.output.publicPath = process.env.publicPath || 'http://localhost:3000/';
 config.entry = ['./app/App.js'];
 config.plugins.unshift(productionPlugin);
 config.plugins.push(cssExtractPlugin);
+config.plugins.push(uglifyPlugin);
 
 config.module.loaders = [
   {

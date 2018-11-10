@@ -8,7 +8,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
     './app/App.js'
   ],
@@ -16,7 +16,7 @@ module.exports = {
     pathinfo: true,
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:8080/'
+    publicPath: 'http://localhost:3000/'
   },
   devServer: {
     contentBase: './public',
@@ -32,14 +32,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React with Webpack and Redux - Meteor as a backend only!',
+      title: 'Prello!',
       template: './index_template.ejs',
       inject: 'body'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
+        warnings: true
       }
     })
   ],

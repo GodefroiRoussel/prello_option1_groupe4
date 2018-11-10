@@ -1,0 +1,8 @@
+node_modules
+public
+mocha-runner
+__tests__
+.env
+.git
+.gitignore
+webpack.test.config.js
