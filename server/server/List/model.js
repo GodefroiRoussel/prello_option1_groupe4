@@ -8,6 +8,8 @@ const listSchema = new SimpleSchema({
     titleList : {type: String},
     positionList :{type: Number},
     isDeletedList: {type: Boolean, defaultValue: false},
+    cards: {type: Array, defaultValue: []},
+    "cards.$": {type: String}
 });
 
 List.attachSchema(listSchema);
