@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
+import SimpleSchema from "simpl-schema";
 
 const Client = new Meteor.Collection('clients');
 
-Client.schema = new SimpleSchema({
+const clientSchema = new SimpleSchema({
     id: { type: String },
     clientSecret: { type: String },
     redirectUris: { type: Array },

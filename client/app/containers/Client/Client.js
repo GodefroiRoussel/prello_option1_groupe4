@@ -54,11 +54,15 @@ class Client extends React.Component {
 }
 
 Client.propTypes = {
-    clients: PropTypes.array.isRequired
+    clients: PropTypes.array.isRequired,
+    user: PropTypes.object
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+    console.log("STATE")
+    console.log(state)
     return {
+        user: state.user,
         clients: state.clients
     }
 };
