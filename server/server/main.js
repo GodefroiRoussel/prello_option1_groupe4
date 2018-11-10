@@ -9,6 +9,7 @@ import './Team/index';
 import './Board/index';
 import './User/index';
 import './Card/index';
+import './Client/index';
 
 // declare MongoDB collection here
 //
@@ -22,7 +23,7 @@ import './Card/index';
 
 
 Meteor.publish('user', function () {
-    return Meteor.users.find({_id: this.userId});
+    return Meteor.users.find({ _id: this.userId });
 });
 
 JsonRoutes.setResponseHeaders({
@@ -31,7 +32,7 @@ JsonRoutes.setResponseHeaders({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
-  });
+});
 
 // We can also use server side methods and call them from our client app
 // here we just fetch all documents from the collection
