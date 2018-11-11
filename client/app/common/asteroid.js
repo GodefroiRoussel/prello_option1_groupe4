@@ -6,7 +6,7 @@ import { addTeam } from '../objects/Team/TeamActions';
 import { addBoard } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
 import { addCard } from '../objects/Card/CardActions';
-import { addClient } from '../objects/Client/ClientActions';
+import { addClient, removeClient } from '../objects/Client/ClientActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -71,6 +71,10 @@ asteroid.ddp.on('removed', (removedDoc) => {
     }
     if (removedDoc.collection === 'users') {
         store.dispatch(unsetLoggedUser());
+    }
+    if (removedDoc.collection === 'clients') {
+        console.log("coucou ? ")
+        store.dispatch(removeClient(removedDoc.id));
     }
 });
 

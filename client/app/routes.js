@@ -28,9 +28,10 @@ const Root = (
         <Route path="test" component={BoardParameters} />
         <Route path="card" component={CardModal} />
         <Route path="war" component={War} />
-        <Route exac path="oauth/clients" component={Client} />
-        <Route path="oauth/clients/:id" component={ClientManagement} />
+        <Route path="oauth/clients" component={Client} />
         <Route path="oauth/clients/registration" component={ClientRegistration} />
+        <Route path="oauth/clients/:id" component={ClientManagement} />
+
     </Route>
 
 

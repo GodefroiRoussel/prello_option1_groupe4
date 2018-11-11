@@ -5,6 +5,7 @@
 export const ADD_CLIENT = 'ADD_CLIENT';
 export const GET_ALL_CLIENT = 'GET_ALL_CLIENT';
 export const REMOVE_CLIENT = 'REMOVE_CLIENT';
+export const FAIL_REMOVE_CLIENT = 'FAIL_REMOVE_CLIENT';
 
 
 export function addClient(data) {

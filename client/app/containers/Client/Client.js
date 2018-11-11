@@ -22,7 +22,7 @@ class Client extends React.Component {
     }
 
     render() {
-        if (this.props.console.error) {
+        if (this.props.error) {
             returnAlert.error(error.message);
         } else
             return (<div>

@@ -1,4 +1,4 @@
-import { ADD_CLIENT, GET_ALL_CLIENT, REMOVE_CLIENT } from './ClientActions';
+import { ADD_CLIENT, GET_ALL_CLIENT, REMOVE_CLIENT, FAIL_REMOVE_CLIENT } from './ClientActions';
 import { add, remove } from '../../common/helpers';
 
 const clients = (state = [], action) => {

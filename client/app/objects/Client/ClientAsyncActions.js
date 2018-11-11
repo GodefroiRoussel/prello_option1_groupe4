@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addClient, getAllClient, failRemoveClient } from './ClientActions';
+import { addClient, getAllClient, removeClient, failRemoveClient } from './ClientActions';
 
 export function callAddClient(data) {
     const client = {

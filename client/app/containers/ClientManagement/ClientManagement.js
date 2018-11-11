@@ -75,7 +75,7 @@ class ClientManagement extends React.Component {
                 </Grid.Row>
                 <Grid.Row>
                     <div className={style.loginBox}>
-                        <Button fluid animated='fade' onClick={() => browserHistory.push('/oauth/clients')} >
+                        <Button fluid animated='fade' onClick={() => this.handleDeleteClient()} >
                             <Button.Content hidden>Delete application</Button.Content>
                             <Button.Content visible>
                                 Delete the application
