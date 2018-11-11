@@ -30,6 +30,16 @@ Meteor.methods({
         return Client.findOne(id);
     },
     removeClient(id) {
-        return Client.remove(id);
+        const userId = Meteor.userId();
+        Client.findOne({ _id: id, createdBy: userId }).then(client => {
+            if (client)
+                return Client.remove(id);
+            else
+                throw new Meteor.Error('Not Authorized');
+        }).catch(err => {
+            console.log(err)
+            throw new Meteor.Error('Not Authorized');
+        });
+
     }
 });

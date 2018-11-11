@@ -31,7 +31,7 @@ const CardOAuthApp = (props) => {
     }
 
     const handleOnClick = (id) => {
-        browserHistory.push({ pathname: '/oauth/client', state: { id } });
+        browserHistory.push({ pathname: '/oauth/clients/' + id, state: { id } });
     }
 
     return (

@@ -12,6 +12,7 @@ import List from './containers/List/List';
 import CardModal from './containers/CardModal/CardModal';
 import War from './containers/WeeklyActivityReport/WAR';
 import Client from './containers/Client/Client';
+import ClientManagement from './containers/ClientManagement/ClientManagement';
 import ClientRegistration from './containers/Client/ClientRegistration';
 
 
@@ -27,7 +28,8 @@ const Root = (
         <Route path="test" component={BoardParameters} />
         <Route path="card" component={CardModal} />
         <Route path="war" component={War} />
-        <Route path="oauth/clients" component={Client} />
+        <Route exac path="oauth/clients" component={Client} />
+        <Route path="oauth/clients/:id" component={ClientManagement} />
         <Route path="oauth/clients/registration" component={ClientRegistration} />
     </Route>
 

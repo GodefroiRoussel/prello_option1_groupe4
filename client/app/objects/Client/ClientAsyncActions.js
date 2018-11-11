@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addClient, getAllClient } from './ClientActions';
+import { addClient, getAllClient, failRemoveClient } from './ClientActions';
 
 export function callAddClient(data) {
     const client = {
@@ -19,4 +19,13 @@ export function callAddClient(data) {
 export function callGetAllClient() {
     return dispatch => asteroid.call('getClients')
         .then(result => dispatch(getAllClient(result)));
+}
+
+export function callRemoveClient(data) {
+    return dispatch => asteroid.call('removeClient', data.id)
+        .then(() => dispatch(removeClient(data.id)))
+        .catch(err => {
+            console.log(err)
+            dispatch(failRemoveClient(data.id))
+        });
 }
