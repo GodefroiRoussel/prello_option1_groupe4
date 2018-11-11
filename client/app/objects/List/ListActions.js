@@ -51,3 +51,6 @@ export class archiveList {
 
 export class unarchiveList {
 }
+
+export class updateCardsPosArcDel {
+}
