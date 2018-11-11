@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addCard, getCard, updateCardTitle, updateCardDescription, updateCardBillable } from './CardActions';
+import { addCard, getCard, updateCardTitle, updateCardDescription, updateCardBillable, addContributorCard, deleteContributorCard } from './CardActions';
 import {callUpdateCardsPositionsAfterArchiveOrDelete, callAddCardInList} from '../List/ListAsyncActions'
 
 export function callGetCard(idCard) {
@@ -35,6 +35,16 @@ export function deleteCard(list, card) {
             dispatch(deleteCard(result))
             callUpdateCardsPositionsAfterArchiveOrDelete({list: list, idCardArcOrDel: result}) //result or result.id ?
         })
+}
+
+export function callAddMemberAssigned(data) {
+    return dispatch => asteroid.call('addContributorCard', data)
+        .then(result => dispatch(addContributorCard(result)))
+}
+
+export function callDeleteMemberAssigned(data) {
+    return dispatch => asteroid.call('deleteContributorCard', data)
+        .then(result => dispatch(deleteContributorCard(result)))
 }
 
 
