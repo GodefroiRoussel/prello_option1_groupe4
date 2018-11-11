@@ -1,5 +1,8 @@
 export const GET_CARD = 'GET_CARD';
 export const ADD_CARD = 'ADD_CARD';
+export const EDIT_CARD_TITLE = 'EDIT_CARD_TITLE';
+export const EDIT_CARD_DESCRIPTION = 'EDIT_CARD_DESCRIPTION';
+export const EDIT_CARD_BILLABLE = 'EDIT_CARD_BILLABLE';
 
 export function getCard(_id) {
     return {
@@ -15,11 +18,23 @@ export function addCard(data){
     }
 }
 
-export class updateCardTitle {
+export function updateCardTitle(data) {
+    return {
+        type: EDIT_CARD_TITLE,
+        data,
+    }
 }
 
-export class updateCardDescription {
+export function updateCardDescription(data) {
+    return {
+        type: EDIT_CARD_DESCRIPTION,
+        data,
+    }
 }
 
-export class updateCardBillable {
+export function updateCardBillable(data) {
+    return {
+        type: EDIT_CARD_BILLABLE,
+        data,
+    }
 }

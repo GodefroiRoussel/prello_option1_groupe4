@@ -15,17 +15,17 @@ export function callAddCard(data) {
 }
 
 export function callUpdateCardTitle(data) {
-    return dispatch => asteroid.call('updateCard', data)
+    return dispatch => asteroid.call('updateCardTitle', data)
         .then(result => dispatch(updateCardTitle(result)))
 }
 
 export function callUpdateCardDescription(data) {
-    return dispatch => asteroid.call('updateCard', data)
+    return dispatch => asteroid.call('updateCardDescription', data)
         .then(result => dispatch(updateCardDescription(result)))
 }
 
 export function callUpdateCardBillable(data) {
-    return dispatch => asteroid.call('updateCard', data)
+    return dispatch => asteroid.call('updateCardBillable', data)
         .then(result => dispatch(updateCardBillable(result)))
 }
 

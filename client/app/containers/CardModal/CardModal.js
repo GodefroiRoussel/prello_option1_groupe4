@@ -22,6 +22,11 @@ import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
 import classNames from 'classnames';
 import CardModalMembers from "./CardModalMembers"
+import {
+    callUpdateCardBillable,
+    callUpdateCardDescription,
+    callUpdateCardTitle
+} from "../../objects/Card/CardAsyncActions";
 
 class CardModal extends React.Component {
 
@@ -43,6 +48,24 @@ class CardModal extends React.Component {
     toggleModal = () => this.setState(state => ({ openModal: !state.openModal }));
 
     toggleEditCardTitle = () => this.setState({ editTitle: !this.state.editTitle })
+
+    editCardTitle = (e) => {
+        this.setState({titleCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardTitle({titleCard: this.state.card.titleCard, _id: this.state.card._id})
+        )
+    }
+
+    editDescriptionCard = (e) => {
+        this.setState({descriptionCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardDescription({descriptionCard: this.state.card.descriptionCard, _id: this.state.card._id})
+        )
+    }
+
+    editBillableCard = (e) => {
+        this.setState({billableCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardBillable({billable: this.state.card.billableCard, _id: this.state.card._id})
+        )
+    }
 
     render() {
         const { openModal } = this.state;
@@ -98,7 +121,7 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Description</h3>
 
                                             <Form>
-                                                <TextArea placeholder='Write the card description' value={this.state.card.descriptionCard}/>
+                                                <TextArea onChange={this.editDescriptionCard} placeholder='Write the card description' value={this.state.card.descriptionCard}/>
                                             </Form>
                                             <Divider />
                                         </Grid.Column>
@@ -254,25 +277,28 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}/>
+                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.state.card.titleCard}/>
                     </Form.Field>
                 </Form>
             );
         }
     }
 }
+CardModal.defaultProps = {
+};
 
-/*
 function mapStateToProps(state, ownProps){
     return{
 
     }
 };
 
-const mapDispatchToProps = (dispatch)=> ({
-
-});*/
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEditCardTitle: data => dispatch(callUpdateCardTitle(data)),
+    dispatchCallEditCardDescription: data => dispatch(callUpdateCardDescription(data)),
+    dispatchCallEditCardBillable: data => dispatch(callUpdateCardBillable(data))
+});
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));
 
-export default cssModules(CardModal, style);
+export default connect(mapStateToProps, mapDispatchToProps)(CardModal)
