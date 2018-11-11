@@ -12,12 +12,14 @@ class ListC extends Component {
         super(props)
     }
 
+
     handleCreateCard = (e) => {
         if (e.key === 'Enter') {
             const elem = e.target;
             e.preventDefault();
             if (elem.value) {
-                this.props.dispatchCallAddCard({titleCard: elem.value});
+                this.props.dispatchCallAddCard({titleCard: elem.value, listId: this.props.list._id });
+                this.setState(state => ({ modalOpen: !state.modalOpen }))
                 elem.value = '';
             }
         }
@@ -47,20 +49,9 @@ class ListC extends Component {
             <div className={style.cardCustom}>
                 <Card className={style.ListCard}>
                     {this.titleListMode()}
-
-
                     <div>
                         <List>
-                            <List.Item>
-                                <Card key={"test1"} className={style.cardBoard}>
-                                    <Card.Content>
-                                        <Card.Header className={style.cardBoardHeader}>Title of a card <CardModal/></Card.Header>
-                                        <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                                    </Card.Content>
-                                </Card>
-                            </List.Item>
-
-                            {this.isCardFilled}
+                            {this.isCardFilled()}
                         </List>
                     </div>
                     <Card.Content extra>
@@ -93,13 +84,13 @@ class ListC extends Component {
 
     titleListMode = () => {
         if(!this.state.editListTitle){
-            return(<h4 className={style.TitleList} onClick={this.toggleEditListTitle}>{this.props.titleList}</h4>);
+            return(<h4 className={style.TitleList} onClick={this.toggleEditListTitle}>{this.props.list.titleList}</h4>);
         }
         else{
             return (
                 <Form onSubmit={this.toggleEditListTitle}>
                     <Form.Field>
-                        <Input action='Save' name="titleList" type="text" value={this.props.titleList}></Input>
+                        <Input action='Save' name="titleList" type="text" value={this.props.list.titleList}></Input>
                     </Form.Field>
                 </Form>
                 );
@@ -108,25 +99,29 @@ class ListC extends Component {
 
     isCardFilled = () =>{
         if(this.props.cards){
-            this.props.cards.map(x => {
+            return this.props.cards.map(x => {
                 return(
                     <List.Item>
-                    <Card key={x.titleCard}>
-                        <Card.Content>
-                            <Card.Header className={style.cardBoardHeader}>{x.titleCard}</Card.Header>
-                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                        </Card.Content>
-                    </Card>
+                        <Card key={x._id} className={style.cardBoard}>
+                            <Card.Content>
+                                <Card.Header className={style.cardBoardHeader}>{x.titleCard} <CardModal/></Card.Header>
+                                <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                            </Card.Content>
+                        </Card>
                     </List.Item>
                 )
         })
     }}
 }
 
+ListC.defaultProps = {
+    cards: []
+}
+
 const mapStateToProps = (state, ownProps) => {
     return({
             lists: state.lists,
-            cards: state.cards
+            cards: state.cards.filter(el => el.listId == ownProps.list._id)
         }
     )
 
