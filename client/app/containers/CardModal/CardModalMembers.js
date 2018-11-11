@@ -56,7 +56,7 @@ class CardModalMembers extends React.Component {
     }
 
     deleteContributorCard = (e) => {
-        this.setState({members: this.state.members.push(e.target.value)}, () =>
+        this.setState({members: this.state.members.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
             this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
         )
     }
