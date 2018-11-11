@@ -103,7 +103,7 @@ class CardModalDeadlines extends React.Component {
                         </List>
                         <Form>
                             <Form.Field>
-                               
+
                             </Form.Field>
                         </Form>
                     </Modal.Description>
