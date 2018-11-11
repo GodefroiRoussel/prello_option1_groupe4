@@ -24,6 +24,8 @@ import classNames from 'classnames';
 import CardModalMembers from "./CardModalMembers"
 import CardModalDeadlines from "./CardModalDeadlines";
 
+import ProfileAnonymous from '../../styles/assets/hanonyme.png';
+
 class CardModal extends React.Component {
 
     constructor(props) {
@@ -130,6 +132,32 @@ class CardModal extends React.Component {
                                     <Grid.Row className={style.rowCard}>
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Comments</h3>
+                                            <List relaxed='very'>
+                                                <List.Item>
+                                                    <List.Content>
+                                                        <List.Header as='a'>
+                                                            <h5  className={defaultStyle.textColor1}>
+                                                                Maurice Dupont <span className={defaultStyle.textColor2}>the 5th of november at 11:34 am</span>
+                                                            </h5>
+                                                        </List.Header>
+                                                        <List.Description className={defaultStyle.textColorDark}>
+                                                            A comment written by maurice dupont about his work on this card and some possible troubles.
+                                                        </List.Description>
+                                                    </List.Content>
+                                                </List.Item>
+                                                <List.Item>
+                                                    <List.Content>
+                                                        <List.Header as='a' className={defaultStyle.textColor1}>
+                                                            <h5  className={defaultStyle.textColor1}>
+                                                                Stevie Feliciano <span className={defaultStyle.textColor2}>the 5th of november at 11:34 am</span>
+                                                            </h5>
+                                                        </List.Header>
+                                                        <List.Description className={defaultStyle.textColorDark}>
+                                                           Postum felicita evertaum guter. A comment written for maurice dupont about his work on this card and some possible troubles.
+                                                        </List.Description>
+                                                    </List.Content>
+                                                </List.Item>
+                                            </List>
                                             <label className={defaultStyle.textColor1}>Add a comment</label>
                                             <Form>
                                                 <TextArea placeholder='Write a comment'/>
@@ -143,9 +171,9 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Activity</h3>
                                             <List relaxed='very'>
                                                 <List.Item>
-                                                    <Image avatar src='https://react.semantic-ui.com/images/avatar/small/daniel.jpg' />
+                                                    <Image avatar src={ProfileAnonymous} />
                                                     <List.Content>
-                                                        <List.Header as='a'>Daniel Louise</List.Header>
+                                                        <List.Header as='a'>Daniel Louise </List.Header>
                                                         <List.Description>
                                                             Last seen watching{' '}
                                                             <a>
@@ -156,7 +184,7 @@ class CardModal extends React.Component {
                                                     </List.Content>
                                                 </List.Item>
                                                 <List.Item>
-                                                    <Image avatar src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
+                                                    <Image avatar src={ProfileAnonymous} />
                                                     <List.Content>
                                                         <List.Header as='a'>Stevie Feliciano</List.Header>
                                                         <List.Description>
