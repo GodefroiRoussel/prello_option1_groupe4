@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList } from './ListActions';
+import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList, updateCardsPosArcDel } from './ListActions';
 import { callUpdateBoardListId, callUpdateListsPosition, callUpdateListsPositionsAfterArchiveOrDelete} from '../Board/BoardAsyncActions';
 
 export function callAddList(data, board) {
@@ -53,4 +53,9 @@ export function callUnarchiveList(data, board) {
             dispatch(unarchiveList(result))
             //TODO: add the function that give the position of the list (end)
         })
+}
+
+export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
+    return dipatch => asteroid.call('updateCardsPositionsAfterArchiveOrDelete', {list: list, idCardArcOrDel: idCard})
+        .then(result => dispatch(updateCardsPosArcDel({list: result})))
 }

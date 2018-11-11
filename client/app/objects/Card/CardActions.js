@@ -14,3 +14,12 @@ export function addCard(data){
         data,
     }
 }
+
+export class updateCardTitle {
+}
+
+export class updateCardDescription {
+}
+
+export class updateCardBillable {
+}

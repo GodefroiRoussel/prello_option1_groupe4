@@ -69,14 +69,12 @@ Meteor.methods({
     updateListsPositionsAfterArchiveOrDelete(data) { // data = board, idListArchived
         if(data.board._id && data.idListArchived) {
             const position = Meteor.call('findOneList', data.idListArchived).positionList
-            console.log(position)
             const listsId = data.board.listsId
             let listsToUpdate = []
             let anteriorLists = []
             let listsNotDisplayed = []
             listsId.map(idList => {
                 const list = Meteor.call('findOneList', idList)
-                console.log(list.isArchivedList)
                 if(list.isArchivedList === false && list.isDeletedList === false) {
                     if (list.positionList > position) {
                         listsToUpdate.push(list)
@@ -87,17 +85,12 @@ Meteor.methods({
                     listsNotDisplayed.push(list._id)
                 }
             })
-            console.log(listsToUpdate)
-            console.log(anteriorLists)
-            console.log(listsNotDisplayed)
             let ids = []
             listsToUpdate.map(list => {
                 Meteor.call('updatePosition', {idList: list._id, position: list.positionList - 1})
                 ids.push(list._id)
             })
-            console.log(ids)
             const listsOfBoard = [...anteriorLists, ...ids, ...listsNotDisplayed]
-            console.log(listsOfBoard)
             return Board.update({_id: data.board._id}, {$set: {listsId: listsOfBoard}})
         }
     }
