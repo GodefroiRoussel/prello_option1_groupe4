@@ -22,6 +22,7 @@ import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
 import classNames from 'classnames'
 import ProfileAnonymous from '../../styles/assets/hanonyme.png'
+import {callAddMemberAssigned, callDeleteMemberAssigned} from "../../objects/Card/CardAsyncActions";
 
 class CardModalMembers extends React.Component {
 
@@ -46,6 +47,19 @@ class CardModalMembers extends React.Component {
 
     toggleModalMembers = () => this.setState(state => ({ openModal: !state.openModal }));
 
+
+    // ATTENTION : e.target.value va etre l id du membre
+    addContributorCard = (e) => {
+        this.setState({members: this.state.members.push(e.target.value)}, () =>
+            this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+        )
+    }
+
+    deleteContributorCard = (e) => {
+        this.setState({members: this.state.members.push(e.target.value)}, () =>
+            this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+        )
+    }
 
     render() {
         const { openModal } = this.state;
@@ -102,7 +116,7 @@ class CardModalMembers extends React.Component {
                         <Form onSubmit={this.toggleEditCardTitle}>
                             <Form.Field className={style.inputEditTitle}>
                                 <label>Add a new worker</label>
-                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}></Input>
+                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}/>
                                 <datalist id='languages'>
                                     <option value='English' />
                                     <option value='Chinese' />
@@ -120,17 +134,19 @@ class CardModalMembers extends React.Component {
 
 }
 
-/*
+CardModalMembers.defaultProps = {
+};
+
 function mapStateToProps(state, ownProps){
     return{
-
     }
 };
 
 const mapDispatchToProps = (dispatch)=> ({
+    dispatchCallAddMemberToCard: data => dispatch(callAddMemberAssigned(data)),
+    dispatchCallDeleteMemberToCard: data => dispatch(callDeleteMemberAssigned(data))
+});
 
-});*/
+export default connect(mapStateToProps, mapDispatchToProps)(CardModalMembers);
 
-//export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));
-
-export default cssModules(CardModalMembers, style);
+//export default cssModules(CardModalMembers, style);

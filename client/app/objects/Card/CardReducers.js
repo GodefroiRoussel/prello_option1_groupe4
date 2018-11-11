@@ -1,4 +1,11 @@
-import {GET_CARD, ADD_CARD, EDIT_CARD_TITLE, EDIT_CARD_DESCRIPTION, EDIT_CARD_BILLABLE} from './CardActions';
+import {
+    GET_CARD,
+    ADD_CARD,
+    EDIT_CARD_TITLE,
+    EDIT_CARD_DESCRIPTION,
+    EDIT_CARD_BILLABLE,
+    EDIT_CONTRIBUTOR_CARD
+} from './CardActions';
 import { add } from '../../common/helpers';
 import {EDIT_TITLE_LIST} from "../List/ListActions";
 //import { remove, edit, add } from '../../common/helpers';
@@ -33,6 +40,15 @@ const cards = (state = [], action) => {
                 const elemToEditIndex = state.indexOf(elemEditBill[0]);
                 const newState = state.slice();
                 newState[elemToEditIndex].billable = action.data.billable;
+                return newState;
+            }
+            return state;
+        case EDIT_CONTRIBUTOR_CARD:
+            const elemEditMemb = state.slice().filter(item => item._id === action.data._id);
+            if (Array.isArray(elemEditMemb) && elemEditMemb.length) {
+                const elemToEditIndex = state.indexOf(elemEditMemb[0]);
+                const newState = state.slice();
+                newState[elemToEditIndex].members = action.data.members;
                 return newState;
             }
             return state;

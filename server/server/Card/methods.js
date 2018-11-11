@@ -48,14 +48,16 @@ Meteor.methods({
         const card = Card.findOne(data.idCard)
         const members = card.assignedUsers
         members.push(data.idMember)
-        return Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        return Card.findOne({_id: data.idCard})
     },
     deleteContributorCard(data) { //data = idCard, idMember
         const card = Card.findOne(data.idCard)
         const members = card.assignedUsers
         const position = members.indexOf(data.idMember)
         members.splice(position, 1)
-        return Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        return Card.findOne({_id: data.idCard})
     },
     addLabelCard(data) { //data = idCard, idLabel
         const card = Card.findOne(data.idCard)
