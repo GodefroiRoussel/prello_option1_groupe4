@@ -8,11 +8,9 @@ export function callAddClient(data) {
     };
     return dispatch => asteroid.call('addClient', client)
         .then(result => {
-            const newClient = {
-                _id: result, nameClient: data.nameClient, redirectUris: data.redirectUris, grants: data.grants, logoClient: data.logoClient,
-                descriptionClient: data.descriptionClient, websiteClient: data.websiteClient
-            };
-            dispatch(addClient(newClient))
+            asteroid.call('getClientById', result).then(clientRegistered => {
+                dispatch(addClient(clientRegistered))
+            })
         });
 }
 

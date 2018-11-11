@@ -21,14 +21,13 @@ Meteor.methods({
             descriptionClient: client.descriptionClient,
             websiteClient: client.websiteClient,
             createdBy: userId
-
         }
         return Client.insert(new_client);
     },
     getClients() {
         return Client.find().fetch();
     },
-    getClientById() {
+    getClientById(id) {
         return Client.findOne(id);
     },
     removeClient(_id) {
@@ -43,19 +42,5 @@ Meteor.methods({
             console.log("error")
             throw new Meteor.Error('Not Authorized', "You are not authorized to do this action");
         }
-
-        /*
-        .then(client => {
-            console.log("MONTRE MOI MON CLIENT")
-            console.log(CLIENT)
-            if (client)
-                return Client.remove(id);
-            else
-                throw new Meteor.Error('Not Authorized');
-        }).catch(err => {
-            console.log(err)
-            throw new Meteor.Error('Not Authorized');
-        });*/
-
     }
 });
