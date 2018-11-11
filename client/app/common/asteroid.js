@@ -24,7 +24,7 @@ asteroid.subscribe('user');
 asteroid.subscribe('board');
 asteroid.subscribe('team');
 asteroid.subscribe('card');
-asteroid.subscribe('clients');
+asteroid.subscribe('client');
 
 
 asteroid.ddp.on('added', (doc) => {
