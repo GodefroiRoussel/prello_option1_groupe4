@@ -258,7 +258,7 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}></Input>
+                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}/>
                     </Form.Field>
                 </Form>
             );
