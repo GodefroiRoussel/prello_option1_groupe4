@@ -20,7 +20,8 @@ import {
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
+import classNames from 'classnames';
+import CardModalMembers from "./CardModalMembers"
 
 class CardModal extends React.Component {
 
@@ -191,12 +192,7 @@ class CardModal extends React.Component {
                                 </Form>
                                 <List>
                                     <List.Item>
-                                        <Button fluid animated='fade' className={style.settingsButtons} >
-                                            <Button.Content hidden>Manage card workers</Button.Content>
-                                            <Button.Content visible>
-                                                Members
-                                            </Button.Content>
-                                        </Button>
+                                        <CardModalMembers/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -258,7 +254,7 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}></Input>
+                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}/>
                     </Form.Field>
                 </Form>
             );

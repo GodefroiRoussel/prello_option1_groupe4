@@ -32,7 +32,6 @@ Meteor.methods({
             const board = Board.findOne(data.board._id)
             if(board) {
                 const listId = board.listsId
-                console.log(listId)
                 let arrayLists = []
                 let arrayNotDisplayedLists = []
                 listId.map(listId => {

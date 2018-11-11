@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
 import BoardComponent from "../../components/Board/Board.component";
 import CardModal from "../CardModal/CardModal";
+import {callEditListTitle} from "../../objects/List/ListAsyncActions";
 
 class ListC extends Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class ListC extends Component {
     state = {
         addCardInput: false,
         modalOpen: false,
-        editListTitle: false
+        editListTitle: false,
+        titleList: this.props.list.titleList,
     }
 
 
@@ -38,7 +40,15 @@ class ListC extends Component {
 
     handleClose = () => this.setState({ modalOpen: false })
 
-    toggleEditListTitle = () => this.setState({ editListTitle: !this.state.editListTitle })
+    toggleEditListTitle = () => {
+        this.setState({ editListTitle: !this.state.editListTitle })
+    }
+
+    editListTitle = (e) => {
+        this.setState({titleList: e.target.value}, () =>
+            this.props.dispatchCallEditListTitle({titleList: this.state.titleList, _id: this.props.list._id})
+        )
+    }
 
 
     displayAddCard = (e) => this.setState({addCardInput: !this.state.addCardInput})
@@ -65,7 +75,7 @@ class ListC extends Component {
                                     New card in {this.props.titleList}
                                 </Header>
                                 <Modal.Content>
-                                    <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'></Input>
+                                    <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
                                 </Modal.Content>
                                 <Modal.Actions>
                                     <Button basic color='red' onClick={this.handleClose} inverted>
@@ -90,7 +100,7 @@ class ListC extends Component {
             return (
                 <Form onSubmit={this.toggleEditListTitle}>
                     <Form.Field>
-                        <Input action='Save' name="titleList" type="text" value={this.props.list.titleList}></Input>
+                        <Input onChange={this.editListTitle} name="titleList" type="text" value={this.state.titleList}/>
                     </Form.Field>
                 </Form>
                 );
@@ -121,7 +131,8 @@ ListC.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
     return({
             lists: state.lists,
-            cards: state.cards.filter(el => el.listId == ownProps.list._id)
+            cards: state.cards.filter(el => el.listId === ownProps.list._id)
+            //cards: state.lists.cards
         }
     )
 
@@ -129,6 +140,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     dispatchCallAddCard: data => dispatch(callAddCard(data)),
+    dispatchCallEditListTitle: data => dispatch(callEditListTitle(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListC)
