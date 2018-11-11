@@ -13,7 +13,6 @@ Meteor.methods({
         return List.remove({_id: id});
     },
     findOneList(id) {
-        console.log(List.findOne(id))
         return List.findOne(id)
     },
     updatePosition(data) { // data = idList, position
@@ -24,19 +23,28 @@ Meteor.methods({
             {_id:  data._id},
             {$set: {titleList: data.titleList, positionList: data.positionList, isDeletedList: data.isDeletedList, isArchivedList: data.isArchivedList, cards: data.cards}})
     },
+    updateListTitle(data) {
+        List.update(
+            {_id: data._id},
+            {$set: {titleList: data.titleList}}
+        )
+        return List.findOne(data._id)
+    },
+    addCardInList(data) { //data = idList, idCard
+        const list = List.findOne(data.idList)
+        const cards = list.cards
+        cards.push(data.idCard)
+        return List.update( {_id: data.idList}, {$set: {cards: cards}})
+    },
     // update position of each card of the list according to the new position of one of them
     // idCard is the id of the card having a new position
     updateCardsPositions(data) { //data = {list, idCard}
         if(data.list._id && data.list.cards && data.idCard) {
             const card = Meteor.call('findOneCard',data.idCard) // the card for which the position has changed
-            console.log(card)
             const newPos = card.positionCard // the new position of this anterior card
-            console.log(newPos)
             const list = List.findOne(data.list._id)
-            console.log(list)
             if(list) {
                 const cardsId = list.cards
-                console.log(cardsId)
                 let arrayCards = []
                 let arrayNotDisplayedCards = []
                 cardsId.map(cardId => {

@@ -11,10 +11,8 @@ const boards = (state = [], action) => {
             if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
                 const elemToEditIndex = state.indexOf(elemToEditArray[0]);
                 const newState = state.slice();
-                console.log(newState[elemToEditIndex]);
                 if(elemToEditArray[0].listsId){
                     newState[elemToEditIndex].listsId.push(action.listId)
-                    console.log(newState);
                     return newState;
                 }
             }

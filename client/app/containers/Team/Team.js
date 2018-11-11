@@ -105,7 +105,7 @@ class Team extends React.Component {
 
 function mapStateToProps(state, ownProps){
     return{
-        team: state.teams.find(el => el._id == ownProps.location.state.team),
+        team: state.teams.find(el => el._id === ownProps.location.state.team),
         teams: state.teams,
         user: state.user,
         boards: state.boards

@@ -38,6 +38,9 @@ const CardSchema = new SimpleSchema({
         type: Boolean,
         defaultValue: false
     },
+    listId: {
+        type: String
+    },
     assignedUsers: {
         type: Array,
         defaultValue: []
