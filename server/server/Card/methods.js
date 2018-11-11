@@ -23,6 +23,24 @@ Meteor.methods({
         return Card.update({_id: data._id}, {$set: {titleCard: data.titleCard, descriptionCard: data.descriptionCard, deadlineCard: data.deadlineCard, positionCard: data.positionCard,
                 seedCard: data.seedCard, isDeletedCard: data.isDeletedCard, isArchivedCard: data.isArchivedCard, billable: data.billable, assignedUsers: data.assignedUsers}})
     },
+    updateCardTitle(data) {
+        Card.update(
+            {_id: data._id},
+            {$set: {titleCard: data.titleCard}})
+        return Card.findOne({_id: data._id})
+    },
+    updateCardDescription(data) {
+        Card.update(
+            {_id: data._id},
+            {$set: {descriptionCard: data.descriptionCard}})
+        return Card.findOne({_id: data._id})
+    },
+    updateCardBillable(data) {
+        Card.update(
+            {_id: data._id},
+            {$set: {billable: data.billable}})
+        return Card.findOne({_id: data._id})
+    },
     updateCardPosition(data) { // data = idCard, position
         return Card.update( {_id: data.idCard}, {$set: {positionCard: data.position}})
     },
