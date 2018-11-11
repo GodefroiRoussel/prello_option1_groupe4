@@ -24,6 +24,13 @@ import defaultStyle from "../../styles/settings.styl";
 import classNames from 'classnames'
 import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 
+import {
+    DateInput,
+    TimeInput,
+    DateTimeInput,
+    DatesRangeInput
+} from 'semantic-ui-calendar-react';
+
 
 class CardModalDeadlines extends React.Component {
 
@@ -42,11 +49,21 @@ class CardModalDeadlines extends React.Component {
                 LastName: "Tarpien",
                 nickname: "TarpM"
 
-            }]
+            }],
+            date: '',
+            time: '',
+            dateTime: '',
+            datesRange: ''
         };
     }
 
     toggleModalDeadlines = () => this.setState(state => ({ openModal: !state.openModal }));
+
+    handleChange = (event, {name, value}) => {
+        if (this.state.hasOwnProperty(name)) {
+            this.setState({ [name]: value });
+        }
+    }
 
 
     render() {
@@ -74,38 +91,85 @@ class CardModalDeadlines extends React.Component {
                     <Modal.Description>
                         <List verticalAlign='middle'>
                             <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
                                     <List.Header>Helen</List.Header>
                                 </List.Content>
+                                <List.Content floated='right'>
+                                    <Form>
+                                        <Form.Group>
+                                            <DateInput
+                                                name="startDate"
+                                                placeholder="Start Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <DateInput
+                                                name="endDate"
+                                                placeholder="End Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <Input type={"number"} placeholder='Nb hours' />
+                                            <Button>Delete</Button>
+                                        </Form.Group>
+                                    </Form>
+                                </List.Content>
                             </List.Item>
                             <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
-                                    <List.Header>Christian</List.Header>
+                                    <List.Header>Helen</List.Header>
+                                </List.Content>
+                                <List.Content floated='right'>
+                                    <Form>
+                                        <Form.Group>
+                                            <DateInput
+                                                name="startDate"
+                                                placeholder="Start Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <DateInput
+                                                name="endDate"
+                                                placeholder="End Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <Input type={"number"} placeholder='Nb hours' />
+                                            <Button>Delete</Button>
+                                        </Form.Group>
+                                    </Form>
                                 </List.Content>
                             </List.Item>
                             <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
-                                    <List.Header>Daniel</List.Header>
+                                    <List.Header>Helen</List.Header>
+                                </List.Content>
+                                <List.Content floated='right'>
+                                    <Form>
+                                        <Form.Group>
+                                            <DateInput
+                                                name="startDate"
+                                                placeholder="Start Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <DateInput
+                                                name="endDate"
+                                                placeholder="End Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <Input type={"number"} placeholder='Nb hours' />
+                                            <Button>Delete</Button>
+                                        </Form.Group>
+                                    </Form>
                                 </List.Content>
                             </List.Item>
                         </List>
-                        <Form>
-                            <Form.Field>
-
-                            </Form.Field>
-                        </Form>
+                        
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
