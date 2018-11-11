@@ -7,6 +7,7 @@ Meteor.methods({
         // Generate a random ID and a Ramdom secret client for the developer of a length of 43 characters
         const idClient = Random.id(43);
         const clientSecret = Random.secret(43);
+        const userId = Meteor.userId();
 
         const new_client = {
             id: idClient,
@@ -16,7 +17,9 @@ Meteor.methods({
             nameClient: client.nameClient,
             logoClient: 'Plus obligatoire',
             descriptionClient: client.descriptionClient,
-            websiteClient: client.websiteClient
+            websiteClient: client.websiteClient,
+            createdBy: userId
+
         }
         return Client.insert(new_client);
     },

@@ -11,9 +11,10 @@ const clientSchema = new SimpleSchema({
     grants: { type: Array },
     'grants.$': { type: String },
     nameClient: { type: String },
-    logoClient: { type: String },
+    logoClient: { type: String, optional: true },
     descriptionClient: { type: String, optional: true },
-    websiteClient: { type: String }
+    websiteClient: { type: String },
+    createdBy: { type: String }
 });
 
 Client.attachSchema(clientSchema);
