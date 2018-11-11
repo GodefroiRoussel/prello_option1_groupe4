@@ -22,6 +22,7 @@ import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
 import classNames from 'classnames';
 import CardModalMembers from "./CardModalMembers"
+import CardModalDeadlines from "./CardModalDeadlines";
 
 class CardModal extends React.Component {
 
@@ -195,12 +196,7 @@ class CardModal extends React.Component {
                                         <CardModalMembers/>
                                     </List.Item>
                                     <List.Item>
-                                        <Button fluid animated='fade' className={style.settingsButtons} >
-                                            <Button.Content hidden>End Date</Button.Content>
-                                            <Button.Content visible>
-                                                Deadline
-                                            </Button.Content>
-                                        </Button>
+                                        <CardModalDeadlines/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >

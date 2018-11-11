@@ -70,20 +70,29 @@ class CardModalMembers extends React.Component {
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
-                        <List selection verticalAlign='middle'>
+                        <List verticalAlign='middle'>
                             <List.Item>
+                                <List.Content floated='right'>
+                                    <Button>Delete</Button>
+                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
                                     <List.Header>Helen</List.Header>
                                 </List.Content>
                             </List.Item>
                             <List.Item>
+                                <List.Content floated='right'>
+                                    <Button>Delete</Button>
+                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
                                     <List.Header>Christian</List.Header>
                                 </List.Content>
                             </List.Item>
                             <List.Item>
+                                <List.Content floated='right'>
+                                    <Button>Delete</Button>
+                                </List.Content>
                                 <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
                                     <List.Header>Daniel</List.Header>
