@@ -15,15 +15,17 @@ import {
     Modal,
     Header,
     Divider,
-    Icon, Input
+    Icon, Input,
+    CustomCalendar
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
 import classNames from 'classnames'
-import ProfileAnonymous from '../../styles/assets/hanonyme.png'
+import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 
-class CardModalMembers extends React.Component {
+
+class CardModalDeadlines extends React.Component {
 
     constructor(props) {
         super(props)
@@ -44,7 +46,7 @@ class CardModalMembers extends React.Component {
         };
     }
 
-    toggleModalMembers = () => this.setState(state => ({ openModal: !state.openModal }));
+    toggleModalDeadlines = () => this.setState(state => ({ openModal: !state.openModal }));
 
 
     render() {
@@ -53,10 +55,10 @@ class CardModalMembers extends React.Component {
 
             <Modal
                 trigger={
-                    <Button onClick={this.toggleModalMembers} fluid animated='fade' className={style.settingsButtons} >
-                        <Button.Content hidden>Manage card workers</Button.Content>
+                    <Button onClick={this.toggleModalDeadlines} fluid animated='fade' className={style.settingsButtons} >
+                        <Button.Content hidden>End dates</Button.Content>
                         <Button.Content visible>
-                            Members
+                            Deadlines
                         </Button.Content>
                     </Button>
                 }
@@ -64,9 +66,9 @@ class CardModalMembers extends React.Component {
                 centered={false}
                 open={openModal}
                 closeIcon
-                onClose={this.toggleModalMembers}>
+                onClose={this.toggleModalDeadlines}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                   Manage members
+                    Manage members
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
@@ -99,15 +101,9 @@ class CardModalMembers extends React.Component {
                                 </List.Content>
                             </List.Item>
                         </List>
-                        <Form onSubmit={this.toggleEditCardTitle}>
-                            <Form.Field className={style.inputEditTitle}>
-                                <label>Add a new worker</label>
-                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}></Input>
-                                <datalist id='languages'>
-                                    <option value='English' />
-                                    <option value='Chinese' />
-                                    <option value='Dutch' />
-                                </datalist>
+                        <Form>
+                            <Form.Field>
+                               
                             </Form.Field>
                         </Form>
                     </Modal.Description>
@@ -133,4 +129,4 @@ const mapDispatchToProps = (dispatch)=> ({
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));
 
-export default cssModules(CardModalMembers, style);
+export default cssModules(CardModalDeadlines, style);
