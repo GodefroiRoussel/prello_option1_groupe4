@@ -4,7 +4,8 @@ import {
     EDIT_CARD_TITLE,
     EDIT_CARD_DESCRIPTION,
     EDIT_CARD_BILLABLE,
-    EDIT_CONTRIBUTOR_CARD
+    EDIT_CONTRIBUTOR_CARD,
+    EDIT_LABEL_CARD
 } from './CardActions';
 import { add } from '../../common/helpers';
 import {EDIT_TITLE_LIST} from "../List/ListActions";
@@ -49,6 +50,15 @@ const cards = (state = [], action) => {
                 const elemToEditIndex = state.indexOf(elemEditMemb[0]);
                 const newState = state.slice();
                 newState[elemToEditIndex].members = action.data.members;
+                return newState;
+            }
+            return state;
+        case EDIT_LABEL_CARD:
+            const elemEditLabel = state.slice().filter(item => item._id === action.data._id);
+            if (Array.isArray(elemEditLabel) && elemEditLabel.length) {
+                const elemToEditIndex = state.indexOf(elemEditLabel[0]);
+                const newState = state.slice();
+                newState[elemToEditIndex].labels = action.data.labels;
                 return newState;
             }
             return state;

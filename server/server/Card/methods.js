@@ -63,14 +63,16 @@ Meteor.methods({
         const card = Card.findOne(data.idCard)
         const labels = card.labels
         labels.push(data.idLabel)
-        return Card.update( {_id: data.idCard}, {$set: {labels: labels}})
+        Card.update( {_id: data.idCard}, {$set: {labels: labels}})
+        return Card.findOne({_id: data.idCard})
     },
     deleteLabelCard(data) { //data = idCard, idLabel
         const card = Card.findOne(data.idCard)
         const labels = card.labels
         const position = labels.indexOf(data.idLabel)
         labels.splice(position, 1)
-        return Card.update( {_id: data.idCard}, {$set: {labels: labels}})
+        Card.update( {_id: data.idCard}, {$set: {labels: labels}})
+        return Card.findOne({_id: data.idCard})
     }
 });
 

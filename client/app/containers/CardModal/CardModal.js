@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import CardModalMembers from "./CardModalMembers"
 import CardModalDeadlines from "./CardModalDeadlines";
 import {
+    callAddLabelCard, callDeleteLabelCard,
     callUpdateCardBillable,
     callUpdateCardDescription,
     callUpdateCardTitle
@@ -62,9 +63,24 @@ class CardModal extends React.Component {
         )
     }
 
+    // si on recup la valeur du label => mettre des if pour true et false
+    // peut etre moyen de mettre !this.state.billableCard ?
     editBillableCard = (e) => {
         this.setState({billableCard: e.target.value}, () =>
             this.props.dispatchCallEditCardBillable({billable: this.state.card.billableCard, _id: this.state.card._id})
+        )
+    }
+
+    // /!\ e.target.value = id du label à add ou delete
+    addLabelCard = (e) => {
+        this.setState({labels: this.state.labels.push(e.target.value)}, () =>
+            this.props.dispatchCallAddLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
+        )
+    }
+
+    deleteLabelCard = (e) => {
+        this.setState({labels: this.state.labels.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
+            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
         )
     }
 
@@ -292,7 +308,9 @@ function mapStateToProps(state, ownProps){
 const mapDispatchToProps = dispatch => ({
     dispatchCallEditCardTitle: data => dispatch(callUpdateCardTitle(data)),
     dispatchCallEditCardDescription: data => dispatch(callUpdateCardDescription(data)),
-    dispatchCallEditCardBillable: data => dispatch(callUpdateCardBillable(data))
+    dispatchCallEditCardBillable: data => dispatch(callUpdateCardBillable(data)),
+    dispatchCallAddLabelCard: data => dispatch(callAddLabelCard(data)),
+    dispatchCallDeleteLabelCard: data => dispatch(callDeleteLabelCard(data)),
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));
