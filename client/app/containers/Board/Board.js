@@ -7,6 +7,7 @@ import { Grid, Input } from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
+import {DragDropContext} from 'react-beautiful-dnd';
 
 import {callAddList} from '../../objects/List/ListAsyncActions'
 import style from './board.styl'
@@ -42,9 +43,16 @@ class Board extends Component {
         }
     }
 
+    onDragEnd =result => {
+        
+    }
+
     listsIsFilled = () => {
         if(this.props.lists){
-            return(<div><BoardComponent lists={this.props.lists}/></div>);
+            return(<DragDropContext
+                    onDragEnd={this.onDragEnd}>
+                        <BoardComponent lists={this.props.lists}/>
+                    </DragDropContext>);
         }
         else{
             return <div/>
