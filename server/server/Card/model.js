@@ -12,7 +12,7 @@ const CardSchema = new SimpleSchema({
     },
     descriptionCard: {
         type: String,
-        optional: true
+        defaultValue: "''"
     },
     deadlineCard: {
         type: Date,
@@ -20,11 +20,11 @@ const CardSchema = new SimpleSchema({
     },
     positionCard: {
         type: SimpleSchema.Integer,
-        optional: true
+        defaultValue: 0
     },
     seedCard: {
         type: String,
-        optional: true
+        defaultValue: "''"
     },
     isDeletedCard: {
         type: Boolean,
@@ -38,14 +38,29 @@ const CardSchema = new SimpleSchema({
         type: Boolean,
         defaultValue: false
     },
-    assignedUser: {
-        type: String,
-        optional: true
-    },
     listId: {
-        type: String,
+        type: String
     },
-
+    assignedUsers: {
+        type: Array,
+        defaultValue: []
+    },
+    'assignedUsers.$':{type:String},
+    labels: {
+        type: Array,
+        defaultValue: []
+    },
+    'labels.$': {type:String},
+    comments: {
+        type: Array,
+        defaultValue: []
+    },
+    'comments.$': {type: String},
+    checkList: {
+        type: Array,
+        defaultValue: []
+    },
+    'checkList.$': {type:String},
 });
 
 Card.attachSchema(CardSchema);

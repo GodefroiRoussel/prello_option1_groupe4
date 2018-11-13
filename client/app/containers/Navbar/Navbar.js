@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux';
 import asteroid from '../../common/asteroid';
-import {resetTeam} from '../../objects/Team/TeamActions';
-import {resetBoard} from '../../objects/Board/BoardActions';
+import { resetTeam } from '../../objects/Team/TeamActions';
+import { resetBoard } from '../../objects/Board/BoardActions';
 import PropTypes from 'prop-types';
 
 import {
@@ -25,7 +25,7 @@ import {
 import logo from '../../styles/assets/prelloblanc.png'
 import defaultStyle from '../../styles/settings.styl'
 import style from './navbar.styl';
-import {browserHistory} from "react-router";
+import { browserHistory } from "react-router";
 import cssModules from "react-css-modules";
 
 
@@ -70,11 +70,11 @@ class Navbar extends Component {
         asteroid.logout();
         this.props.dispatchCallResetTeam();
         this.props.dispatchCallResetBoard();
-        
+
     };
 
     render() {
-        const { menuFixed} = this.state
+        const { menuFixed } = this.state
 
         if (this.props.user) {
             return (
@@ -83,7 +83,7 @@ class Navbar extends Component {
                         <Menu borderless fixed={menuFixed && 'top'} style={menuFixed ? fixedMenuStyle : menuStyle} className={defaultStyle.backgroundColor4}>
 
                             <Menu.Item>
-                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')}/>
+                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')} />
                             </Menu.Item>
                             <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/')}>Prello</Menu.Item>
 
@@ -92,7 +92,7 @@ class Navbar extends Component {
                                 <Dropdown style={dropdowMenu} text={this.props.user.username} pointing className='link item'>
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => browserHistory.push('/account')}>Settings</Dropdown.Item>
-                                        <Dropdown.Item>API acces</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => browserHistory.push('/oauth/clients')}>OAuth apps</Dropdown.Item>
                                         <Dropdown.Divider />
                                         <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
                                     </Dropdown.Menu>
@@ -103,20 +103,20 @@ class Navbar extends Component {
                     </Visibility>
                 </div>
             )
-        }else{
+        } else {
             return (
                 <div>
                     <Visibility onBottomPassed={this.stickTopMenu} onBottomVisible={this.unStickTopMenu} once={false}>
                         <Menu borderless fixed={menuFixed && 'top'} style={menuFixed ? fixedMenuStyle : menuStyle} className={defaultStyle.backgroundColor4}>
 
                             <Menu.Item>
-                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')}/>
+                                <Image size='mini' src={logo} onClick={() => browserHistory.push('/')} />
                             </Menu.Item>
                             <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/')}>Prello</Menu.Item>
 
                             <Menu.Menu position='right'>
                                 <Menu.Item>
-                                    <Button className={classNames(defaultStyle.backgroundColor3,defaultStyle.textColor4)} onClick={() => browserHistory.push('/login')}>Log-in</Button>
+                                    <Button className={classNames(defaultStyle.backgroundColor3, defaultStyle.textColor4)} onClick={() => browserHistory.push('/login')}>Log-in</Button>
                                 </Menu.Item>
 
                             </Menu.Menu>
@@ -140,8 +140,8 @@ const mapStateToProps = state => ({
     user: state.user,
 });
 
-function mapDispatchToProps(dispatch){
-    return{
+function mapDispatchToProps(dispatch) {
+    return {
         dispatchCallResetTeam: () => dispatch(resetTeam()),
         dispatchCallResetBoard: () => dispatch(resetBoard()),
     }

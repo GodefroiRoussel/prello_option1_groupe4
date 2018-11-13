@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Divider} from 'semantic-ui-react'
+import {Button, Divider, Icon} from 'semantic-ui-react'
 
 export default class OtherParameters extends Component {
     state = {}
@@ -8,11 +8,11 @@ export default class OtherParameters extends Component {
         //TODO: finish sentences
         return (
             <div>
-                <a>Quit the board</a>
-                <p>If you quit the board, ...</p>
+                <h4>Quit the board</h4>
                 <Divider/>
-                <a>Quit the board</a>
-                <p>You can re-open the board later ... </p>
+                <Button basic color='red'>
+                    <Icon name='remove' /> Quit
+                </Button>
             </div>
         )
     }

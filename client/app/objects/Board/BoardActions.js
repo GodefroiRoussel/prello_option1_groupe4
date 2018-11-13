@@ -30,3 +30,9 @@ export function updateBoardListId(data){
         listId: data.listsid,
     }
 }
+
+export class updateBoardListsPosition {
+}
+
+export class updateListsPositionsAfterDeleteOrArchive {
+}

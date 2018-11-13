@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Form, Divider, Card} from 'semantic-ui-react'
+import {Form, Divider, Card, Segment, Input, Icon, Button} from 'semantic-ui-react'
 
 export default class LabelsParameters extends Component {
     state = {
@@ -8,20 +8,50 @@ export default class LabelsParameters extends Component {
 
     render() {
         return (
-            <Form>
-                <h4>Board's labels</h4>
-                <Card.Group >
-                    {this.state.labels.map(label =>
-                        <div >
-                            <h5>{label.text}</h5>
-                            <Divider/>
-                        </div>
-                    )}
-                </Card.Group>
-                <Form.field>
-                    <h4>Create new label</h4>
-                </Form.field>
-            </Form>
+            <div>
+                <Segment inverted color='red'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='orange'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='yellow'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='olive'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='green'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='teal'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='blue'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='violet'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='purple'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='pink'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='brown'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='grey'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Segment inverted color='black'>
+                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
+                </Segment>
+                <Button basic inverted>
+                    <Icon name='add' /> Add a new sticker
+                </Button>
+            </div>
         )
     }
 }

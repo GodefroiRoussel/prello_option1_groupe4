@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { getBoard, addBoard , updateBoardListId} from './BoardActions';
+import { getBoard, addBoard , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive} from './BoardActions';
 
 export function callGetBoard(idBoard) {
     return dispatch => asteroid.call('getBoard', idBoard)
@@ -18,4 +18,14 @@ export function callAddBoard(data) {
 export function callUpdateBoardListId(id, board){
     return dispatch => asteroid.call('updateBoardListId', {id: board._id, listId: id})
         .then(dispatch(updateBoardListId({id: board._id, listsid: id})));
+}
+
+export function callUpdateListsPosition(idList, board){
+    return dispatch => asteroid.call('updateListsPositions', {board: board, idList: idList})
+        .then(dispatch(updateBoardListsPosition({board: result, idList: idList})));
+}
+
+export function callUpdateListsPositionsAfterArchiveOrDelete(idList, board) {
+    return dispatch => asteroid.call('updateListsPositionsAfterArchiveOrDelete',{board: board, idListArchived: idList})
+        .then(result => dispatch(updateListsPositionsAfterDeleteOrArchive({board: result})))
 }
