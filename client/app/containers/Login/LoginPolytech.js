@@ -1,17 +1,16 @@
 import React from 'react';
 import cssModules from 'react-css-modules';
 import Alert from 'react-s-alert';
-import asteroid from '../../common/asteroid';
+import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router'
 
 import { Grid, Form, Button, Icon, Image } from 'semantic-ui-react';
-import defaultStyle from '../../styles/settings.styl'
+import defaultStyle from '../../styles/settings.styl';
+import PropTypes from 'prop-types';
 import style from './login.styl';
-import store from '../../store';
+import { callLoginPolytech } from "../../objects/Login/LoginAsyncActions";
 
-
-
-class Login extends React.Component {
+class LoginPolytech extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -23,13 +22,11 @@ class Login extends React.Component {
 
     handleLogin = (e) => {
         e.preventDefault();
-        asteroid.loginWithPassword({
+        this.props.dispatchCallLoginPolytech({
             username: this.state.username,
-            password: this.state.password,
+            password: this.state.password
         })
-            .catch((error) => {
-                Alert.error(error.message);
-            });
+        browserHistory.push('/')
     };
 
     updateUsername = (username) => {
@@ -46,19 +43,19 @@ class Login extends React.Component {
                 <Grid centered style={style.root}>
                     <Grid.Column mobile={12} tablet={6} computer={4}>
                         <div className={style.loginBox}>
-                            <h2 className={style.titleLoginBox}>Login</h2>
+                            <h2 className={style.titleLoginBox}>Login Polytech</h2>
                             <Form onSubmit={this.handleLogin}>
                                 <Form.Field>
-                                    <label>Nickname</label>
-                                    <input onChange={(username) => { this.updateUsername(username.target.value) }} name="username" type="text" placeholder="Type your nickname" />
+                                    <label>Username</label>
+                                    <input onChange={(username) => { this.updateUsername(username.target.value) }} name="username" type="text" placeholder="Type your username" />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Password</label>
                                     <input onChange={(password) => { this.updatePassword(password.target.value) }} name="password" type="password" placeholder="Your password" />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button fluid animated='fade' onClick={() => browserHistory.push('/')}>
-                                        <Button.Content hidden>Login</Button.Content>
+                                    <Button fluid animated='fade' onClick={() => this.handleLogin}>
+                                        <Button.Content hidden>Login Polytech</Button.Content>
                                         <Button.Content visible>
                                             <Icon name='arrow right' />
                                         </Button.Content>
@@ -67,26 +64,27 @@ class Login extends React.Component {
                             </Form>
                         </div>
                         <div className={style.loginBox}>
-                            <Button fluid animated='fade' onClick={() => browserHistory.push('/registration')} >
-                                <Button.Content hidden>Register</Button.Content>
+                            <Button fluid animated='fade' onClick={() => browserHistory.push('/')} >
+                                <Button.Content hidden>Normal Login</Button.Content>
                                 <Button.Content visible>
-                                    Need an account ?
-                                </Button.Content>
-                            </Button>
-                        </div>
-                        <div className={style.loginBox}>
-                            <Button fluid onClick={() => browserHistory.push('/login/polytech')} >
-                                <Button.Content visible>
-                                    Login With Polytech ?
+                                    Not a Polytech account ?
                                 </Button.Content>
                             </Button></div>
                     </Grid.Column>
                 </Grid>
-            </div>
+            </div >
         )
     }
-
-
 }
 
-export default cssModules(Login, style);
+LoginPolytech.propType = {
+    dispatchCallLoginPolytech: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    dispatchCallLoginPolytech: data => dispatch(callLoginPolytech(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(cssModules(LoginPolytech, style));
