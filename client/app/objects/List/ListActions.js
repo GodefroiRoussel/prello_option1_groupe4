@@ -7,6 +7,8 @@ export const REMOVE_LIST = 'REMOVE_LIST';
 export const GET_ALL_LIST = 'GET_ALL_LIST';
 export const EDIT_TITLE_LIST = 'EDIT_TITLE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
+export const EDIT_CARD_LIST = 'EDIT_CARD_LIST';
+export const EDIT_CARD_POS_LIST = 'EDIT_CARD_POS_LIST';
 /*
  * action creators
  */
@@ -59,5 +61,16 @@ export function unarchiveList() {
 export function updateCardsPosArcDel() {
 }
 
-export function addCardInList (){
+export function addCardInList (data){
+    return{
+        type: EDIT_CARD_LIST,
+        data,
+    }
+}
+
+export function updateCardPositionInList(data){
+    return{
+        type: EDIT_CARD_POS_LIST,
+        data,
+    }
 }

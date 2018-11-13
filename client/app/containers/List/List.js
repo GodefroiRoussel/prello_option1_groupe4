@@ -147,10 +147,22 @@ ListC.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    var cardB = state.cards.filter(el => el.listId === ownProps.list._id)
+    var result = []
+    if(cardB){
+        ownProps.list.cards.forEach((card)=> {
+            cardB.forEach((element) => {
+                if(element._id == card){
+                    result.push(element);
+                }
+            })
+        })
+    }
+
     return({
             lists: state.lists,
-            cards: state.cards.filter(el => el.listId === ownProps.list._id)
-            //cards: state.lists.cards
+            cards: result,
+
         }
     )
 

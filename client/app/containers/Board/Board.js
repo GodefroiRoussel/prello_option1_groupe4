@@ -9,12 +9,14 @@ import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
 import {DragDropContext} from 'react-beautiful-dnd';
 
-import {callAddList} from '../../objects/List/ListAsyncActions'
+import {callAddList} from '../../objects/List/ListAsyncActions';
+import {callUpdateCardPositionInList} from '../../objects/List/ListAsyncActions';
 import style from './board.styl'
 
 class Board extends Component {
     constructor(props) {
         super(props)
+        this.state ={}
     }
 
     handleAddList=(e)=>{
@@ -44,7 +46,29 @@ class Board extends Component {
     }
 
     onDragEnd =result => {
-        
+        const {destination, source, draggableId} = result;
+
+        if(!destination){
+            return;
+        }
+
+        if(
+            destination.draggableId ===source.droppableId &&
+            destination.index ===source.index
+        ){
+            return;
+        }
+
+        const list = this.props.lists.find(el => el._id == source.droppableId);
+        const newCardIds = Array.from(list.cards);
+        newCardIds.splice(source.index, 1);
+        newCardIds.splice(destination.index, 0, draggableId);
+        const newList = {
+            ...list,
+            cards: newCardIds
+        };
+        this.props.dispatchUpdateCardPositionInList(newList);
+
     }
 
     listsIsFilled = () => {
@@ -69,6 +93,7 @@ const mapStateToProps = (state, ownProps) => {
             };
         }
     })
+    
     return ({
         lists: listB,
         board: state.boards.find(el => el._id == ownProps.location.state.id),
@@ -79,6 +104,7 @@ const mapStateToProps = (state, ownProps) => {
 function mapDispatchToProps(dispatch){
     return{
         dispatchCallAddList: (data, board) => dispatch(callAddList(data, board)),
+        dispatchUpdateCardPositionInList : (data) => dispatch(callUpdateCardPositionInList(data)),
     }
 };
 
