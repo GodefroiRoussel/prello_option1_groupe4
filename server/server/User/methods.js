@@ -53,10 +53,10 @@ Meteor.methods({
         });
     },
     getUsers() {
-        return User.find().fetch();
+        return Meteor.users.find().fetch();
     },
     getUser(id) {
-        return users.findOne(id);
+        return Meteor.users.findOne(id);
     },
     editUserProfile(data){
        return Meteor.users.update(Meteor.userId(), {$set: {profile: data}});

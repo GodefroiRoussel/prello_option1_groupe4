@@ -30,6 +30,7 @@
     "lodash": "~4.17.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
+    "react-beautiful-dnd": "^10.0.0",
     "react-chartjs-2": "^2.5.8",
     "react-css-modules": "^4.0.3",
     "react-dom": "^16.6.1",

@@ -24,6 +24,10 @@ class AdminMembers extends React.Component {
 
 
     render() {
+        var u;
+        asteroid.call("getUsers")
+            .then(result => console.log(result))
+        console.log(u);
         if (this.props.user && this.props.user.username) {
             if(!this.props.users){
                 return (

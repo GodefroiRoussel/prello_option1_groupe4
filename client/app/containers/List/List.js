@@ -7,6 +7,7 @@ import {callAddCard} from "../../objects/Card/CardAsyncActions";
 import BoardComponent from "../../components/Board/Board.component";
 import CardModal from "../CardModal/CardModal";
 import {callEditListTitle} from "../../objects/List/ListAsyncActions";
+import {Droppable, Draggable} from 'react-beautiful-dnd';
 
 class ListC extends Component {
     constructor(props) {
@@ -60,9 +61,17 @@ class ListC extends Component {
                 <Card className={style.ListCard}>
                     {this.titleListMode()}
                     <div>
-                        <List>
-                            {this.isCardFilled()}
-                        </List>
+                        <Droppable droppableId={this.props.list._id}>
+                            {(provided)=>(
+                                <div ref={provided.innerRef}
+                                {...provided.droppableProps}>
+                                    <List >
+                                        {this.isCardFilled()}
+                                        {provided.placeholder}
+                                    </List>
+                                </div>
+                            )}
+                        </Droppable>
                     </div>
                     <Card.Content extra>
                         <div>
@@ -109,9 +118,15 @@ class ListC extends Component {
 
     isCardFilled = () =>{
         if(this.props.cards){
-            return this.props.cards.map(x => {
+            return this.props.cards.map((x, index) => {
                 return(
-                    <List.Item>
+                    <Draggable draggableId={x._id} index={index}>
+                    {(provided) => (
+                        <div
+                        {...provided.draggableProps} 
+                        {...provided.dragHandleProps} 
+                        ref={provided.innerRef}>
+                        <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
                                 <Card.Header className={style.cardBoardHeader}>{x.titleCard} <CardModal/></Card.Header>
@@ -119,6 +134,9 @@ class ListC extends Component {
                             </Card.Content>
                         </Card>
                     </List.Item>
+                    </div>
+                    )}
+                    </Draggable>
                 )
         })
     }}
