@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import user from './objects/Login/LoginReducers';
+import users from './objects/User/UserReducers'
 import todos from './objects/Todo/TodoReducers';
 import lists from './objects/List/ListReducers';
 import teams from './objects/Team/TeamReducers';
@@ -15,6 +16,7 @@ const mainReducer = combineReducers({
   //addlists,
   teams,
   boards,
+  users
 });
 
 export default mainReducer;
