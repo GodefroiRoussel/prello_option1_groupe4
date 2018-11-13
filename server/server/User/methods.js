@@ -81,11 +81,22 @@ Meteor.methods({
                 var lastName = splitUsername[1];
                 var email = username + '@etu.umontpellier.fr'
             }
+
+            const stampedToken = Accounts._generateStampedLoginToken();
+            const hashStampedToken = Accounts._hashStampedToken(stampedToken);
             // If user then return user._id else create a new user in the Database
             if (user) {
-                return user._id;
+                Meteor.users.update(user._id,
+                    { $push: { 'services.resume.loginTokens': hashStampedToken } }
+                );
+                this.setUserId(user._id);
+
+                return {
+                    id: user._id,
+                    token: stampedToken.token
+                }
             } else {
-                return Accounts.createUser({
+                const newUserId = Accounts.createUser({
                     username: username,
                     email: email,
                     password: '',
@@ -104,6 +115,15 @@ Meteor.methods({
                         colourBlindUser: ""
                     }
                 });
+                Meteor.users.update(newUserId,
+                    { $push: { 'services.resume.loginTokens': hashStampedToken } }
+                );
+                this.setUserId(newUserId);
+
+                return {
+                    id: newUserId,
+                    token: stampedToken.token
+                }
             }
         }
         catch (err) {

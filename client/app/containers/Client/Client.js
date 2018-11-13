@@ -17,8 +17,6 @@ import style from './client.styl';
 class Client extends React.Component {
     constructor(props) {
         super(props)
-        console.log("PROPS")
-        console.log(props)
     }
 
     render() {
