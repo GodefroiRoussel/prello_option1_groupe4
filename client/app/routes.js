@@ -12,6 +12,7 @@ import Account from './containers/Account/Account';
 import List from './containers/List/List';
 import CardModal from './containers/CardModal/CardModal';
 import War from './containers/WeeklyActivityReport/WAR';
+import AdminMembers from "./containers/AdminMembers/AdminMembers";
 import Client from './containers/Client/Client';
 import ClientManagement from './containers/ClientManagement/ClientManagement';
 import ClientRegistration from './containers/Client/ClientRegistration';
@@ -34,6 +35,7 @@ const Root = (
         <Route path="oauth/clients/:id" component={ClientManagement} />
 
         <Route path="login/polytech" component={LoginPolytech} />
+        <Route path = "admin-members" component={AdminMembers}/>
     </Route>
 
 

@@ -20,7 +20,17 @@ import {
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
+import classNames from 'classnames';
+import CardModalMembers from "./CardModalMembers"
+import CardModalDeadlines from "./CardModalDeadlines";
+import {
+    callAddLabelCard, callDeleteLabelCard,
+    callUpdateCardBillable,
+    callUpdateCardDescription,
+    callUpdateCardTitle
+} from "../../objects/Card/CardAsyncActions";
+
+import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 
 class CardModal extends React.Component {
 
@@ -42,6 +52,39 @@ class CardModal extends React.Component {
     toggleModal = () => this.setState(state => ({ openModal: !state.openModal }));
 
     toggleEditCardTitle = () => this.setState({ editTitle: !this.state.editTitle })
+
+    editCardTitle = (e) => {
+        this.setState({titleCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardTitle({titleCard: this.state.card.titleCard, _id: this.state.card._id})
+        )
+    }
+
+    editDescriptionCard = (e) => {
+        this.setState({descriptionCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardDescription({descriptionCard: this.state.card.descriptionCard, _id: this.state.card._id})
+        )
+    }
+
+    // si on recup la valeur du label => mettre des if pour true et false
+    // peut etre moyen de mettre !this.state.billableCard ?
+    editBillableCard = (e) => {
+        this.setState({billableCard: e.target.value}, () =>
+            this.props.dispatchCallEditCardBillable({billable: this.state.card.billableCard, _id: this.state.card._id})
+        )
+    }
+
+    // /!\ e.target.value = id du label à add ou delete
+    addLabelCard = (e) => {
+        this.setState({labels: this.state.labels.push(e.target.value)}, () =>
+            this.props.dispatchCallAddLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
+        )
+    }
+
+    deleteLabelCard = (e) => {
+        this.setState({labels: this.state.labels.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
+            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
+        )
+    }
 
     render() {
         const { openModal } = this.state;
@@ -97,7 +140,7 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Description</h3>
 
                                             <Form>
-                                                <TextArea placeholder='Write the card description' value={this.state.card.descriptionCard}/>
+                                                <TextArea onChange={this.editDescriptionCard} placeholder='Write the card description' value={this.state.card.descriptionCard}/>
                                             </Form>
                                             <Divider />
                                         </Grid.Column>
@@ -128,6 +171,32 @@ class CardModal extends React.Component {
                                     <Grid.Row className={style.rowCard}>
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Comments</h3>
+                                            <List relaxed='very'>
+                                                <List.Item>
+                                                    <List.Content>
+                                                        <List.Header as='a'>
+                                                            <h5  className={defaultStyle.textColor1}>
+                                                                Maurice Dupont <span className={defaultStyle.textColor2}>the 5th of november at 11:34 am</span>
+                                                            </h5>
+                                                        </List.Header>
+                                                        <List.Description className={defaultStyle.textColorDark}>
+                                                            A comment written by maurice dupont about his work on this card and some possible troubles.
+                                                        </List.Description>
+                                                    </List.Content>
+                                                </List.Item>
+                                                <List.Item>
+                                                    <List.Content>
+                                                        <List.Header as='a' className={defaultStyle.textColor1}>
+                                                            <h5  className={defaultStyle.textColor1}>
+                                                                Stevie Feliciano <span className={defaultStyle.textColor2}>the 5th of november at 11:34 am</span>
+                                                            </h5>
+                                                        </List.Header>
+                                                        <List.Description className={defaultStyle.textColorDark}>
+                                                           Postum felicita evertaum guter. A comment written for maurice dupont about his work on this card and some possible troubles.
+                                                        </List.Description>
+                                                    </List.Content>
+                                                </List.Item>
+                                            </List>
                                             <label className={defaultStyle.textColor1}>Add a comment</label>
                                             <Form>
                                                 <TextArea placeholder='Write a comment'/>
@@ -141,9 +210,9 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Activity</h3>
                                             <List relaxed='very'>
                                                 <List.Item>
-                                                    <Image avatar src='https://react.semantic-ui.com/images/avatar/small/daniel.jpg' />
+                                                    <Image avatar src={ProfileAnonymous} />
                                                     <List.Content>
-                                                        <List.Header as='a'>Daniel Louise</List.Header>
+                                                        <List.Header as='a'>Daniel Louise </List.Header>
                                                         <List.Description>
                                                             Last seen watching{' '}
                                                             <a>
@@ -154,7 +223,7 @@ class CardModal extends React.Component {
                                                     </List.Content>
                                                 </List.Item>
                                                 <List.Item>
-                                                    <Image avatar src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
+                                                    <Image avatar src={ProfileAnonymous} />
                                                     <List.Content>
                                                         <List.Header as='a'>Stevie Feliciano</List.Header>
                                                         <List.Description>
@@ -191,20 +260,10 @@ class CardModal extends React.Component {
                                 </Form>
                                 <List>
                                     <List.Item>
-                                        <Button fluid animated='fade' className={style.settingsButtons} >
-                                            <Button.Content hidden>Manage card workers</Button.Content>
-                                            <Button.Content visible>
-                                                Members
-                                            </Button.Content>
-                                        </Button>
+                                        <CardModalMembers/>
                                     </List.Item>
                                     <List.Item>
-                                        <Button fluid animated='fade' className={style.settingsButtons} >
-                                            <Button.Content hidden>End Date</Button.Content>
-                                            <Button.Content visible>
-                                                Deadline
-                                            </Button.Content>
-                                        </Button>
+                                        <CardModalDeadlines/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -258,25 +317,30 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input action='Save' name="titleList" type="text" value={this.state.card.titleCard}></Input>
+                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.state.card.titleCard}/>
                     </Form.Field>
                 </Form>
             );
         }
     }
 }
+CardModal.defaultProps = {
+};
 
-/*
 function mapStateToProps(state, ownProps){
     return{
 
     }
 };
 
-const mapDispatchToProps = (dispatch)=> ({
-
-});*/
+const mapDispatchToProps = dispatch => ({
+    dispatchCallEditCardTitle: data => dispatch(callUpdateCardTitle(data)),
+    dispatchCallEditCardDescription: data => dispatch(callUpdateCardDescription(data)),
+    dispatchCallEditCardBillable: data => dispatch(callUpdateCardBillable(data)),
+    dispatchCallAddLabelCard: data => dispatch(callAddLabelCard(data)),
+    dispatchCallDeleteLabelCard: data => dispatch(callDeleteLabelCard(data)),
+});
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));
 
-export default cssModules(CardModal, style);
+export default connect(mapStateToProps, mapDispatchToProps)(CardModal)

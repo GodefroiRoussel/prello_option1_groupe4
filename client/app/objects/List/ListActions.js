@@ -5,6 +5,8 @@
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const GET_ALL_LIST = 'GET_ALL_LIST';
+export const EDIT_TITLE_LIST = 'EDIT_TITLE_LIST';
+export const EDIT_LIST = 'EDIT_LIST';
 /*
  * action creators
  */
@@ -28,4 +30,34 @@ export function removeList(_id){
     type: REMOVE_LIST,
     _id,
   };
+}
+
+export function updateListPosition() {
+}
+
+export function updateListTitle(data){
+    return {
+        type: EDIT_TITLE_LIST,
+        data, //data = idList
+    };
+}
+export function updateList(data) {
+    return {
+        type: EDIT_LIST,
+        data,
+    }
+}
+export function deleteList() {
+}
+
+export function archiveList() {
+}
+
+export function unarchiveList() {
+}
+
+export function updateCardsPosArcDel() {
+}
+
+export function addCardInList (){
 }

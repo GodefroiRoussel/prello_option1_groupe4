@@ -1,4 +1,4 @@
-import { ADD_USER, REMOVE_USER, EDIT_USER, GET_ALL_USER } from './UserActions';
+import { ADD_USER, REMOVE_USER, EDIT_USER_PROFILE,EDIT_USER_PASSWORD, GET_ALL_USER } from './UserActions';
 import { remove, edit, add } from '../../common/helpers';
 
 //les apels au serveur sont fait par astéroide grâce aux appel client de modification du state défini dans le reducer et les action / asyncAction
