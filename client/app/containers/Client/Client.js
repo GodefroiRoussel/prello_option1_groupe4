@@ -58,8 +58,6 @@ Client.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    console.log("STATE")
-    console.log(state)
     return {
         clients: state.clients
     }

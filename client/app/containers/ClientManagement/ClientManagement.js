@@ -13,12 +13,39 @@ import defaultStyle from "../../styles/settings.styl";
 import style from './clientManagement.styl';
 
 class ClientManagement extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super();
+        this.state = {
+            _id: "",
+            nameClient: "",
+            descriptionClient: "",
+            websiteClient: "",
+            redirectUris: [],
+            grants: [],
+            id: "",
+            clientSecret: ""
+        }
+    }
+
+    componentDidMount() {
+        const id = this.props.params.id;
+        asteroid.call('getClientById', id)
+            .then(client => {
+                this.setState({
+                    _id: client._id,
+                    nameClient: client.nameClient,
+                    descriptionClient: client.descriptionClient,
+                    websiteClient: client.websiteClient,
+                    redirectUris: client.redirectUris,
+                    grants: client.grants,
+                    id: client.id,
+                    clientSecret: client.clientSecret
+                })
+            });
     }
 
     handleDeleteClient() {
-        this.props.DispatchCallRemoveClient({ id: this.props.client._id });
+        this.props.DispatchCallRemoveClient({ id: this.state._id });
         browserHistory.push({ pathname: '/oauth/clients' });
     }
 
@@ -34,43 +61,43 @@ class ClientManagement extends React.Component {
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Name of the application</h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.nameClient}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.nameClient}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Description </h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.descriptionClient}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.descriptionClient}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Homepage of the application </h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.websiteClient}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.websiteClient}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Redirect URI</h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.redirectUris[0]}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.redirectUris[0]}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Grants</h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.grants.join(', ')}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.grants.join(', ')}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Application ID</h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.id}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.id}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column mobile={15} tablet={13} computer={10}>
                         <h3>Application Secret</h3>
-                        <span className={defaultStyle.textColor4}>{this.props.client.clientSecret}</span>
+                        <span className={defaultStyle.textColor4}>{this.state.clientSecret}</span>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
