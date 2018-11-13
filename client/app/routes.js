@@ -4,6 +4,7 @@ import Main from './containers/Main/Main';
 import Home from './containers/Home/Home';
 import Registration from "./containers/Registration/Registration";
 import Login from "./containers/Login/Login";
+import LoginPolytech from "./containers/Login/LoginPolytech";
 import Board from "./containers/Board/Board";
 import Team from './containers/Team/Team';
 import BoardParameters from './containers/BoardParameters/BoardParameters';
@@ -32,6 +33,7 @@ const Root = (
         <Route path="oauth/clients/registration" component={ClientRegistration} />
         <Route path="oauth/clients/:id" component={ClientManagement} />
 
+        <Route path="login/polytech" component={LoginPolytech} />
     </Route>
 
 
