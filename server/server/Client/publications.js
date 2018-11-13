@@ -5,6 +5,6 @@ Meteor.publish('client', function () {
     const userid = Meteor.userId();
     const user = Meteor.users.findOne(userid);
     if (user) {
-        return (Client.find());
+        return (Client.find({ createdBy: userid }));
     }
 });
