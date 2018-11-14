@@ -106,11 +106,17 @@ Meteor.methods({
         }
     },
     updateCardPositionInList(data){
-        console.log(data);
         return List.update(
             {_id: data._id},
             {$set: {cards: data.cards}}
         )
+    },
+    updateCardPositionBetweenList(data){
+        console.log(data);
+        List.update({_id: data.startList._id},
+            {$set: {cards: data.startList.cards}});
+        List.update({_id: data.finishList._id},
+            {$set: {cards: data.finishList.cards}})
     }
 });
 

@@ -9,6 +9,7 @@ export const EDIT_TITLE_LIST = 'EDIT_TITLE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
 export const EDIT_CARD_LIST = 'EDIT_CARD_LIST';
 export const EDIT_CARD_POS_LIST = 'EDIT_CARD_POS_LIST';
+export const EDIT_CARD_POS_BETWEEN_LIST = 'EDIT_CARD_POS_BETWEEN_LIST';
 /*
  * action creators
  */
@@ -71,6 +72,13 @@ export function addCardInList (data){
 export function updateCardPositionInList(data){
     return{
         type: EDIT_CARD_POS_LIST,
+        data,
+    }
+}
+
+export function updateCardPositionBetweenList(data){
+    return{
+        type: EDIT_CARD_POS_BETWEEN_LIST,
         data,
     }
 }

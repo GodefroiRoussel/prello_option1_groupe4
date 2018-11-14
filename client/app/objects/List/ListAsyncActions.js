@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList, updateCardsPosArcDel, addCardInList, updateCardPositionInList } from './ListActions';
+import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList, updateCardsPosArcDel, addCardInList, updateCardPositionInList, updateCardPositionBetweenList } from './ListActions';
 import { callUpdateBoardListId, callUpdateListsPosition, callUpdateListsPositionsAfterArchiveOrDelete} from '../Board/BoardAsyncActions';
 
 export function callAddList(data, board) {
@@ -71,6 +71,16 @@ export function callUpdateCardPositionInList(data){
     return dispatch => {
             dispatch(updateCardPositionInList(data));
             asteroid.call('updateCardPositionInList', data)
+            .then(result => {
+                console.log("ok")
+            })
+    }
+}
+
+export function callUpdateCardPositionBetweenList(data){
+    return dispatch => {
+        dispatch(updateCardPositionBetweenList(data));
+        asteroid.call('updateCardPositionBetweenList', data)
             .then(result => {
                 console.log("ok")
             })

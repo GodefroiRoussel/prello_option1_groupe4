@@ -57,15 +57,22 @@ class ListC extends Component {
 
     render () {
         return (
-            <div className={style.cardCustom}>
+            <Draggable draggableId={this.props.list._id} index={this.props.index}>
+            {(provided) => (
+            <div 
+            {...provided.draggableProps}
+            {...provided.dragHandleProps} 
+            ref={provided.innerRef}
+            className={style.cardCustom}>
                 <Card className={style.ListCard}>
                     {this.titleListMode()}
                     <div>
-                        <Droppable droppableId={this.props.list._id}>
-                            {(provided)=>(
+                        <Droppable droppableId={this.props.list._id} type="task">
+                            {(provided, snapshot)=>(
                                 <div ref={provided.innerRef}
-                                {...provided.droppableProps}>
-                                    <List >
+                                {...provided.droppableProps}
+                                isDraggingOver={snapshot.isDraggingOver}>
+                                    <List className={style.listofCard}>
                                         {this.isCardFilled()}
                                         {provided.placeholder}
                                     </List>
@@ -97,7 +104,8 @@ class ListC extends Component {
                     </Card.Content>
                 </Card>
             </div>
-
+            )}
+            </Draggable>
         )
     }
 
@@ -121,11 +129,12 @@ class ListC extends Component {
             return this.props.cards.map((x, index) => {
                 return(
                     <Draggable draggableId={x._id} index={index}>
-                    {(provided) => (
+                    {(provided, snapshot) => (
                         <div
                         {...provided.draggableProps} 
                         {...provided.dragHandleProps} 
-                        ref={provided.innerRef}>
+                        ref={provided.innerRef}
+                        isDragging={snapshot.isDragging}>
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
@@ -147,7 +156,7 @@ ListC.defaultProps = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    var cardB = state.cards.filter(el => el.listId === ownProps.list._id)
+    var cardB = state.cards
     var result = []
     if(cardB){
         ownProps.list.cards.forEach((card)=> {
