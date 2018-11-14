@@ -24,66 +24,66 @@ class AdminMembers extends React.Component {
 
 
     render() {
-        var u;
-        asteroid.call("getUsers")
-            .then(result => console.log(result))
-        console.log(u);
+
         if (this.props.user && this.props.user.username) {
-            if(!this.props.users){
-                return (
-                    <Grid centered style={style.root}>
-                        <Grid.Column mobile={12} tablet={12} computer={12}>
-                            <h1 className={defaultStyle.textColor4}>Admin Members</h1>
-                        </Grid.Column>
+
+            return (
+                <Grid centered style={style.root}>
+                    <Grid.Column mobile={12} tablet={12} computer={12}>
+                        <h1 className={defaultStyle.textColor4}>Admin Members</h1>
+                    </Grid.Column>
+                    {this.isMembersFilled()}
+
+                </Grid>
+            );
+
+        }
+        return <Login/>;
+    }
+    isMembersFilled = () =>
+    {
+        asteroid.call("getUsers")
+            .then(result => {
+                console.log(result)
+                if(!result){
+                    return (
                         <Grid.Column mobile={12} tablet={12} computer={12}>
                             <p>No members in the app</p>
                         </Grid.Column>
-                    </Grid>
-                );
-            }
-            else {
-                return (
-                    <Grid centered style={style.root}>
-                        <Grid.Column mobile={12} tablet={12} computer={12}>
-                            <h1 className={defaultStyle.textColor4}>Admin Members</h1>
-                        </Grid.Column>
+                    )
+                }else{
+                    return result.map(x=>{return(
                         <Grid.Column mobile={12} tablet={12} computer={12}>
                             <List divided verticalAlign='middle'>
-                                /**
-                                {props.users.map(x=>{return(
-                                    <List.Item>
-                                        <List.Content floated='right'>
-                                            <Button className={defaultStyle.backgroundColorSuccess}>open account</Button>
-                                            <Button className={defaultStyle.backgroundColorAlert}>close account</Button>
-                                        </List.Content>
-                                        <List.Content className={defaultStyle.textColor1}>
-                                            {x.profile.firstNameUser} {x.profile.lastNameUser} - {x.username}
-                                        </List.Content>
-                                    </List.Item>
-                                )})}**/
-
+                                <List.Item>
+                                    <List.Content floated='right'>
+                                        <Button className={defaultStyle.backgroundColorSuccess}>open account</Button>
+                                        <Button className={defaultStyle.backgroundColorAlert}>close account</Button>
+                                    </List.Content>
+                                    <List.Content className={defaultStyle.textColor1}>
+                                        {x.profile.firstNameUser} {x.profile.lastNameUser} - {x.username}
+                                    </List.Content>
+                                </List.Item>
 
                             </List>
                         </Grid.Column>
 
-                    </Grid>
-                );
-            }
-        }
-        return <Login/>;
+                    )})
+                }
+
+            })
+
     }
 };
 
 AdminMembers.propType = {
     user: PropTypes.object,
-    users: PropTypes.array.isRequired
 };
 
 
 function mapStateToProps(state,ownProps){
     return{
         user: state.user,
-        users: state.users
     }
 
 };

@@ -65,10 +65,11 @@ Meteor.methods({
 // Read more at: https://guide.meteor.com/accounts.html
 Meteor.startup(() => {
     const theOnlyUser = Meteor.users.find().fetch();
+    /*
     if (!theOnlyUser.length) {
         Accounts.createUser({
             username: 'admin',
             password: 'pass'
         });
-    }
+    }*/
 });
