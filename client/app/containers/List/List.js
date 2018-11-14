@@ -91,7 +91,7 @@ class ListC extends Component {
                                     New card in {this.props.titleList}
                                 </Header>
                                 <Modal.Content>
-                                    <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
+                                    <Input type='text' autoFocus visible action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
                                 </Modal.Content>
                                 <Modal.Actions>
                                     <Button basic color='red' onClick={this.handleClose} inverted>
