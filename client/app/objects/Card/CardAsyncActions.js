@@ -17,8 +17,9 @@ export function callGetCard(idCard) {
 export function callAddCard(data) {
     return dispatch => asteroid.call('addCard', data)
         .then(result => {
+            dispatch(callAddCardInList({idList: data.listId, idCard: result}))
             dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false}}))
-            callAddCardInList({idList: data.listId, idCard: result})})
+        })
 }
 
 export function callUpdateCardTitle(data) {
