@@ -53,7 +53,7 @@ class ClientManagement extends React.Component {
         return (<div>
             <Grid centered style={style.root}>
                 <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
+                    <Grid.Column mobile={15} tablet={9} computer={7}>
                         <div className={style.clientManagmentBox}>
                             <h2 className={style.titleManagementBox}>APPLICATION</h2>
                             <Form>
