@@ -20,9 +20,9 @@ export function callUpdateBoardListId(id, board){
         .then(dispatch(updateBoardListId({id: board._id, listsid: id})));
 }
 
-export function callUpdateListsPosition(idList, board){
-    return dispatch => asteroid.call('updateListsPositions', {board: board, idList: idList})
-        .then(dispatch(updateBoardListsPosition({board: result, idList: idList})));
+export function callUpdateListPositionInBoard(data){
+    return dispatch => asteroid.call('updateListsPositions', data)
+        .then(dispatch(updateBoardListsPosition(data)));
 }
 
 export function callUpdateListsPositionsAfterArchiveOrDelete(idList, board) {

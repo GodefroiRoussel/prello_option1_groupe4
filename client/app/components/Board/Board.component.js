@@ -16,8 +16,8 @@ const BoardComponent = (props) => {
                 <div className={style.margin}>
                     <div className={style.listBox}>
 
-                        {props.lists.map(list =>
-                            <ListCont list={list}/>)}
+                        {props.lists.map((list, index) =>
+                            <ListCont list={list} index={index}/>)}
                     </div>
                 </div>
             </Grid.Column>

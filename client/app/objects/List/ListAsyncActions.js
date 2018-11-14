@@ -1,11 +1,11 @@
 import asteroid from '../../common/asteroid';
-import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList, updateCardsPosArcDel, addCardInList } from './ListActions';
+import { addList, getAllList, removeList, updateListPosition, updateListTitle,deleteList, archiveList, unarchiveList, updateCardsPosArcDel, addCardInList, updateCardPositionInList, updateCardPositionBetweenList } from './ListActions';
 import { callUpdateBoardListId, callUpdateListsPosition, callUpdateListsPositionsAfterArchiveOrDelete} from '../Board/BoardAsyncActions';
 
 export function callAddList(data, board) {
   return dispatch => asteroid.call('addList', data)
       .then(result => {
-          dispatch(addList({ ...{_id: result}, ...data }))
+          dispatch(addList({ ...{_id: result, cards: []}, ...data }))
           dispatch(callUpdateBoardListId(result, board))
         });
 }
@@ -56,11 +56,33 @@ export function callUnarchiveList(data, board) {
 }
 
 export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
-    return dipatch => asteroid.call('updateCardsPositionsAfterArchiveOrDelete', {list: list, idCardArcOrDel: idCard})
+    return dispatch => asteroid.call('updateCardsPositionsAfterArchiveOrDelete', {list: list, idCardArcOrDel: idCard})
         .then(result => dispatch(updateCardsPosArcDel({list: result})))
 }
 
 export function callAddCardInList(data) {
     return dispatch => asteroid.call('addCardInList', data)
-        .then(result => dispatch(addCardInList(result)))
+        .then(result => {
+            dispatch(addCardInList(data))
+        })
+}
+
+export function callUpdateCardPositionInList(data){
+    return dispatch => {
+            dispatch(updateCardPositionInList(data));
+            asteroid.call('updateCardPositionInList', data)
+            .then(result => {
+                console.log("ok")
+            })
+    }
+}
+
+export function callUpdateCardPositionBetweenList(data){
+    return dispatch => {
+        dispatch(updateCardPositionBetweenList(data));
+        asteroid.call('updateCardPositionBetweenList', data)
+            .then(result => {
+                console.log("ok")
+            })
+    }
 }
