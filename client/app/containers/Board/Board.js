@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import bo from '../../common/dataTest';
 import PropTypes from 'prop-types';
 //import listsTest from '../../common/dataTest';
-import { Grid, Input } from 'semantic-ui-react';
+import {Card, Grid, Input} from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
@@ -32,13 +32,26 @@ class Board extends Component {
 
     render () {
         if(this.props.board){
-            return(
-                <div className={style.generalBoardRendering}>
-                    <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
-                    <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
-                    {this.listsIsFilled()}
-                </div>
-            )
+            if(this.props.lists){
+                return(
+                    <div className={style.generalBoardRendering}>
+                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                        {this.listsIsFilled()}
+
+
+                    </div>
+                )
+            }else{
+                return(
+                    <div className={style.generalBoardRendering}>
+                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                        <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+
+
+                    </div>
+                )
+            }
+
         }
         else{
             return <div/>
@@ -114,7 +127,23 @@ class Board extends Component {
                                 <div
                                 {...provided.droppableProps} 
                                 ref={provided.innerRef}>
-                                    <BoardComponent lists={this.props.lists}/>
+                                    <Grid>
+                                        <Grid.Row>
+                                            <Grid.Column mobile={16} tablet={16} computer={16} >
+                                                <div className={style.margin}>
+                                                    <div className={style.listBox}>
+                                                        <BoardComponent lists={this.props.lists}/>
+                                                        <div className={style.cardCustom}>
+                                                            <Card className={style.ListCard}>
+                                                                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                                                            </Card>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+
                                 {provided.placeholder}
                                 </div>
                             )}
