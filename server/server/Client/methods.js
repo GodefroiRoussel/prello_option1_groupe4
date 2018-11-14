@@ -3,7 +3,37 @@ import { Random } from 'meteor/random'
 import Client from './model';
 import AccessToken from '../AccessToken/model'
 import AuthorizationToken from '../AuthorizationToken/model'
+import jwt from 'jsonwebtoken'
 
+/*
+const options = {
+
+}
+SimpleRest.setMethodOptions("getClients", options)*/
+
+Meteor.method("getClients", function (userId) {
+    if (!userId)
+        userId = Meteor.userId();
+
+    return Client.find({ createdBy: userId }).fetch();
+}, {
+        url: "clients",
+        getArgsFromRequest: function (request) {
+            // Let's say we want this function to accept a form-encoded request with
+            // fields named `a` and `b`.
+            const token = request.authToken;
+
+            //TODO: Handle the verification of JWT
+            const decoded = jwt.verify(token, Meteor.settings.SECRET_KEY)
+
+            // Since form enconding doesn't distinguish numbers and strings, we need
+            // to parse it manually
+            return [decoded.userId]
+        },
+        httpMethod: "GET"
+    }
+);
+/*
 Meteor.methods({
     addClient(client) {
         // Generate a random ID and a Ramdom secret client for the developer of a length of 43 characters
@@ -24,9 +54,7 @@ Meteor.methods({
         }
         return Client.insert(new_client);
     },
-    getClients() {
-        return Client.find().fetch();
-    },
+
     getClientById(id) {
         return Client.findOne(id);
     },
@@ -44,3 +72,4 @@ Meteor.methods({
         }
     }
 });
+*/
