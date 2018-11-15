@@ -24,13 +24,15 @@ import classNames from 'classnames';
 import CardModalMembers from "./CardModalMembers"
 import CardModalDeadlines from "./CardModalDeadlines";
 import {
-    callAddLabelCard, callDeleteLabelCard,
+    callAddCommentCard,
+    callAddLabelCard, callArchiveCard, callDeleteCard, callDeleteLabelCard,
     callUpdateCardBillable,
     callUpdateCardDescription,
     callUpdateCardTitle
 } from "../../objects/Card/CardAsyncActions";
 
 import ProfileAnonymous from '../../styles/assets/hanonyme.png';
+import {callAddComment} from "../../objects/Comment/CommentAsyncAction";
 
 class CardModal extends React.Component {
 
@@ -39,13 +41,15 @@ class CardModal extends React.Component {
         this.state = {
             openModal: false,
             editTitle: false,
-            card:{
+            idCard: this.props.card._id,
+            titleCard: this.props.card.titleCard,
+            /*card:{
                 titleCard: "The title of this card",
                 descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
                 deadlineCard:"18/11/2018",
                 positionCard:0,
                 billableCard:false
-            }
+            }*/
         };
     }
 
@@ -55,13 +59,13 @@ class CardModal extends React.Component {
 
     editCardTitle = (e) => {
         this.setState({titleCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardTitle({titleCard: this.state.card.titleCard, _id: this.state.card._id})
+            this.props.dispatchCallEditCardTitle({titleCard: this.props.card.titleCard, _id: this.props.card._id})
         )
     }
 
     editDescriptionCard = (e) => {
         this.setState({descriptionCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardDescription({descriptionCard: this.state.card.descriptionCard, _id: this.state.card._id})
+            this.props.dispatchCallEditCardDescription({descriptionCard: this.props.card.descriptionCard, _id: this.props.card._id})
         )
     }
 
@@ -69,21 +73,40 @@ class CardModal extends React.Component {
     // peut etre moyen de mettre !this.state.billableCard ?
     editBillableCard = (e) => {
         this.setState({billableCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardBillable({billable: this.state.card.billableCard, _id: this.state.card._id})
+            this.props.dispatchCallEditCardBillable({billable: this.props.card.billableCard, _id: this.props.card._id})
         )
     }
 
     // /!\ e.target.value = id du label à add ou delete
     addLabelCard = (e) => {
-        this.setState({labels: this.state.labels.push(e.target.value)}, () =>
-            this.props.dispatchCallAddLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
-        )
+        if(e.target.value) {
+            this.props.dispatchCallAddLabelCard({idLabel: e.target.value, idCard: this.props.card._id})
+        }
     }
 
     deleteLabelCard = (e) => {
-        this.setState({labels: this.state.labels.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
-            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.card._id})
-        )
+        if(e.target.value) {
+            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.idCard})
+        }
+    }
+
+    deleteCard = (e) => {
+        console.log(this.props.card._id)
+        if(this.props) {
+            this.props.dispatchCallDeleteCard(this.state.idCard)
+        }
+    }
+
+    archiveCard = (e) => {
+        this.props.dispatchCallArchiveCard(this.props.card._id)
+    }
+
+    addCommentCard = () => {
+        //this.props.dispatchCallEditComment(data) //to precise
+    }
+
+    deleteCommentCard = () => {
+        //this.props.dispatchCallDeleteComment(data) //to precise
     }
 
     render() {
@@ -140,7 +163,7 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Description</h3>
 
                                             <Form>
-                                                <TextArea onChange={this.editDescriptionCard} placeholder='Write the card description' value={this.state.card.descriptionCard}/>
+                                                <TextArea onChange={this.editDescriptionCard} placeholder='Write the card description' value={this.props.card.descriptionCard}/>
                                             </Form>
                                             <Divider />
                                         </Grid.Column>
@@ -282,7 +305,7 @@ class CardModal extends React.Component {
                                         </Button>
                                     </List.Item>
                                     <List.Item>
-                                        <Button fluid animated='fade' basic color='red'>
+                                        <Button onClick={this.deleteCard}fluid animated='fade' basic color='red'>
                                             <Button.Content hidden>all the card</Button.Content>
                                             <Button.Content visible>
                                                 delete
@@ -309,7 +332,7 @@ class CardModal extends React.Component {
         if(!this.state.editTitle){
             return(
                 <h4 onClick={this.toggleEditCardTitle}>
-                    {this.state.card.titleCard} - <span className={defaultStyle.textColor2}> General List</span>
+                    {this.state.titleCard} - <span className={defaultStyle.textColor2}> General List</span>
                 </h4>
             );
         }
@@ -317,7 +340,7 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.state.card.titleCard}/>
+                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.props.card.titleCard}/>
                     </Form.Field>
                 </Form>
             );
@@ -325,11 +348,14 @@ class CardModal extends React.Component {
     }
 }
 CardModal.defaultProps = {
+    card:{}
 };
 
 function mapStateToProps(state, ownProps){
+    console.log(ownProps)
+    console.log(state)
     return{
-
+        card: state.cards.filter(el => el._id === ownProps.card._id)
     }
 };
 
@@ -339,6 +365,10 @@ const mapDispatchToProps = dispatch => ({
     dispatchCallEditCardBillable: data => dispatch(callUpdateCardBillable(data)),
     dispatchCallAddLabelCard: data => dispatch(callAddLabelCard(data)),
     dispatchCallDeleteLabelCard: data => dispatch(callDeleteLabelCard(data)),
+    dispatchCallDeleteCard: data => dispatch(callDeleteCard(data)),
+    dispatchCallArchiveCard: data => dispatch(callArchiveCard(data)),
+    dispatchCallEditComment: data => dispatch(callAddCommentCard(data)),
+    dispatchCallDeleteComment: data => dispatch(callAddCommentCard(data))
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));

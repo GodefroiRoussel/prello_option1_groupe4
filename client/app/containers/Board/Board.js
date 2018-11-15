@@ -35,7 +35,7 @@ class Board extends Component {
             return(
                 <div className={style.generalBoardRendering}>
                     <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
-                    <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                    <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
                     {this.listsIsFilled()}
                 </div>
             )
@@ -130,6 +130,7 @@ const mapStateToProps = (state, ownProps) => {
     let listB=[];
     let board = state.boards.find(el => el._id == ownProps.location.state.id);
     state.lists.find(x => {
+        let board = state.boards.find(el => el._id === ownProps.location.state.id);
         if(board){
             if(board.listsId.includes(x._id)){
                 listB.push(x);
@@ -147,9 +148,10 @@ const mapStateToProps = (state, ownProps) => {
         })
     }
     return ({
-        lists: result,
-        board: board,
+        lists: listB.filter(el => el.isDeletedList === false && el.isArchivedList === false),
         boards: state.boards,
+        //board: board,
+        board: state.boards.find(el => el._id === ownProps.location.state.id)
     })
 }
 

@@ -110,7 +110,7 @@ class CardModalDeadlines extends React.Component {
                                                 value={this.state.date}
                                                 iconPosition="left"
                                                 onChange={this.handleChange} />
-                                            <Input type={"number"} placeholder='Nb hours' />
+                                            <Input type={"text"} placeholder='Nb hours' />
                                             <Button>Delete</Button>
                                         </Form.Group>
                                     </Form>

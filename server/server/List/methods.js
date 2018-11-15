@@ -77,8 +77,9 @@ Meteor.methods({
             }
         }
     },
-    updateCardsPositionsAfterArchiveOrDelete(data) { // data = list, idCardArcOrDel
-        if(data.list._id && data.idCardArcOrDel) {
+    updateCardsPositionsAfterArchiveOrDelete(data) { // data = idList, idCardArcOrDel
+        console.log('list')
+        if(data.idList && data.idCardArcOrDel) {
             const position = Meteor.call('findOneCard', data.idCardArcOrDel).positionCard
             const cardsId = data.list.cards
             let cardsToUpdate = []
