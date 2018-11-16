@@ -1,6 +1,8 @@
 import asteroid from '../../common/asteroid';
 import { setLoggedUser } from './LoginActions';
 
+const URL_WS = process.env.APIURL || "ws://localhost:9000/websocket";
+
 export function callLoginPolytech(data) {
     const user = {
         username: data.username,
@@ -11,7 +13,7 @@ export function callLoginPolytech(data) {
         .then(data => {
             const token = data.token;
             const id = data.id;
-            localStorage.setItem('ws://localhost:9000/websocket__login_token__', token);
+            localStorage.setItem(URL_WS + '__login_token__', token);
             asteroid.call('getUser', id).then(userDB => {
                 dispatch(setLoggedUser(userDB))
             })
