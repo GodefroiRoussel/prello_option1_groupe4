@@ -63,7 +63,6 @@ class CardModal extends React.Component {
     toggleEditDescription = () => this.setState({editDescription: !this.state.editDescription})
 
     editCardTitle = (e) => {
-        console.log(this.props.card._id)
         this.setState({titleCard: e.target.value}, () =>
             this.props.dispatchCallEditCardTitle({titleCard: this.state.titleCard, _id: this.props.card._id})
         )
@@ -302,7 +301,7 @@ class CardModal extends React.Component {
                                         <CardModalMembers/>
                                     </List.Item>
                                     <List.Item>
-                                        <CardModalDeadlines/>
+                                        <CardModalDeadlines card={this.props.card}/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >

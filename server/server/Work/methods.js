@@ -2,8 +2,9 @@ import {Meteor} from 'meteor/meteor';
 import Work from './model';
 
 Meteor.methods({
-    addWork(team){
-        return Work.insert(team);
+    addWork(data){
+        console.log('serveur work add', data)
+        return Work.insert({idCard: data._id, idUser: Meteor.userId(), day: data.dateWork, timeReal: data.timeWork});
     },
     getWorkByCard() {
         return Work.find().fetch();
