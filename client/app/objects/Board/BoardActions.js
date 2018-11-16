@@ -1,5 +1,3 @@
-import {EDIT_TITLE_LIST} from "../List/ListActions";
-
 export const GET_BOARD = 'GET_BOARD';
 export const ADD_BOARD = 'ADD_BOARD';
 export const UPDATE_BOARD_LIST = 'UPDATE_BOARD_LIST';
@@ -7,6 +5,7 @@ export const RESET = 'RESET';
 export const EDIT_FAV_BOARD = 'EDIT_FAV_BOARD';
 export const UPDATE_BOARD_LIST_POSITION='UPDATE_BOARD_LIST_POSITION';
 export const EDIT_TITLE_BOARD='EDIT_TITLE_BOARD';
+export const EDIT_BOARD='EDIT_BOARD';
 
 export function getBoard(_id) {
     return {
@@ -56,6 +55,14 @@ export function editFavoriteBoards(data) {
 export function updateBoardTitle(data){
     return {
         type: EDIT_TITLE_BOARD,
+        data,
+    };
+}
+
+export function editBoard(_id, data){
+    return{
+        type: EDIT_BOARD,
+        _id,
         data,
     };
 }

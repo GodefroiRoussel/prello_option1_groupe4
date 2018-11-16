@@ -16,7 +16,7 @@ export const edit = (state, action) => {
   if (Array.isArray(elemToEditArray) && elemToEditArray.length) {
     const elemToEditIndex = state.indexOf(elemToEditArray[0]);
     const newState = state.slice();
-    newState[elemToEditIndex].finished = action.finished;
+    Object.keys(action.data).forEach((f) => newState[elemToEditIndex][f] = action.data[f])
     return newState;
   }
   return state;

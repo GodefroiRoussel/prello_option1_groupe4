@@ -1,5 +1,5 @@
-import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST, UPDATE_BOARD_LIST_POSITION,EDIT_TITLE_BOARD } from './BoardActions';
-import { add } from '../../common/helpers';
+import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST, UPDATE_BOARD_LIST_POSITION,EDIT_TITLE_BOARD, EDIT_BOARD } from './BoardActions';
+import { add , edit} from '../../common/helpers';
 //import { remove, edit, add } from '../../common/helpers';
 
 const boards = (state = [], action) => {
@@ -46,6 +46,8 @@ const boards = (state = [], action) => {
                 return newState;
             }
             return state;
+        case EDIT_BOARD:
+            return edit(state, action);
         case RESET:
             return [];
         default:

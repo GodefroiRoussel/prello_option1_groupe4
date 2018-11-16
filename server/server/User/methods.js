@@ -61,6 +61,11 @@ Meteor.methods({
     getUser(id) {
         return Meteor.users.findOne(id);
     },
+    getAllUsersReturnUsername(){
+        const users = Meteor.users.find().fetch();
+        var usernames = users.map(x => x.username);
+        return usernames;
+    },
     editUserProfile(data) {
         return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
     },
