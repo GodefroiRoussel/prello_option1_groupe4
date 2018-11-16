@@ -8,7 +8,10 @@ export function callLoginPolytech(data) {
     };
 
     return dispatch => asteroid.call('loginPolytech', user)
-        .then(id => {
+        .then(data => {
+            const token = data.token;
+            const id = data.id;
+            localStorage.setItem('ws://localhost:9000/websocket__login_token__', token);
             asteroid.call('getUser', id).then(userDB => {
                 dispatch(setLoggedUser(userDB))
             })
