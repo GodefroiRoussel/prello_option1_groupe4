@@ -137,6 +137,7 @@ class ListC extends Component {
     isCardFilled = () =>{
         if(this.props.cards){
             return this.props.cards.map((x, index) => {
+                if(x.isDeletedCard === false && x.isArchivedCard === false) {
                 return(
                     <Draggable draggableId={x._id} index={index}>
                     {(provided, snapshot) => (
@@ -157,7 +158,7 @@ class ListC extends Component {
                     )}
                     </Draggable>
                 )
-        })
+        }})
     }}
 }
 

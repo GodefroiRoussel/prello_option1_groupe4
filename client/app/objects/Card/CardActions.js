@@ -6,7 +6,7 @@ export const EDIT_CARD_BILLABLE = 'EDIT_CARD_BILLABLE';
 export const EDIT_CONTRIBUTOR_CARD = 'EDIT_CONTRIBUTOR_CARD';
 export const EDIT_LABEL_CARD = 'EDIT_LABEL_CARD';
 export const EDIT_COMMENT_CARD = 'EDIT_COMMENT_CARD';
-const NADA = 'NADA'
+export const DELETE_CARD = 'DELETE_CARD';
 
 export function getCard(_id) {
     return {
@@ -60,7 +60,8 @@ export function editLabelCard(data) {
 export function deleteCard(data) {
     console.log("action")
     return {
-        type: NADA
+        type: DELETE_CARD,
+        data
 }
 }
 

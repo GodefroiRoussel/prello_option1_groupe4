@@ -48,9 +48,9 @@ export function callUpdateCardBillable(data) {
         .then(result => dispatch(updateCardBillable(result)))
 }
 
-export function callDeleteCard(idCard) {
-    console.log('async', idCard)
-    return dispatch => asteroid.call('deleteCard', idCard)
+export function callDeleteCard(data) {
+    console.log('async', data.idCard)
+    return dispatch => asteroid.call('deleteCard', data.idCard)
         .then(result => {
             dispatch(deleteCard(result))
             dispatch(callUpdateCardsPositionsAfterArchiveOrDelete({idList: result.idList, idCardArcOrDel: result._id}))

@@ -100,7 +100,7 @@ class CardModal extends React.Component {
 
     deleteCard = (e) => {
         if(this.props) {
-            this.props.dispatchCallDeleteCard(this.state.idCard)
+            this.props.dispatchCallDeleteCard({idCard: this.props.card._id})
         }
     }
 
