@@ -44,6 +44,23 @@ class ClientManagement extends React.Component {
             });
     }
 
+    componentDidUpdate() {
+        const id = this.props.params.id;
+        asteroid.call('getClientById', id)
+            .then(client => {
+                this.setState({
+                    _id: client._id,
+                    nameClient: client.nameClient,
+                    descriptionClient: client.descriptionClient,
+                    websiteClient: client.websiteClient,
+                    redirectUris: client.redirectUris,
+                    grants: client.grants,
+                    id: client.id,
+                    clientSecret: client.clientSecret
+                })
+            });
+    }
+
     handleDeleteClient() {
         this.props.DispatchCallRemoveClient({ id: this.state._id });
         browserHistory.push({ pathname: '/oauth/clients' });
