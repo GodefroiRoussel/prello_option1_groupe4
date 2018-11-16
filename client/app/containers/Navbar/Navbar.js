@@ -88,7 +88,8 @@ class Navbar extends Component {
                             <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/')}>Prello</Menu.Item>
 
                             <Menu.Menu position='right'>
-
+                                <Menu.Item header className={defaultStyle.textColor3}>other works</Menu.Item>
+                                <Menu.Item header className={defaultStyle.textColor3} onClick={() => browserHistory.push('/admin-members')}>admin members</Menu.Item>
                                 <Dropdown style={dropdowMenu} text={this.props.user.username} pointing className='link item'>
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => browserHistory.push('/account')}>Settings</Dropdown.Item>

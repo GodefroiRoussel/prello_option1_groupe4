@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import User from "./model";
 import { Accounts } from "meteor/accounts-base";
 import { createClient } from "ldapjs"
+import List from "../List/model";
 
 Accounts.emailTemplates.siteName = 'PRELLO - The best management tool for your projects';
 Accounts.emailTemplates.from = 'PRELLO - The best management tool for your projects <contact@prello.com>';
@@ -49,7 +50,8 @@ Meteor.methods({
                 seedUser: "",
                 avatarUser: "",
                 languageUser: "",
-                colourBlindUser: ""
+                colourBlindUser: "",
+                favoriteBoards: []
             }
         });
     },
@@ -61,6 +63,19 @@ Meteor.methods({
     },
     editUserProfile(data) {
         return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
+    },
+    addFavoriteBoard(data) { // data = userId, boardId
+        const user = Meteor.users.findOne(data.userId)
+        const favBoards = user.favoriteBoards
+        favBoards.push(data.boardId)
+        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+    },
+    deleteFavoriteBoard(data) { // data = userId, boardId
+        const user = Meteor.users.findOne(data.userId)
+        const favBoards = user.favoriteBoards
+        const position = favBoards.indexOf(data.boardId)
+        favBoards.splice(position, 1)
+        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
     },
     async loginPolytech(user) {
         const username = user.username;
@@ -81,11 +96,22 @@ Meteor.methods({
                 var lastName = splitUsername[1];
                 var email = username + '@etu.umontpellier.fr'
             }
+
+            const stampedToken = Accounts._generateStampedLoginToken();
+            const hashStampedToken = Accounts._hashStampedToken(stampedToken);
             // If user then return user._id else create a new user in the Database
             if (user) {
-                return user._id;
+                Meteor.users.update(user._id,
+                    { $push: { 'services.resume.loginTokens': hashStampedToken } }
+                );
+                this.setUserId(user._id);
+
+                return {
+                    id: user._id,
+                    token: stampedToken.token
+                }
             } else {
-                return Accounts.createUser({
+                const newUserId = Accounts.createUser({
                     username: username,
                     email: email,
                     password: '',
@@ -104,6 +130,15 @@ Meteor.methods({
                         colourBlindUser: ""
                     }
                 });
+                Meteor.users.update(newUserId,
+                    { $push: { 'services.resume.loginTokens': hashStampedToken } }
+                );
+                this.setUserId(newUserId);
+
+                return {
+                    id: newUserId,
+                    token: stampedToken.token
+                }
             }
         }
         catch (err) {

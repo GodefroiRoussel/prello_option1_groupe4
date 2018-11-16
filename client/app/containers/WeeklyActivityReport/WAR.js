@@ -29,7 +29,7 @@ const data = {
     }]
 };
 
-const dataPieBillable = {
+/*const dataPieBillable = {
     labels: [
         'Blue',
         'Yellow',
@@ -45,7 +45,7 @@ const dataPieBillable = {
             '#FFCE56'
         ]
     }]
-};
+};*/
 
 const dataBarPlot = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -344,5 +344,6 @@ const WeeklyActivityReport = () => {
     );
     return <div>{form()}</div>;
 };
+
 
 export default cssModules(WeeklyActivityReport, style);

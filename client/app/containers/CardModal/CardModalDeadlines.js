@@ -73,9 +73,9 @@ class CardModalDeadlines extends React.Component {
             <Modal
                 trigger={
                     <Button onClick={this.toggleModalDeadlines} fluid animated='fade' className={style.settingsButtons} >
-                        <Button.Content hidden>End dates</Button.Content>
+                        <Button.Content hidden>Work Done</Button.Content>
                         <Button.Content visible>
-                            Deadlines
+                            Work
                         </Button.Content>
                     </Button>
                 }
@@ -91,9 +91,17 @@ class CardModalDeadlines extends React.Component {
                     <Modal.Description>
                         <List verticalAlign='middle'>
                             <List.Item>
-                                <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
-                                    <List.Header>Helen</List.Header>
+                                    <List>
+                                        <List.Header>Yours work days on this project</List.Header>
+                                        <List.Item>Date - nb heures</List.Item>
+                                        <List.Item>Date - nb heures</List.Item>
+                                        <List.Item>Date - nb heures</List.Item>
+                                        <List.Item>Date - nb heures</List.Item>
+                                        <List.Item>Date - nb heures</List.Item>
+
+                                    </List>
+
                                 </List.Content>
                                 <List.Content floated='right'>
                                     <Form>
@@ -110,64 +118,33 @@ class CardModalDeadlines extends React.Component {
                                                 value={this.state.date}
                                                 iconPosition="left"
                                                 onChange={this.handleChange} />
-                                            <Input type={"number"} placeholder='Nb hours' />
+                                            <Input type={"text"} placeholder='Nb hours' />
                                             <Button>Delete</Button>
                                         </Form.Group>
                                     </Form>
                                 </List.Content>
                             </List.Item>
                             <List.Item>
-                                <Image avatar src={ProfileAnonymous} />
                                 <List.Content>
-                                    <List.Header>Helen</List.Header>
+                                    <List.Header>Add new work </List.Header>
                                 </List.Content>
                                 <List.Content floated='right'>
                                     <Form>
                                         <Form.Group>
                                             <DateInput
                                                 name="startDate"
-                                                placeholder="Start Date"
+                                                placeholder="Date"
                                                 value={this.state.date}
                                                 iconPosition="left"
                                                 onChange={this.handleChange} />
-                                            <DateInput
-                                                name="endDate"
-                                                placeholder="End Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleChange} />
+
                                             <Input type={"number"} placeholder='Nb hours' />
-                                            <Button>Delete</Button>
+                                            <Button>Add</Button>
                                         </Form.Group>
                                     </Form>
                                 </List.Content>
                             </List.Item>
-                            <List.Item>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Helen</List.Header>
-                                </List.Content>
-                                <List.Content floated='right'>
-                                    <Form>
-                                        <Form.Group>
-                                            <DateInput
-                                                name="startDate"
-                                                placeholder="Start Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleChange} />
-                                            <DateInput
-                                                name="endDate"
-                                                placeholder="End Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleChange} />
-                                            <Input type={"number"} placeholder='Nb hours' />
-                                            <Button>Delete</Button>
-                                        </Form.Group>
-                                    </Form>
-                                </List.Content>
-                            </List.Item>
+
                         </List>
                         
                     </Modal.Description>

@@ -55,6 +55,11 @@ export function callUnarchiveList(data, board) {
         })
 }
 
+export function callUpdateCardsPositionsAfterArchiveOrDeleteId(idCard, idList) {
+    return dispatch => asteroid.call('findOneList', idList)
+        .then(result => {dispatch(callUpdateCardsPositionsAfterArchiveOrDelete({idCard: idCard, list: result}))})
+}
+
 export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
     return dispatch => asteroid.call('updateCardsPositionsAfterArchiveOrDelete', {list: list, idCardArcOrDel: idCard})
         .then(result => dispatch(updateCardsPosArcDel({list: result})))
@@ -63,7 +68,7 @@ export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
 export function callAddCardInList(data) {
     return dispatch => asteroid.call('addCardInList', data)
         .then(result => {
-            dispatch(addCardInList(data))
+            dispatch(addCardInList(data)) //TODO: result ??
         })
 }
 

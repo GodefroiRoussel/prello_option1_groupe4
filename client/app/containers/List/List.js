@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Button, Modal,Grid, Form, Input, List,Icon,Header} from "semantic-ui-react";
+import {Card, Button, Modal,Grid, Form, Input, List, Image,Header, Icon} from "semantic-ui-react";
 import ListComponent from '../../components/List/List.component';
 import style from './List.styl';
 import {connect} from "react-redux";
@@ -8,6 +8,8 @@ import BoardComponent from "../../components/Board/Board.component";
 import CardModal from "../CardModal/CardModal";
 import {callEditListTitle} from "../../objects/List/ListAsyncActions";
 import {Droppable, Draggable} from 'react-beautiful-dnd';
+import defaultStyle from "../../styles/settings.styl";
+import hamburgerDefault from "../../styles/assets/hamburgerDefault.png"
 
 class ListC extends Component {
     constructor(props) {
@@ -65,7 +67,15 @@ class ListC extends Component {
             ref={provided.innerRef}
             className={style.cardCustom}>
                 <Card className={style.ListCard}>
-                    {this.titleListMode()}
+                    <Card.Content>
+                        <Card.Header>
+                            {this.titleListMode()}
+
+                        </Card.Header>
+                    </Card.Content>
+
+
+
                     <div>
                         <Droppable droppableId={this.props.list._id} type="task">
                             {(provided, snapshot)=>(
@@ -91,7 +101,7 @@ class ListC extends Component {
                                     New card in {this.props.titleList}
                                 </Header>
                                 <Modal.Content>
-                                    <Input type='text' action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
+                                    <Input type='text' autoFocus visible action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
                                 </Modal.Content>
                                 <Modal.Actions>
                                     <Button basic color='red' onClick={this.handleClose} inverted>
@@ -127,6 +137,7 @@ class ListC extends Component {
     isCardFilled = () =>{
         if(this.props.cards){
             return this.props.cards.map((x, index) => {
+                if(x.isDeletedCard === false && x.isArchivedCard === false) {
                 return(
                     <Draggable draggableId={x._id} index={index}>
                     {(provided, snapshot) => (
@@ -138,7 +149,7 @@ class ListC extends Component {
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}>{x.titleCard} <CardModal/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal card={x}/></Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
@@ -147,7 +158,7 @@ class ListC extends Component {
                     )}
                     </Draggable>
                 )
-        })
+        }})
     }}
 }
 
@@ -161,7 +172,7 @@ const mapStateToProps = (state, ownProps) => {
     if(cardB){
         ownProps.list.cards.forEach((card)=> {
             cardB.forEach((element) => {
-                if(element._id == card){
+                if(element._id === card){
                     result.push(element);
                 }
             })
@@ -170,8 +181,8 @@ const mapStateToProps = (state, ownProps) => {
 
     return({
             lists: state.lists,
+            //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
-
         }
     )
 
