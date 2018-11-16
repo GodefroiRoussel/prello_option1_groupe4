@@ -6,6 +6,7 @@ export const EDIT_FAV_BOARD = 'EDIT_FAV_BOARD';
 export const UPDATE_BOARD_LIST_POSITION='UPDATE_BOARD_LIST_POSITION';
 export const EDIT_TITLE_BOARD='EDIT_TITLE_BOARD';
 export const EDIT_BOARD='EDIT_BOARD';
+export const REMOVE_BOARD='REMOVE_BOARD';
 
 export function getBoard(_id) {
     return {
@@ -19,6 +20,13 @@ export function addBoard(data){
         type: ADD_BOARD,
         data,
     }
+}
+
+export function removeBoard(_id){
+return{
+    type: REMOVE_BOARD,
+    _id,
+}
 }
 
 export function resetBoard(data){

@@ -2,10 +2,10 @@ import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
 import { addList, removeList, editList } from '../objects/List/ListActions';
-import { addTeam, editTeam } from '../objects/Team/TeamActions';
-import { addBoard, editBoard } from '../objects/Board/BoardActions';
+import { addTeam, editTeam , removeTeam} from '../objects/Team/TeamActions';
+import { addBoard, editBoard, removeBoard } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
-import { addCard, editCard } from '../objects/Card/CardActions';
+import { addCard, editCard , deleteCard} from '../objects/Card/CardActions';
 import { addClient, removeClient } from '../objects/Client/ClientActions';
 import store from '../store';
 
@@ -68,6 +68,15 @@ asteroid.ddp.on('removed', (removedDoc) => {
     }
     if (removedDoc.collection === 'list') {
         store.dispatch(removeList(removedDoc.id));
+    }
+    if (removedDoc.collection === 'board') {
+        store.dispatch(removeBoard(removedDoc.id));
+    }
+    if (removedDoc.collection === 'card') {
+        store.dispatch(deleteCard(removedDoc.id));
+    }
+    if (removedDoc.collection === 'team') {
+        store.dispatch(removeTeam(removedDoc.id));
     }
     if (removedDoc.collection === 'users') {
         store.dispatch(unsetLoggedUser());

@@ -6,9 +6,9 @@ const lists = (state = listsTest, action) => {
   switch (action.type) {
     case ADD_LIST:
       return add(state, action);
-    /*case REMOVE_LIST:
+    case REMOVE_LIST:
       return remove(state, action);
-    case GET_ALL_LIST:
+    /*case GET_ALL_LIST:
       return action.data;*/
       case EDIT_TITLE_LIST:
          const elemToEditArray = state.slice().filter(item => item._id === action.data._id);

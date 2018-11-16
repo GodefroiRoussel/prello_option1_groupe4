@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Menu, Segment, Dropdown, Tab,  Card, Image, Grid, Header, Button, Modal, Icon} from 'semantic-ui-react';
-import CommentsParameters from './CommentsParameters';
+import CommentsParametersBoard from './CommentsParameters';
 import InvitationParameters from './InvitationParameters';
 import JoinBoardParameters from './JoinBoardParameters';
 import TeamsParameters from './TeamsParameters';
@@ -22,7 +22,7 @@ class BoardParameters extends Component {
     }
 
     panes = [
-        { menuItem: 'General', render: () => <Tab.Pane><CommentsParameters/><InvitationParameters/><JoinBoardParameters/></Tab.Pane> },
+        { menuItem: 'General', render: () => <Tab.Pane><CommentsParametersBoard/><InvitationParameters/><JoinBoardParameters/></Tab.Pane> },
         { menuItem: 'Background', render: () => <Tab.Pane><BackgroundParameters/></Tab.Pane> },
         { menuItem: 'Teams', render: () => <Tab.Pane><TeamsParameters/></Tab.Pane> },
         { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters/></Tab.Pane> },
@@ -34,6 +34,9 @@ class BoardParameters extends Component {
     MenuParams = () => <Tab className={style.tabTeam} panes={this.panes} />
 
     render(){
+        if(!this.props.board){
+            return <div/>
+        }
         return (
             <div className={style.generalBoardRendering}>
                 <BoardMenu board={this.props.board}/>

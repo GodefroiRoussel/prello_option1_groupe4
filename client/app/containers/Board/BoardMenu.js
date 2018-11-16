@@ -23,15 +23,12 @@ class BoardMenu extends Component {
 
     editBoardTitle = (e) => {
         if (e.key === 'Enter') {
-            console.log("hello")
             this.props.dispatchCallEditBoardTitle({titleBoard: e.target.value, _id: this.props.board._id})
             this.toggleEditBoardTitle();
         }
     }
 
     render() {
-        console.log(this.props)
-
         return(
             <Menu borderless className={style.menuCustom}>
                 <Menu.Item>
@@ -52,7 +49,6 @@ class BoardMenu extends Component {
         )}
 
     titleBoardMode = () => {
-        console.log(this.state.editBoardTitle)
         if(!this.state.editBoardTitle){
             return(
                 <Menu.Item onClick={this.toggleEditBoardTitle}

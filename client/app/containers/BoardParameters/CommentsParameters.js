@@ -3,14 +3,16 @@ import {Form, Divider, Radio, Button} from 'semantic-ui-react'
 import defaultStyle from "../../styles/settings.styl";
 import style from './boardParameters.styl';
 
-export default class CommentsParameters extends Component {
-    state = {
-        value:'board members'
-    }
-    handleChange = (e, { value }) => this.setState({ value })
+const CommentsParametersBoard = (props) =>{
 
-    render() {
-        return (
+    var value = 'board members';
+
+    const handleChange = (e, { value }) => {
+        console.log(value)
+        value = value
+    }
+
+    return (
             <Form>
                 <h4>Comments authorizations</h4>
                 <Form.Group inline>
@@ -22,8 +24,8 @@ export default class CommentsParameters extends Component {
                             label='Disable'
                             name='radioGroup'
                             value='disable'
-                            checked={this.state.value === 'disable'}
-                            onChange={this.handleChange}
+                            checked={value === 'disable'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -31,8 +33,8 @@ export default class CommentsParameters extends Component {
                             label='Board members'
                             name='radioGroup'
                             value='board members'
-                            checked={this.state.value === 'board members'}
-                            onChange={this.handleChange}
+                            checked={value === 'board members'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -40,8 +42,8 @@ export default class CommentsParameters extends Component {
                             label='Teams members'
                             name='radioGroup'
                             value='teams members'
-                            checked={this.state.value === 'teams members'}
-                            onChange={this.handleChange}
+                            checked={value === 'teams members'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -49,13 +51,14 @@ export default class CommentsParameters extends Component {
                             label='All'
                             name='radioGroup'
                             value='all'
-                            checked={this.state.value === 'all'}
-                            onChange={this.handleChange}
+                            checked={value === 'all'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                 </Form.Group>
                 <Divider/>
             </Form>
         )
-    }
 }
+
+export default CommentsParametersBoard
