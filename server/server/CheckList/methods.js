@@ -24,4 +24,4 @@ Meteor.methods({
     },
 })
 
-export default Item;
+export default CheckList;
