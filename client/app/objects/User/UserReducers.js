@@ -13,7 +13,7 @@ const users = (state = [], action) => {
         case EDIT_USER_PASSWORD:
             return edit(state, action);
         case GET_ALL_USER:
-            return action.data;
+            return action.payload;
         default:
             return state;
     }

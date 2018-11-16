@@ -1,7 +1,5 @@
 import {Meteor} from 'meteor/meteor';
 import Card from './model';
-import SimpleSchema from "simpl-schema";
-import List from "../List/model";
 
 Meteor.methods({
     getCard(id) {
@@ -73,7 +71,37 @@ Meteor.methods({
         labels.splice(position, 1)
         Card.update( {_id: data.idCard}, {$set: {labels: labels}})
         return Card.findOne({_id: data.idCard})
-    }
+    },
+    deleteCard(id) {
+        console.log('card', id)
+        Card.update( {_id: id}, {$set: {isDeletedCard: true}})
+        return Card.findOne({_id: id})
+    },
+    archiveCard(id) {
+        Card.update( {_id: id}, {$set: {isArchivedCard: true}})
+        return Card.findOne({_id: id})
+
+    },
+    unarchiveCard(id) {
+        Card.update( {_id: id}, {$set: {isArchivedCard: false}})
+        return Card.findOne({_id: id})
+
+    },
+    addCommentCard(data) { //data = idCard, idComment
+        const card = Card.findOne(data.idCard)
+        const comments = card.comments
+        comments.push(data.idComment)
+        Card.update( {_id: data.idCard}, {$set: {comments: comments}})
+        return Card.findOne({_id: data.idCard})
+    },
+    deleteCommentCard(data) { //data = idCard, idComment
+        const card = Card.findOne(data.idCard)
+        const comments = card.comments
+        const position = comments.indexOf(data.idComment)
+        comments.splice(position, 1)
+        Card.update( {_id: data.idCard}, {$set: {comments: comments}})
+        return Card.findOne({_id: data.idCard})
+    },
 });
 
 export default Card;

@@ -1,5 +1,6 @@
 import asteroid from '../../common/asteroid';
-import { getBoard, addBoard , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive} from './BoardActions';
+import { getBoard, addBoard , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive, editFavoriteBoards} from './BoardActions';
+import {updateListTitle} from "../List/ListActions";
 
 export function callGetBoard(idBoard) {
     return dispatch => asteroid.call('getBoard', idBoard)
@@ -20,12 +21,27 @@ export function callUpdateBoardListId(id, board){
         .then(dispatch(updateBoardListId({id: board._id, listsid: id})));
 }
 
-export function callUpdateListsPosition(idList, board){
-    return dispatch => asteroid.call('updateListsPositions', {board: board, idList: idList})
-        .then(dispatch(updateBoardListsPosition({board: result, idList: idList})));
+export function callUpdateListPositionInBoard(data){
+    return dispatch => asteroid.call('updateListsPositions', data)
+        .then(dispatch(updateBoardListsPosition(data)));
 }
 
 export function callUpdateListsPositionsAfterArchiveOrDelete(idList, board) {
     return dispatch => asteroid.call('updateListsPositionsAfterArchiveOrDelete',{board: board, idListArchived: idList})
         .then(result => dispatch(updateListsPositionsAfterDeleteOrArchive({board: result})))
+}
+
+export function callAddFavoriteBoard(data) { // data = boardId, userId
+    return dispatch => asteroid.call('addFavoriteBoard',data)
+        .then(result => dispatch(editFavoriteBoards({board: result})))
+}
+
+export function deleteAddFavoriteBoard(idList, board) {
+    return dispatch => asteroid.call('addFavoriteBoard',{board: board, idListArchived: idList})
+        .then(result => dispatch(editFavoriteBoards({board: result})))
+}
+
+export function callEditBoardTitle(data) { // data = _id, titleBoard
+    return dispatch => asteroid.call('updateBoardTitle', data)
+        .then(result => dispatch(updateListTitle(result)))
 }

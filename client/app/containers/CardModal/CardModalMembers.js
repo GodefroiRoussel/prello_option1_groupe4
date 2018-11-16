@@ -50,15 +50,16 @@ class CardModalMembers extends React.Component {
 
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
-        this.setState({members: this.state.members.push(e.target.value)}, () =>
+        if(e.target.value) {
             this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
-        )
+        }
     }
 
     deleteContributorCard = (e) => {
-        this.setState({members: this.state.members.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
+        if(e.target.value) {
             this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
-        )
+        }
+
     }
 
     render() {
@@ -80,7 +81,7 @@ class CardModalMembers extends React.Component {
                 closeIcon
                 onClose={this.toggleModalMembers}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                   Manage members
+                    Manage members
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>

@@ -26,7 +26,7 @@ class Client extends React.Component {
             return (<div>
                 <Grid centered style={style.root}>
                     <Grid.Row className={style.firstRowClient}>
-                        <Grid.Column mobile={15} tablet={13} computer={10}>
+                        <Grid.Column mobile={15} tablet={13} computer={11}>
                             <h2 className={defaultStyle.textColor4}>OAuth Applications</h2>
                             <Divider />
                         </Grid.Column>

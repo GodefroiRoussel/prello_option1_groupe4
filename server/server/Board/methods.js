@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import Board from './model';
 import '../List/index'
+import List from "../List/model";
 
 
 Meteor.methods({
@@ -25,7 +26,7 @@ Meteor.methods({
     },
     // update position of each list of the board according to the new position of one of them
     // idList is the id of the list having a new position
-    updateListsPositions(data) { //data = {board, idList}
+    /*updateListsPositions(data) { //data = {board, idList}
         if(data.board._id && data.board.listsId && data.idList) {
             const list = Meteor.call('findOneList',data.idList) // the list for which the position has changed
             const newPos = list.positionList // the new position of this anterior list
@@ -63,6 +64,12 @@ Meteor.methods({
                 return Board.update({_id: board._id}, {$set: {listsId: newListsBoard}})
             }
         }
+    },*/
+    updateListsPositions(data) {
+        return Board.update(
+            {_id: data._id},
+            {$set: {listsId: data.listsId}}
+        )
     },
     //change position after delete or archive
     updateListsPositionsAfterArchiveOrDelete(data) { // data = board, idListArchived
@@ -92,7 +99,15 @@ Meteor.methods({
             const listsOfBoard = [...anteriorLists, ...ids, ...listsNotDisplayed]
             return Board.update({_id: data.board._id}, {$set: {listsId: listsOfBoard}})
         }
-    }
+    },
+
+    updateBoardTitle(data) {
+        Board.update(
+            {_id: data._id},
+            {$set: {titleBoard: data.titleBoard}}
+        )
+        return Board.findOne(data._id)
+    },
 });
 
 export default Board;

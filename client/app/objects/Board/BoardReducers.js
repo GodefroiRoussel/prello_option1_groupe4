@@ -1,4 +1,4 @@
-import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST } from './BoardActions';
+import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST, UPDATE_BOARD_LIST_POSITION,EDIT_TITLE_BOARD } from './BoardActions';
 import { add } from '../../common/helpers';
 //import { remove, edit, add } from '../../common/helpers';
 
@@ -25,8 +25,27 @@ const boards = (state = [], action) => {
                     return newState;
                 }
                 return state;
-            }*/
-        return state;
+            }*/            
+        case UPDATE_BOARD_LIST_POSITION:
+            const elemToEditArray2 = state.slice().filter(item => item._id === action.data._id);
+            if((Array.isArray(elemToEditArray2) && elemToEditArray2.length)){
+                const elemToEditIndex = state.indexOf(elemToEditArray2[0]);
+                const newState = state.slice();
+                if(elemToEditArray2[0].listsId){
+                    newState[elemToEditIndex].listsId=(action.data.listsId)
+                    return newState;
+                }
+            }
+            return state;
+        case EDIT_TITLE_BOARD:
+            const elemToEditTitleBoard = state.slice().filter(item => item._id === action.data._id);
+            if (Array.isArray(elemToEditTitleBoard) && elemToEditTitleBoard.length) {
+                const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+                const newState = state.slice();
+                newState[elemToEditIndex].titleBoard = action.data.titleBoard;
+                return newState;
+            }
+            return state;
         case RESET:
             return [];
         default:

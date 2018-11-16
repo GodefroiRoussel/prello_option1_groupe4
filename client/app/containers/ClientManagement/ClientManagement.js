@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import asteroid from '../../common/asteroid';
 import { browserHistory } from 'react-router';
-import { Button, Input, Card, Grid, Divider } from 'semantic-ui-react';
+import {Button, Input, Card, Grid, Divider, Form, Icon} from 'semantic-ui-react';
 import { callRemoveClient } from '../../objects/Client/ClientAsyncActions';
 import CardTeamsComponent from '../../components/CardTeams/CardTeams.component';
 import CardOAuthApps from '../../components/CardOAuthApps/CardOAuthApps.component';
@@ -69,65 +69,65 @@ class ClientManagement extends React.Component {
     render() {
         return (<div>
             <Grid centered style={style.root}>
-                <Grid.Row className={style.firstRowClientManagement}>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h2 className={defaultStyle.textColor4}>APPLICATION</h2>
-                        <Divider />
-                    </Grid.Column>
-                </Grid.Row>
                 <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Name of the application</h3>
-                        <span className={defaultStyle.textColor4}>{this.state.nameClient}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Description </h3>
-                        <span className={defaultStyle.textColor4}>{this.state.descriptionClient}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Homepage of the application </h3>
-                        <span className={defaultStyle.textColor4}>{this.state.websiteClient}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Redirect URI</h3>
-                        <span className={defaultStyle.textColor4}>{this.state.redirectUris[0]}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Grants</h3>
-                        <span className={defaultStyle.textColor4}>{this.state.grants.join(', ')}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Application ID</h3>
-                        <span className={defaultStyle.textColor4}>{this.state.id}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column mobile={15} tablet={13} computer={10}>
-                        <h3>Application Secret</h3>
-                        <span className={defaultStyle.textColor4}>{this.state.clientSecret}</span>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <div className={style.loginBox}>
-                        <Button fluid animated='fade' onClick={() => this.handleDeleteClient()} >
-                            <Button.Content hidden>Delete application</Button.Content>
-                            <Button.Content visible>
-                                Delete the application
-                            </Button.Content>
-                        </Button>
-                    </div>
-                </Grid.Row>
+                    <Grid.Column mobile={15} tablet={9} computer={7}>
+                        <div className={style.clientManagmentBox}>
+                            <h2 className={style.titleManagementBox}>APPLICATION</h2>
+                            <Form>
+                                <Form.Field>
+                                    <label>Name of the application</label>
+                                    <input type="text" defaultValue={this.state.nameClient} name="nameClient"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Client description</label>
+                                    <input type="text" defaultValue={this.state.descriptionClient} name="descriptionClient"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Homepage of the application</label>
+                                    <input type="text" defaultValue={this.state.websiteClient} name="websiteClient"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Redirect URI</label>
+                                    <input type="text" defaultValue={this.state.redirectUris[0]} name="redirectURI"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Grants</label>
+                                    <input type="text" disabled defaultValue={this.state.grants.join(', ')}
+                                           name="nickname"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Application ID</label>
+                                    <input type="text" disabled defaultValue={this.state.id}
+                                           name="nickname"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Application Secret</label>
+                                    <input type="text" disabled defaultValue={this.state.clientSecret}
+                                           name="nickname"/>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Button fluid animated='fade'>
+                                        <Button.Content hidden>Save parameters</Button.Content>
+                                        <Button.Content visible>
+                                            <Icon name='arrow right'/>
+                                        </Button.Content>
+                                    </Button>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Button fluid animated='fade' onClick={() => this.handleDeleteClient()} >
+                                        <Button.Content hidden>Delete application</Button.Content>
+                                        <Button.Content visible>
+                                            Delete
+                                        </Button.Content>
+                                    </Button>
 
+                                </Form.Field>
+
+
+                            </Form>
+                        </div>
+                    </Grid.Column>
+                </Grid.Row>
 
             </Grid>
         </div>)

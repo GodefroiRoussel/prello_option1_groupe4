@@ -15,42 +15,45 @@ import {callEditUserPassword, callEditUserProfile} from "../../objects/User/User
 import logo from './../../styles/assets/logo.png';
 import Login from './../Login/Login';
 
+import { getAllUser } from "../../objects/User/UserActions";
+
 
 class AdminMembers extends React.Component {
     constructor(props) {
         super(props)
+        this.state={
+            members:[]
+        }
+        var members;
 
+    }
+
+    componentDidMount() {
+        asteroid.call("getUsers")
+            .then(result => {
+                this.setState({members:result})
+            })
     }
 
 
     render() {
-        var u;
-        asteroid.call("getUsers")
-            .then(result => console.log(result))
-        console.log(u);
+
         if (this.props.user && this.props.user.username) {
-            if(!this.props.users){
-                return (
-                    <Grid centered style={style.root}>
-                        <Grid.Column mobile={12} tablet={12} computer={12}>
-                            <h1 className={defaultStyle.textColor4}>Admin Members</h1>
-                        </Grid.Column>
-                        <Grid.Column mobile={12} tablet={12} computer={12}>
-                            <p>No members in the app</p>
-                        </Grid.Column>
-                    </Grid>
-                );
+
+            if (!this.state.members) {
+                return <div>No members</div>;
             }
-            else {
-                return (
+
+
+            return (
+
                     <Grid centered style={style.root}>
                         <Grid.Column mobile={12} tablet={12} computer={12}>
                             <h1 className={defaultStyle.textColor4}>Admin Members</h1>
                         </Grid.Column>
-                        <Grid.Column mobile={12} tablet={12} computer={12}>
-                            <List divided verticalAlign='middle'>
-                                /**
-                                {props.users.map(x=>{return(
+                        {this.state.members.map(x =>
+                            <Grid.Column mobile={12} tablet={12} computer={12}>
+                                <List divided verticalAlign='middle'>
                                     <List.Item>
                                         <List.Content floated='right'>
                                             <Button className={defaultStyle.backgroundColorSuccess}>open account</Button>
@@ -60,33 +63,30 @@ class AdminMembers extends React.Component {
                                             {x.profile.firstNameUser} {x.profile.lastNameUser} - {x.username}
                                         </List.Content>
                                     </List.Item>
-                                )})}**/
 
-
-                            </List>
-                        </Grid.Column>
+                                </List>
+                            </Grid.Column>
+                        )}
 
                     </Grid>
-                );
-            }
+
+
+            );
         }
         return <Login/>;
     }
-};
+}
+
 
 AdminMembers.propType = {
     user: PropTypes.object,
-    users: PropTypes.array.isRequired
 };
 
 
-function mapStateToProps(state,ownProps){
-    return{
-        user: state.user,
-        users: state.users
-    }
+const mapStateToProps = state => ({
+    user: state.user
 
-};
+});
 
 
 const mapDispatchToProps = dispatch => ({

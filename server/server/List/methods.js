@@ -30,7 +30,7 @@ Meteor.methods({
         )
         return List.findOne(data._id)
     },
-    addCardInList(data) { //data = idList, idCard
+    addCardInList(data){ //data = idList, idCard
         const list = List.findOne(data.idList)
         const cards = list.cards
         cards.push(data.idCard)
@@ -77,8 +77,9 @@ Meteor.methods({
             }
         }
     },
-    updateCardsPositionsAfterArchiveOrDelete(data) { // data = list, idCardArcOrDel
-        if(data.list._id && data.idCardArcOrDel) {
+    updateCardsPositionsAfterArchiveOrDelete(data) { // data = idList, idCardArcOrDel
+        console.log('list')
+        if(data.idList && data.idCardArcOrDel) {
             const position = Meteor.call('findOneCard', data.idCardArcOrDel).positionCard
             const cardsId = data.list.cards
             let cardsToUpdate = []
@@ -104,6 +105,19 @@ Meteor.methods({
             const cardsOfList = [...anteriorCards, ...ids, ...cardsNotDisplayed]
             return List.update({_id: data.list._id}, {$set: {cards: cardsOfList}})
         }
+    },
+    updateCardPositionInList(data){
+        return List.update(
+            {_id: data._id},
+            {$set: {cards: data.cards}}
+        )
+    },
+    updateCardPositionBetweenList(data){
+        console.log(data);
+        List.update({_id: data.startList._id},
+            {$set: {cards: data.startList.cards}});
+        List.update({_id: data.finishList._id},
+            {$set: {cards: data.finishList.cards}})
     }
 });
 

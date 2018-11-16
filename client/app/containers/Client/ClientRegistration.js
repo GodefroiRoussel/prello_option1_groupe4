@@ -7,7 +7,7 @@ import { Link, browserHistory } from 'react-router'
 
 import { Grid, Form, Button, Icon, Dropdown, Image, Select } from 'semantic-ui-react';
 import defaultStyle from '../../styles/settings.styl'
-import style from '../Registration/registration.styl';
+import style from '../Client/client.styl';
 
 import { callAddClient } from "../../objects/Client/ClientAsyncActions";
 import PropTypes from 'prop-types';
@@ -67,36 +67,29 @@ class ClientRegistration extends Component {
     render() {
         return (
             <Grid centered style={style.root}>
-                <Grid.Column mobile={12} tablet={6} computer={4}>
+                <Grid.Column mobile={12} tablet={8} computer={6}>
                     <div className={style.registrationBox}>
-                        <h2 className={style.titleClientRegistrationBox}>Client Registration</h2>
+                        <h2 className={defaultStyle.textColor1}>Client Registration</h2>
                         <Form onSubmit={this.handleClientRegistration}>
                             <Form.Field >
                                 <label>Client Name* </label>
                                 <input type="text" onChange={(nameClient) => { this.updateNameClient(nameClient.target.value) }} placeholder="Type your client name" name="nameClient" />
-                                <label>Something users will recognize and trust </label>
+                                <label className={style.tips}>Something users will recognize and trust </label>
                             </Form.Field>
                             <Form.Field>
                                 <label>Homepage URL*</label>
                                 <input type="text" onChange={(websiteClient) => { this.updateWebsiteClient(websiteClient.target.value) }} placeholder="Type your homepage url" name="websiteClient" />
-                                <label>The full URL to your application homepage </label>
+                                <label className={style.tips}>The full URL to your application homepage </label>
                             </Form.Field>
                             <Form.Field>
                                 <label>Application description</label>
                                 <input type="text" onChange={(descClient) => { this.updateDescClient(descClient.target.value) }} placeholder="Type your description" name="descriptionClient" />
-                                <label>This is displayed to all users of your application</label>
+                                <label className={style.tips}>This is displayed to all users of your application</label>
                             </Form.Field>
                             <Form.Field>
                                 <label>Authorization callback URL*</label>
                                 <input type="text" onChange={(redirectUris) => { this.updateRedirectUris(redirectUris.target.value) }} placeholder="Type your nickname" name="nickname" />
-                                <label>Your application’s callback URL. Read our OAuth documentation for more information.</label>
-                            </Form.Field>
-                            <Form.Field>
-                                <label>LOGO CLIENT TODO LATER</label>
-                            </Form.Field>
-                            <Form.Field>
-                                <label>Grants*</label>
-                                <input type="email" placeholder="Type your email again" name="emailVerification" />
+                                <label className={style.tips}>Your application’s callback URL. Read our OAuth documentation for more information.</label>
                             </Form.Field>
                             <Form.Field>
                                 <Button onClick={this.handleClientRegistration} fluid animated='fade'>
