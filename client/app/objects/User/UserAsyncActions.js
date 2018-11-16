@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addUser, getAllUser, removeUser, editUser } from './UserActions';
+import { addUser, getAllUser, removeUser, editUser, removeAuthorizationClient } from './UserActions';
 
 export function callAddUser(data) {
     return dispatch => asteroid.call('addUser', data)
@@ -18,10 +18,15 @@ export function callRemoveUser(_id) {
 }
 
 export function callEditUserProfile(data) {
-    return dispatch => asteroid.call('editUserProfile',data)
+    return dispatch => asteroid.call('editUserProfile', data)
         .then(() => dispatch(editUserProfile(data)));
 }
 export function callEditUserPassword(data) {
-    return dispatch => asteroid.call('editUserPassword',data)
+    return dispatch => asteroid.call('editUserPassword', data)
         .then(() => dispatch(editUserPassword(data)));
+}
+
+export function callRemoveAuthorizationClient(_id) {
+    return dispatch => asteroid.call('removeAuthorization', _id)
+        .then(() => dispatch(removeAuthorizationClient(_id)));
 }

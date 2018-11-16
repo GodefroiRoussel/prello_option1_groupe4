@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import User from "./model";
+import AccessToken from "../AccessToken/model";
+import AuthorizationToken from '../AuthorizationToken/model'
 import { Accounts } from "meteor/accounts-base";
 import { createClient } from "ldapjs"
 import List from "../List/model";
+import Client from '../Client/model';
 
 Accounts.emailTemplates.siteName = 'PRELLO - The best management tool for your projects';
 Accounts.emailTemplates.from = 'PRELLO - The best management tool for your projects <contact@prello.com>';
@@ -68,14 +71,25 @@ Meteor.methods({
         const user = Meteor.users.findOne(data.userId)
         const favBoards = user.favoriteBoards
         favBoards.push(data.boardId)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
         const user = Meteor.users.findOne(data.userId)
         const favBoards = user.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
+    },
+    getClientsAuthorizedByUser() {
+        const userId = Meteor.userId();
+        const listAccessToken = AccessToken.find({ "user.id": userId });
+        const clients = Client.find().fetch();
+        return clients;
+    },
+    removeAuthorization(idClient) {
+        const userId = Meteor.userId();
+        AuthorizationToken.remove({ "client.id": idClient, "user.id": userId });
+        return AccessToken.remove({ "client.id": idClient, "user.id": userId });
     },
     async loginPolytech(user) {
         const username = user.username;

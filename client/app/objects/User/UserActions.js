@@ -8,6 +8,7 @@ export const REMOVE_USER = 'REMOVE_USER';
 export const EDIT_USER_PROFILE = 'EDIT_USER_PROFILE';
 export const EDIT_USER_PASSWORD = 'EDIT_USER_PASSWORD';
 export const GET_ALL_USER = 'GET_ALL_USER';
+export const REMOVE_AUTHORIZATION_CLIENT = 'REMOVE_AUTHORIZATION_CLIENT';
 
 /*
  * action creators
@@ -45,6 +46,13 @@ export function editUserPassword(data) {
 export function getAllUser(data) {
     return {
         type: GET_ALL_USER,
-        payload: {products},
+        payload: { products },
+    };
+}
+
+export function removeAuthorizationClient(_id) {
+    return {
+        type: REMOVE_AUTHORIZATION_CLIENT,
+        _id,
     };
 }
