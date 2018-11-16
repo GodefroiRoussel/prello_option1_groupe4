@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Menu, Segment, Dropdown, Tab,  Card, Image, Grid, Header, Button, Modal, Icon} from 'semantic-ui-react';
 import CommentsParametersBoard from '../../components/BoardParameters/CommentsParameters.component';
-import InvitationParameters from './InvitationParameters';
+import InvitationParametersBoard from '../../components/BoardParameters/InvitationParameters.component';
 import JoinBoardParameters from './JoinBoardParameters';
 import TeamsParameters from './TeamsParameters';
 import LabelsParameters from './LabelsParameters';
@@ -13,7 +13,7 @@ import defaultStyle from "../../styles/settings.styl";
 import style from './boardParameters.styl';
 import BackgroundParameters from "./BackgroundParameters";
 import BoardMenu from "../Board/BoardMenu";
-import {callUpdateCanComment} from '../../objects/Board/BoardAsyncActions';
+import {callUpdateCanComment, callUpdateInvitationsOpenedBoard} from '../../objects/Board/BoardAsyncActions';
 
 class BoardParameters extends Component {
 
@@ -23,7 +23,10 @@ class BoardParameters extends Component {
     }
 
     panes = [
-        { menuItem: 'General', render: () => <Tab.Pane><CommentsParametersBoard _id={this.props.board._id} canComment={this.props.board.canComment} callUpdateCanComment={this.props.DispatchCallUpdateCanComment}/><InvitationParameters/><JoinBoardParameters/></Tab.Pane> },
+        { menuItem: 'General', render: () => <Tab.Pane><CommentsParametersBoard _id={this.props.board._id} canComment={this.props.board.canComment} callUpdateCanComment={this.props.DispatchCallUpdateCanComment}/>
+                                            <InvitationParametersBoard _id={this.props.board._id} invitationsOpenedBoard={this.props.board.invitationsOpenedBoard} callUpdateInvitationsOpenedBoard={this.props.DispatchCallInvitationsOpenedBoard}/>
+                                            <JoinBoardParameters/>
+                                            </Tab.Pane> },
         { menuItem: 'Background', render: () => <Tab.Pane><BackgroundParameters/></Tab.Pane> },
         { menuItem: 'Teams', render: () => <Tab.Pane><TeamsParameters/></Tab.Pane> },
         { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters/></Tab.Pane> },
@@ -61,6 +64,7 @@ function mapStateToProps(state, ownProps){
 function mapDispatchToProps(dispatch){
     return{
         DispatchCallUpdateCanComment: data => dispatch(callUpdateCanComment(data)),
+        DispatchCallInvitationsOpenedBoard: data => dispatch(callUpdateInvitationsOpenedBoard(data)),
     }
 }
 

@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Form, Divider, Radio, Button} from 'semantic-ui-react'
 
-export default class InvitationParameters extends Component {
-    state = {
-        value:'all members'
-    }
-    handleChange = (e, { value }) => this.setState({ value })
+const InvitationParametersBoard = (props) => {
 
-    render() {
+    const handleChange = (e, { value }) => {
+        var invitation = true;
+        if(value == 'admin'){
+            invitation = false
+        }
+        props.callUpdateInvitationsOpenedBoard({invitationsOpenedBoard: invitation, _id: props._id})
+    }
+
         return (
             <Form>
                 <h4>Invitation authorizations</h4>
@@ -20,8 +23,8 @@ export default class InvitationParameters extends Component {
                             label='Administrators only'
                             name='radioGroup'
                             value='admin'
-                            checked={this.state.value === 'admin'}
-                            onChange={this.handleChange}
+                            checked={props.invitationsOpenedBoard == false}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -29,13 +32,14 @@ export default class InvitationParameters extends Component {
                             label='All members'
                             name='radioGroup'
                             value='all members'
-                            checked={this.state.value === 'all members'}
-                            onChange={this.handleChange}
+                            checked={props.invitationsOpenedBoard == true}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                 </Form.Group>
                 <Divider/>
             </Form>
         )
-    }
 }
+
+export default InvitationParametersBoard;

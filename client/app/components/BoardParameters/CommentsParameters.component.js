@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Form, Divider, Radio, Button} from 'semantic-ui-react'
 import defaultStyle from "../../styles/settings.styl";
 import style from '../../containers/BoardParameters/boardParameters.styl';

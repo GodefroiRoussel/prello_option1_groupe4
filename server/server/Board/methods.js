@@ -112,6 +112,9 @@ Meteor.methods({
     updateCanComment(data){
         return Board.update({_id: data._id}, {$set: {canComment: data.canComment}})
     },
+    callInvitationsOpenedBoard(data){
+        return Board.update({_id: data._id}, {$set: {invitationsOpenedBoard: data.invitationsOpenedBoard}})
+    },
 });
 
 export default Board;

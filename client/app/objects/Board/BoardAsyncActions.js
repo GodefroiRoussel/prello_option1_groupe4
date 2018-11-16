@@ -1,6 +1,13 @@
 import asteroid from '../../common/asteroid';
-import { getBoard, addBoard, updateCanComment , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive, editFavoriteBoards, updateBoardTitle} from './BoardActions';
-import {updateListTitle} from "../List/ListActions";
+import { getBoard, 
+    addBoard, 
+    updateCanComment , 
+    updateBoardListId, 
+    updateBoardListsPosition, 
+    updateListsPositionsAfterDeleteOrArchive, 
+    editFavoriteBoards, 
+    updateBoardTitle,
+    updateInvitationsOpenedBoard} from './BoardActions';
 
 export function callGetBoard(idBoard) {
     return dispatch => asteroid.call('getBoard', idBoard)
@@ -49,4 +56,9 @@ export function callEditBoardTitle(data) { // data = _id, titleBoard
 export function callUpdateCanComment(data){
     return dispatch => asteroid.call('updateCanComment', data)
         .then(result => dispatch(updateCanComment(data)))
+}
+
+export function callUpdateInvitationsOpenedBoard(data){
+    return dispatch => asteroid.call('callInvitationsOpenedBoard', data)
+        .then(result => dispatch(updateInvitationsOpenedBoard(data)))
 }
