@@ -1,17 +1,21 @@
 import style from "./boardMenu.styl";
 import defaultStyle from "../../styles/settings.styl";
-import {Icon, Input,Menu} from "semantic-ui-react";
+import {Card, Icon, Input, Menu,Field} from "semantic-ui-react";
 import React, { Component } from 'react';
-import bo from '../../common/dataTest'
 //import BoardParameters from '../BoardParameters/BoardParameters'
 import { Link, browserHistory } from 'react-router'
+import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
+import {callEditBoardTitle, callUpdateListPositionInBoard} from "../../objects/Board/BoardAsyncActions";
+import {connect} from "react-redux";
 
-export default class BoardMenu extends Component {
+class BoardMenu extends Component {
 
     state = {
-        board: bo,
+        //board:
         activeItem:'',
-        displayParams: false
+        displayParams: false,
+        editBoardTitle: false,
+        boardTitle: this.props.titleBoard,
     }
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
@@ -20,6 +24,23 @@ export default class BoardMenu extends Component {
         if (name === 'parameters') {
         }
         this.handleItemClick(e, {name});
+    }
+
+    toggleEditBoardTitle = () => {
+        this.setState({ editListTitle: !this.state.editListTitle })
+    }
+
+    editBoardTitle = (e) => {
+        if (e.key === 'Enter') {
+
+            console.log(this.state.titleBoard)
+            console.log(this.props)
+            /*this.setState({titleBoard: e.target.value}, () =>
+                this.props.dispatchCallEditBoardTitle({titleBoard: this.state.titleBoard, _id: this.props.board._id})
+            )*/
+            this.props.dispatchCallEditBoardTitle({titleBoard: this.props.titleBoard, _id: this.props._id})
+            this.toggleEditBoardTitle();
+        }
     }
 
     render() {
@@ -34,11 +55,8 @@ export default class BoardMenu extends Component {
                 <Menu.Item>
                     <Input className='icon' icon='search' placeholder='Search...' />
                 </Menu.Item>
-                <Menu.Item
-                    className={style.titleBoard}
-                    borderless={'true'}
-                    name={this.props.titleBoard}>
-                </Menu.Item>
+                {this.titleBoardMode()}
+
 
                 <Menu.Item
                     className={defaultStyle.textColor3}
@@ -49,4 +67,42 @@ export default class BoardMenu extends Component {
                 </Menu.Item>
             </Menu>
         )}
+
+    titleBoardMode = () => {
+        if(!this.state.editListTitle){
+            return(
+                <Menu.Item onClick={this.toggleEditBoardTitle}
+                    className={style.titleBoard}
+                    borderless={'true'}
+                    name={this.props.titleBoard}>
+                </Menu.Item>
+            );
+        }
+        else{
+            return (
+                <Menu.Item>
+
+                    <label>Change board title</label>
+                    <Input onKeyPress={this.editBoardTitle} name="titleList" type="text" value={this.props.boardTitle}/>
+
+                </Menu.Item>
+
+            );
+        }
+    }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return ({
+        titleBoard: this.props.titleBoard,
+        _id: this.props.idBoard
+    })
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatchCallEditBoardTitle: (data) => dispatch(callEditBoardTitle(data)),
+    }
+};
+
+export default connect(mapDispatchToProps)(BoardMenu)

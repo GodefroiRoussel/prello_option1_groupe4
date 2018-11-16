@@ -45,6 +45,6 @@ export function editUserPassword(data) {
 export function getAllUser(data) {
     return {
         type: GET_ALL_USER,
-        data,
+        payload: {products},
     };
 }

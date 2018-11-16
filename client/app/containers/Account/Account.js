@@ -65,7 +65,7 @@ class Account extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if(this.props != nextProps) {
+        if(this.props !== nextProps) {
             this.setState({
                 genderValue: nextProps.user.profile.genderUser
             });

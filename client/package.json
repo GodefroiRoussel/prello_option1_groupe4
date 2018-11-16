@@ -31,6 +31,7 @@
     "lodash": "~4.17.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
+    "react-beautiful-dnd": "^10.0.0",
     "react-chartjs-2": "^2.5.8",
     "react-css-modules": "^4.0.3",
     "react-dom": "^16.6.1",
@@ -41,6 +42,7 @@
     "redux-thunk": "^2.1.0",
     "rupture": "~0.6.2",
     "s-grid": "~1.2.0",
+    "semantic-ui-calendar-react": "^0.11.0",
     "semantic-ui-react": "^0.83.0"
   },
   "devDependencies": {
