@@ -12,7 +12,7 @@ const BoardSchema = new SimpleSchema({
     invitationsOpenedBoard: {type: Boolean,defaultValue: true},
     isDeletedBoard: {type: Boolean,defaultValue: false},
     isArchivedBoard: {type: Boolean,defaultValue: false},
-    canComment: {type: Boolean, defaultValue: true},
+    canComment: {type: String, defaultValue: "all"},
     seedForGuest: {type: Boolean,optional: true},
     admins : {type: Array},
     'admins.$':{type: String},

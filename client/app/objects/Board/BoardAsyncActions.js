@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { getBoard, addBoard , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive, editFavoriteBoards, updateBoardTitle} from './BoardActions';
+import { getBoard, addBoard, updateCanComment , updateBoardListId, updateBoardListsPosition, updateListsPositionsAfterDeleteOrArchive, editFavoriteBoards, updateBoardTitle} from './BoardActions';
 import {updateListTitle} from "../List/ListActions";
 
 export function callGetBoard(idBoard) {
@@ -44,4 +44,9 @@ export function deleteAddFavoriteBoard(idList, board) {
 export function callEditBoardTitle(data) { // data = _id, titleBoard
     return dispatch => asteroid.call('updateBoardTitle', data)
         .then(result => dispatch(updateBoardTitle(data)))
+}
+
+export function callUpdateCanComment(data){
+    return dispatch => asteroid.call('updateCanComment', data)
+        .then(result => dispatch(updateCanComment(data)))
 }

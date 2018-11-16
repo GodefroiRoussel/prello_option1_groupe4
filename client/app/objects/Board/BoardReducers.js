@@ -1,4 +1,4 @@
-import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST, UPDATE_BOARD_LIST_POSITION,EDIT_TITLE_BOARD, EDIT_BOARD, REMOVE_BOARD } from './BoardActions';
+import { GET_BOARD, ADD_BOARD, RESET, UPDATE_BOARD_LIST, UPDATE_BOARD_LIST_POSITION,EDIT_TITLE_BOARD, EDIT_BOARD, REMOVE_BOARD, EDIT_CAN_COMMENT } from './BoardActions';
 import { add , edit} from '../../common/helpers';
 
 const boards = (state = [], action) => {
@@ -41,6 +41,17 @@ const boards = (state = [], action) => {
             return state;
         case EDIT_BOARD:
             return edit(state, action);
+        case EDIT_CAN_COMMENT:
+            elemToEditArray = state.slice().filter(item => item._id === action.data._id);
+            if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
+                const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+                const newState = state.slice();
+                if(elemToEditArray[0].canComment){
+                    newState[elemToEditIndex].canComment=(action.data.canComment)
+                    return newState;
+                }
+            }
+            return state;
         case RESET:
             return [];
         default:

@@ -7,6 +7,7 @@ export const UPDATE_BOARD_LIST_POSITION='UPDATE_BOARD_LIST_POSITION';
 export const EDIT_TITLE_BOARD='EDIT_TITLE_BOARD';
 export const EDIT_BOARD='EDIT_BOARD';
 export const REMOVE_BOARD='REMOVE_BOARD';
+export const EDIT_CAN_COMMENT='EDIT_CAN_COMMENT';
 
 export function getBoard(_id) {
     return {
@@ -73,4 +74,11 @@ export function editBoard(_id, data){
         _id,
         data,
     };
+}
+
+export function updateCanComment(data){
+    return{
+        type: EDIT_CAN_COMMENT,
+        data,
+    }
 }

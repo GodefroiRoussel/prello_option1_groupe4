@@ -108,6 +108,10 @@ Meteor.methods({
         )
         return Board.findOne(data._id)
     },
+
+    updateCanComment(data){
+        return Board.update({_id: data._id}, {$set: {canComment: data.canComment}})
+    },
 });
 
 export default Board;
