@@ -4,6 +4,14 @@ import { Accounts } from "meteor/accounts-base";
 import { createClient } from "ldapjs"
 import List from "../List/model";
 
+const URL_LDAP = Meteor.settings.URL_LDAP || process.env.URL_LDAP;
+const CREDENTIALS = Meteor.settings.CREDENTIALS || process.env.CREDENTIALS;
+const PASSWORD = Meteor.settings.PASSWORD || process.env.PASSWORD;
+const BASE_PERMANENT_SEARCH = Meteor.settings.BASE_PERMANENT_SEARCH || process.env.BASE_PERMANENT_SEARCH;
+const BASE_STUDENT_SEARCH = Meteor.settings.BASE_STUDENT_SEARCH || process.env.BASE_STUDENT_SEARCH;
+const BASE_DN = Meteor.settings.BASE_DN || process.env.BASE_DN;
+
+
 Accounts.emailTemplates.siteName = 'PRELLO - The best management tool for your projects';
 Accounts.emailTemplates.from = 'PRELLO - The best management tool for your projects <contact@prello.com>';
 
@@ -68,14 +76,14 @@ Meteor.methods({
         const user = Meteor.users.findOne(data.userId)
         const favBoards = user.favoriteBoards
         favBoards.push(data.boardId)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
         const user = Meteor.users.findOne(data.userId)
         const favBoards = user.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
     },
     async loginPolytech(user) {
         const username = user.username;
@@ -150,9 +158,9 @@ Meteor.methods({
 })
 
 authenticateUser = (username, pwd) => {
-    const ldap = createClient({ url: Meteor.settings.URL_LDAP })
-    const cred = Meteor.settings.CREDENTIALS;
-    const password = Meteor.settings.PASSWORD;
+    const ldap = createClient({ url: URL_LDAP })
+    const cred = CREDENTIALS;
+    const password = PASSWORD;
 
     return new Promise((resolve, reject) => {
         // Enter in the ldap through a good user to be able to do a research
@@ -168,12 +176,12 @@ authenticateUser = (username, pwd) => {
 
                 // A permanent user has a username with only its name and the student has a username with firstname.lastname
                 if (username.split('.').length == 1)
-                    var search = Meteor.settings.BASE_PERMANENT_SEARCH;
+                    var search = BASE_PERMANENT_SEARCH;
                 else
-                    var search = Meteor.settings.BASE_STUDENT_SEARCH;
+                    var search = BASE_STUDENT_SEARCH;
 
                 // Search the CN of the user to check if the password is right to this account
-                ldap.search(search + "," + Meteor.settings.BASE_DN, opts, function (err, res) {
+                ldap.search(search + "," + BASE_DN, opts, function (err, res) {
                     if (err)
                         return reject(err);
                     else {

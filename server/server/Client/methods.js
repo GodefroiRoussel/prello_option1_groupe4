@@ -5,6 +5,8 @@ import AccessToken from '../AccessToken/model'
 import AuthorizationToken from '../AuthorizationToken/model'
 import jwt from "jsonwebtoken";
 
+const SECRET_KEY = Meteor.settings.SECRET_KEY || process.env.SECRET_KEY;
+const ISSUER = Meteor.settings.ISSUER || process.env.ISSUER;
 
 /**
  * Method that returns a list of clients for a user
@@ -22,9 +24,9 @@ Meteor.method("getClients", function (userId) {
         getArgsFromRequest: function (request) {
             const token = request.authToken;
             try {
-                const decoded = jwt.verify(token, Meteor.settings.SECRET_KEY, {
+                const decoded = jwt.verify(token, SECRET_KEY, {
                     ignoreExpiration: false,
-                    issuer: Meteor.settings.ISSUER
+                    issuer: ISSUER
                 });
                 return [decoded.userId];
             } catch (err) {
@@ -82,9 +84,9 @@ Meteor.method("getClientById", function (clientId, userId) {
             const params = request.params;
             if (params.id) {
                 try {
-                    const decoded = jwt.verify(token, Meteor.settings.SECRET_KEY, {
+                    const decoded = jwt.verify(token, SECRET_KEY, {
                         ignoreExpiration: false,
-                        issuer: Meteor.settings.ISSUER
+                        issuer: ISSUER
                     });
                     return [params.id, decoded.userId];
                 } catch (err) {
@@ -127,9 +129,9 @@ Meteor.method('removeClient', function (clientId, userId) {
             const params = request.params;
             if (params._id) {
                 try {
-                    const decoded = jwt.verify(token, Meteor.settings.SECRET_KEY, {
+                    const decoded = jwt.verify(token, SECRET_KEY, {
                         ignoreExpiration: false,
-                        issuer: Meteor.settings.ISSUER
+                        issuer: ISSUER
                     });
                     return [params._id, decoded.userId];
                 } catch (err) {

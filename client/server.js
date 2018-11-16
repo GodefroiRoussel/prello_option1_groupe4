@@ -10,6 +10,8 @@ if (process.env.NODE_ENV == 'production') {
 
   var staticPath = path.join(__dirname, './public');
   app.use(express.static(staticPath));
+  //TODO: HANDLE 404
+  app.all('*', (req, res) => res.sendFile(path.join(staticPath, 'index.html')));
 
   // Allows you to set port in the project properties.
   app.set('port', process.env.PORT || 3000);
