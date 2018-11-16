@@ -84,13 +84,13 @@ asteroid.ddp.on('changed', (updatedDoc) => {
     if (updatedDoc.collection === 'team') {
         store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
     }
-    if (updatedDoc.collection === 'cards') {
+    if (updatedDoc.collection === 'card') {
         store.dispatch(editCard(updatedDoc.id, updatedDoc.fields));
     }
-    if (updatedDoc.collection === 'lists') {
+    if (updatedDoc.collection === 'list') {
         store.dispatch(editList(updatedDoc.id, updatedDoc.fields));
     }
-    if (updatedDoc.collection === 'boards') {
+    if (updatedDoc.collection === 'board') {
         store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
     }
 });
