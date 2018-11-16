@@ -82,7 +82,6 @@ class CardModalDeadlines extends React.Component {
             )
         }
         console.log(e.target.dateWork.value)
-        /**/
     }
 
 
