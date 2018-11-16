@@ -1,4 +1,4 @@
-import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM, ACTIVE_INDEX, RESET } from './TeamActions';
+import { ADD_TEAM, GET_ALL_TEAM, EDIT_TEAM_MEMBERS, REMOVE_TEAM, ACTIVE_INDEX, RESET, EDIT_TEAM_VISIBILITY, DELETE_TEAM_MEMBERS, EDIT_TEAM } from './TeamActions';
 import { add, edit, remove } from '../../common/helpers';
 
 const teams = (state = [], action) => {
@@ -10,14 +10,18 @@ const teams = (state = [], action) => {
       return action.data;
 
     case EDIT_TEAM_MEMBERS:
-      const elemToEditArray = state.slice().filter(item => item._id === action._id);
+      if(action.data){
+        var elemToEditArray = state.slice().filter(item => item._id === action.data._id);
         if (Array.isArray(elemToEditArray) && elemToEditArray.length) {
           const elemToEditIndex = state.indexOf(elemToEditArray[0]);
           const newState = state.slice();
-          newState[elemToEditIndex].members = action.members;
+          newState[elemToEditIndex].members.push(action.data.member);
           return newState;
           }
-      return state;
+        return state;
+      }else{
+        return state;
+      }
 
     case REMOVE_TEAM:
       return remove(state, action);  
@@ -30,6 +34,30 @@ const teams = (state = [], action) => {
         return state.concat([action.data]);
       }
     
+    case EDIT_TEAM_VISIBILITY:
+      elemToEditArray = state.slice().filter(item => item._id === action.data._id);
+      if (Array.isArray(elemToEditArray) && elemToEditArray.length) {
+        const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+        const newState = state.slice();
+        newState[elemToEditIndex].visibilityTeam = action.data.visibilityTeam;
+        return newState;
+        }
+      return state;
+
+    case DELETE_TEAM_MEMBERS:
+        elemToEditArray = state.slice().filter(item => item._id === action.data._id);
+        if (Array.isArray(elemToEditArray) && elemToEditArray.length) {
+          const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+          const newState = state.slice();
+          const members = newState[elemToEditIndex].members;
+          const finalMembers = members.filter(x => x!=action.data.member);
+          newState[elemToEditIndex].members = finalMembers;
+          return newState;
+          }
+        return state;
+
+    case EDIT_TEAM:
+          return edit(state, action);
     case RESET:
       return [];
 

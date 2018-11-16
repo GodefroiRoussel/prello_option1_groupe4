@@ -5,7 +5,7 @@ import { callUpdateBoardListId, callUpdateListsPosition, callUpdateListsPosition
 export function callAddList(data, board) {
   return dispatch => asteroid.call('addList', data)
       .then(result => {
-          dispatch(addList({ ...{_id: result, cards: []}, ...data }))
+          dispatch(addList({ ...{_id: result, cards: [], isArchivedList: false, isDeletedList: false}, ...data }))
           dispatch(callUpdateBoardListId(result, board))
         });
 }
