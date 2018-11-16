@@ -3,8 +3,8 @@ import { addClient, getAllClient, removeClient, failRemoveClient } from './Clien
 
 export function callAddClient(data) {
     const client = {
-        nameClient: data.nameClient, redirectUris: data.redirectUris, grants: data.grants, logoClient: data.logoClient,
-        descriptionClient: data.descriptionClient, websiteClient: data.websiteClient
+        nameClient: data.nameClient, redirectUris: data.redirectUris, grants: data.grants, scopes: data.scopes,
+        logoClient: data.logoClient, descriptionClient: data.descriptionClient, websiteClient: data.websiteClient
     };
     return dispatch => asteroid.call('addClient', client)
         .then(result => {
