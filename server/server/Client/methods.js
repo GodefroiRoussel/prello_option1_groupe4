@@ -53,6 +53,7 @@ Meteor.method("addClient", function (client) {
         clientSecret: clientSecret,
         redirectUris: [client.redirectUris],
         grants: client.grants,
+        scopes: client.scopes,
         nameClient: client.nameClient,
         logoClient: 'Plus obligatoire',
         descriptionClient: client.descriptionClient,
@@ -100,7 +101,8 @@ Meteor.method("getClientById", function (clientId, userId) {
 
 /**
  * Method that delete a client 
- * params:
+ * params:  clientId: String: The id of the client
+ *          userId: String: The id of the user 
  * API: require an Authorization Bearer token
  * return a 200 status code if well deleted else 500 Not Authorized
  */

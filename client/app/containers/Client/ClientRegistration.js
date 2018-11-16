@@ -12,12 +12,6 @@ import style from '../Client/client.styl';
 import { callAddClient } from "../../objects/Client/ClientAsyncActions";
 import PropTypes from 'prop-types';
 
-const options = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-]
-
-
 class ClientRegistration extends Component {
 
     constructor(props) {
@@ -28,6 +22,7 @@ class ClientRegistration extends Component {
             descriptionClient: '',
             redirectUris: '',
             grants: [],
+            scopes: [],
             logoClient: ''
         };
     }
@@ -41,6 +36,7 @@ class ClientRegistration extends Component {
             descriptionClient: this.state.descriptionClient,
             redirectUris: this.state.redirectUris,
             grants: ['refresh_token', 'implicit', 'authorization_code'],
+            scopes: ['read', 'write'],
             logoClient: ''
         }).catch((error) => {
             Alert.error(error.message);
@@ -90,6 +86,14 @@ class ClientRegistration extends Component {
                                 <label>Authorization callback URL*</label>
                                 <input type="text" onChange={(redirectUris) => { this.updateRedirectUris(redirectUris.target.value) }} placeholder="Type your nickname" name="nickname" />
                                 <label className={style.tips}>Your application’s callback URL. Read our OAuth documentation for more information.</label>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Grants</label>
+                                <label className={style.tips}>This feature will be available later. For the moment, your application has access to the : refresh_token, implicit and authorization_code</label>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Scopes</label>
+                                <label className={style.tips}>This feature will be available later. For the moment, your application has access to the : read and write scope</label>
                             </Form.Field>
                             <Form.Field>
                                 <Button onClick={this.handleClientRegistration} fluid animated='fade'>
