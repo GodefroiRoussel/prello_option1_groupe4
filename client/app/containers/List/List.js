@@ -148,8 +148,7 @@ class ListC extends Component {
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal/></Card.Header>
-                                <Card.Header className={style.cardBoardHeader}>{x.titleCard} <CardModal card={x}/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal card={x}/></Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
