@@ -35,7 +35,7 @@ class Board extends Component {
             if(this.props.lists){
                 return(
                     <div className={style.generalBoardRendering}>
-                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard} idBoard={this.props.board._id}/>
                         {this.listsIsFilled()}
 
 
@@ -45,7 +45,7 @@ class Board extends Component {
                 return(
                     <div className={style.generalBoardRendering}>
                         <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
-                        <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                        <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
 
 
                     </div>
@@ -66,8 +66,8 @@ class Board extends Component {
         }
 
         if(
-            destination.draggableId ===source.droppableId &&
-            destination.index ===source.index
+            destination.draggableId === source.droppableId &&
+            destination.index === source.index
         ){
             return;
         }
@@ -84,8 +84,8 @@ class Board extends Component {
             return;
         }
 
-        const start = this.props.lists.find(el => el._id == source.droppableId);
-        const finish = this.props.lists.find(el => el._id ==destination.droppableId);
+        const start = this.props.lists.find(el => el._id === source.droppableId);
+        const finish = this.props.lists.find(el => el._id === destination.droppableId);
         
         if(start === finish){
             const newCardIds = Array.from(start.cards);
@@ -135,7 +135,7 @@ class Board extends Component {
                                                         <BoardComponent lists={this.props.lists}/>
                                                         <div className={style.cardCustom}>
                                                             <Card className={style.ListCard}>
-                                                                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                                                                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
                                                             </Card>
                                                         </div>
                                                     </div>
@@ -157,8 +157,9 @@ class Board extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     let listB=[];
-    let board = state.boards.find(el => el._id == ownProps.location.state.id);
+    let board = state.boards.find(el => el._id === ownProps.location.state.id);
     state.lists.find(x => {
+        let board = state.boards.find(el => el._id === ownProps.location.state.id);
         if(board){
             if(board.listsId.includes(x._id)){
                 listB.push(x);
@@ -169,16 +170,17 @@ const mapStateToProps = (state, ownProps) => {
     if(listB && board){
         board.listsId.forEach((list)=> {
             listB.forEach((element) => {
-                if(element._id == list){
+                if(element._id === list){
                     result.push(element);
                 }
             })
         })
     }
     return ({
-        lists: result,
-        board: board,
+        lists: listB.filter(el => el.isDeletedList === false && el.isArchivedList === false),
         boards: state.boards,
+        //board: board,
+        board: state.boards.find(el => el._id === ownProps.location.state.id)
     })
 }
 

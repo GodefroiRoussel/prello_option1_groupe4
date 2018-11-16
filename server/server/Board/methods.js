@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import Board from './model';
 import '../List/index'
+import List from "../List/model";
 
 
 Meteor.methods({
@@ -98,7 +99,15 @@ Meteor.methods({
             const listsOfBoard = [...anteriorLists, ...ids, ...listsNotDisplayed]
             return Board.update({_id: data.board._id}, {$set: {listsId: listsOfBoard}})
         }
-    }
+    },
+
+    updateBoardTitle(data) {
+        Board.update(
+            {_id: data._id},
+            {$set: {titleBoard: data.titleBoard}}
+        )
+        return Board.findOne(data._id)
+    },
 });
 
 export default Board;

@@ -103,6 +103,26 @@ class CardModalDeadlines extends React.Component {
                                     </List>
 
                                 </List.Content>
+                                <List.Content floated='right'>
+                                    <Form>
+                                        <Form.Group>
+                                            <DateInput
+                                                name="startDate"
+                                                placeholder="Start Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <DateInput
+                                                name="endDate"
+                                                placeholder="End Date"
+                                                value={this.state.date}
+                                                iconPosition="left"
+                                                onChange={this.handleChange} />
+                                            <Input type={"text"} placeholder='Nb hours' />
+                                            <Button>Delete</Button>
+                                        </Form.Group>
+                                    </Form>
+                                </List.Content>
                             </List.Item>
                             <List.Item>
                                 <List.Content>

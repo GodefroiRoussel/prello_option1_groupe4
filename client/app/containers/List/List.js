@@ -148,7 +148,7 @@ class ListC extends Component {
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal card={x}/></Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
@@ -171,7 +171,7 @@ const mapStateToProps = (state, ownProps) => {
     if(cardB){
         ownProps.list.cards.forEach((card)=> {
             cardB.forEach((element) => {
-                if(element._id == card){
+                if(element._id === card){
                     result.push(element);
                 }
             })
@@ -180,8 +180,8 @@ const mapStateToProps = (state, ownProps) => {
 
     return({
             lists: state.lists,
+            //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
-
         }
     )
 

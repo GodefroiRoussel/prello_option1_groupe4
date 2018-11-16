@@ -6,7 +6,7 @@ import style from './todo.styl';
 import PropTypes from 'prop-types';
 
 const Todo = (props) => {
-  const { id, finished, message, dispatchCallRemoveTodo, dispatchCallEditTodo } = props;
+
   const handleRemove = () => {
     dispatchCallRemoveTodo(id);
   };

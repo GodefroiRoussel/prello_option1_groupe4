@@ -2,19 +2,20 @@ import style from "./boardMenu.styl";
 import defaultStyle from "../../styles/settings.styl";
 import {Card, Icon, Input, Menu,Field} from "semantic-ui-react";
 import React, { Component } from 'react';
-import bo from '../../common/dataTest'
 //import BoardParameters from '../BoardParameters/BoardParameters'
 import { Link, browserHistory } from 'react-router'
 import {Form} from "semantic-ui-react/dist/commonjs/collections/Form/Form";
+import {callEditBoardTitle, callUpdateListPositionInBoard} from "../../objects/Board/BoardAsyncActions";
+import {connect} from "react-redux";
 
-export default class BoardMenu extends Component {
+class BoardMenu extends Component {
 
     state = {
-        board: bo,
+        //board:
         activeItem:'',
         displayParams: false,
         editBoardTitle: false,
-        boardTitle: this.props.titleBoard
+        boardTitle: this.props.titleBoard,
     }
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
@@ -31,10 +32,13 @@ export default class BoardMenu extends Component {
 
     editBoardTitle = (e) => {
         if (e.key === 'Enter') {
-            /*
-            this.setState({titleList: e.target.value}, () =>
-                this.props.dispatchCallEditListTitle({titleList: this.state.titleList, _id: this.props.list._id})
+
+            console.log(this.state.titleBoard)
+            console.log(this.props)
+            /*this.setState({titleBoard: e.target.value}, () =>
+                this.props.dispatchCallEditBoardTitle({titleBoard: this.state.titleBoard, _id: this.props.board._id})
             )*/
+            this.props.dispatchCallEditBoardTitle({titleBoard: this.props.titleBoard, _id: this.props._id})
             this.toggleEditBoardTitle();
         }
     }
@@ -79,7 +83,7 @@ export default class BoardMenu extends Component {
                 <Menu.Item>
 
                     <label>Change board title</label>
-                    <Input onKeyPress={this.editBoardTitle} name="titleList" type="text" value={this.boardTitle}/>
+                    <Input onKeyPress={this.editBoardTitle} name="titleList" type="text" value={this.props.boardTitle}/>
 
                 </Menu.Item>
 
@@ -87,3 +91,18 @@ export default class BoardMenu extends Component {
         }
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return ({
+        titleBoard: this.props.titleBoard,
+        _id: this.props.idBoard
+    })
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatchCallEditBoardTitle: (data) => dispatch(callEditBoardTitle(data)),
+    }
+};
+
+export default connect(mapDispatchToProps)(BoardMenu)
