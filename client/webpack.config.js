@@ -32,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Prello!',
+      title: 'Prello',
       template: './index_template.ejs',
       inject: 'body'
     }),

@@ -8,6 +8,9 @@ var uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
 var productionPlugin = new webpack.DefinePlugin({
   'process.env': {
     'NODE_ENV': JSON.stringify('production'),
+    'PUBLIC_URL': process.env.PUBLIC_URL,
+    'APIURL': process.env.APIURL,
+    'PORT': process.env.PORT
   }
 });
 
@@ -15,7 +18,7 @@ var cssExtractPlugin = new ExtractTextPlugin('styles.css');
 
 config.devtool = '';
 config.output.pathinfo = false;
-config.output.publicPath = process.env.publicPath || 'http://localhost:3000/';
+config.output.publicPath = process.env.PUBLIC_URL;
 config.entry = ['./app/App.js'];
 config.plugins.unshift(productionPlugin);
 config.plugins.push(cssExtractPlugin);
