@@ -328,13 +328,7 @@ class CardModal extends React.Component {
                                             </Button.Content>
                                         </Button>
                                     </List.Item>
-
-
                                 </List>
-
-
-
-
                             </Grid.Column>
                         </Grid>
                     </Modal.Description>

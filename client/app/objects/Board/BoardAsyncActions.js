@@ -7,7 +7,8 @@ import { getBoard,
     updateListsPositionsAfterDeleteOrArchive, 
     editFavoriteBoards, 
     updateBoardTitle,
-    updateInvitationsOpenedBoard} from './BoardActions';
+    updateInvitationsOpenedBoard,
+    updateTeamBoard} from './BoardActions';
 
 export function callGetBoard(idBoard) {
     return dispatch => asteroid.call('getBoard', idBoard)
@@ -59,6 +60,11 @@ export function callUpdateCanComment(data){
 }
 
 export function callUpdateInvitationsOpenedBoard(data){
-    return dispatch => asteroid.call('callInvitationsOpenedBoard', data)
+    return dispatch => asteroid.call('updateInvitationsOpenedBoard', data)
         .then(result => dispatch(updateInvitationsOpenedBoard(data)))
+}
+
+export function callUpdateTeamBoard(data){
+    return dispatch => asteroid.call('updateTeamBoard', data)
+        .then(result => dispatch(updateTeamBoard(data)))
 }

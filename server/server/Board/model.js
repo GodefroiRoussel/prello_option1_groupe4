@@ -6,7 +6,7 @@ const Board = new Meteor.Collection('board');
 
 const BoardSchema = new SimpleSchema({
     titleBoard: {type: String,min: 1, max: 20},
-    visibilityBoard: {type: Boolean,defaultValue: false},
+    visibilityBoard: {type: Boolean,defaultValue: true},
     backgroundBoard: {type: String,optional: true},
     seedBoard: {type: String,optional: true},
     invitationsOpenedBoard: {type: Boolean,defaultValue: true},

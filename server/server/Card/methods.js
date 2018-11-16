@@ -73,7 +73,6 @@ Meteor.methods({
         return Card.findOne({_id: data.idCard})
     },
     deleteCard(id) {
-        console.log('card', id)
         Card.update( {_id: id}, {$set: {isDeletedCard: true}})
         return Card.findOne({_id: id})
     },
