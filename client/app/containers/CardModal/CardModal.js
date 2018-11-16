@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import cssModules from 'react-css-modules';
 import {
     Tab,
     Card,
@@ -41,8 +40,12 @@ class CardModal extends React.Component {
         this.state = {
             openModal: false,
             editTitle: false,
+            editDescription: false,
             idCard: this.props.card._id,
             titleCard: this.props.card.titleCard,
+            descriptionCard: this.props.card.descriptionCard,
+            billableCard: this.props.card.billable,
+
             /*card:{
                 titleCard: "The title of this card",
                 descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
@@ -53,27 +56,32 @@ class CardModal extends React.Component {
         };
     }
 
-    toggleModal = () => this.setState(state => ({ openModal: !state.openModal }));
+    toggleModal = () => this.setState({ openModal: !this.state.openModal });
 
     toggleEditCardTitle = () => this.setState({ editTitle: !this.state.editTitle })
 
+    toggleEditDescription = () => this.setState({editDescription: !this.state.editDescription})
+
     editCardTitle = (e) => {
+        console.log(this.props.card._id)
         this.setState({titleCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardTitle({titleCard: this.props.card.titleCard, _id: this.props.card._id})
+            this.props.dispatchCallEditCardTitle({titleCard: this.state.titleCard, _id: this.props.card._id})
         )
     }
 
     editDescriptionCard = (e) => {
         this.setState({descriptionCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardDescription({descriptionCard: this.props.card.descriptionCard, _id: this.props.card._id})
+            this.props.dispatchCallEditCardDescription({descriptionCard: this.state.descriptionCard, _id: this.props.card._id})
         )
     }
 
-    // si on recup la valeur du label => mettre des if pour true et false
-    // peut etre moyen de mettre !this.state.billableCard ?
-    editBillableCard = (e) => {
-        this.setState({billableCard: e.target.value}, () =>
-            this.props.dispatchCallEditCardBillable({billable: this.props.card.billableCard, _id: this.props.card._id})
+    editBillableCard = (e, value) => {
+        var billable = false
+        if(value.value === 'true') {
+            billable = true
+        }
+        this.setState({billableCard: billable}, () =>
+            this.props.dispatchCallEditCardBillable({billable: this.state.billableCard, _id: this.props.card._id})
         )
     }
 
@@ -91,7 +99,6 @@ class CardModal extends React.Component {
     }
 
     deleteCard = (e) => {
-        console.log(this.props.card._id)
         if(this.props) {
             this.props.dispatchCallDeleteCard(this.state.idCard)
         }
@@ -162,8 +169,10 @@ class CardModal extends React.Component {
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Description</h3>
 
-                                            <Form>
-                                                <TextArea onChange={this.editDescriptionCard} placeholder='Write the card description' value={this.props.card.descriptionCard}/>
+                                            <Form onSubmit={this.toggleEditDescription}>
+                                                <Form.Field>
+                                                <TextArea onChange={this.editDescriptionCard} name="descriptionCard" type="text" value={this.state.descriptionCard}/>
+                                            </Form.Field>
                                             </Form>
                                             <Divider />
                                         </Grid.Column>
@@ -274,10 +283,17 @@ class CardModal extends React.Component {
                                         <label>Billable</label>
                                         <Form.Radio
                                             label='Yes'
-                                            checked={true}
+                                            name='billable'
+                                            value='true'
+                                            checked={this.state.billableCard === true}
+                                            onChange={this.editBillableCard}
                                         />
-                                        <Form.Radio label='No'
-                                            checked={false}
+                                        <Form.Radio
+                                            label='No'
+                                            name='billable'
+                                            value='false'
+                                            checked={this.state.billableCard === false}
+                                            onChange={this.editBillableCard}
                                         />
                                     </Form.Group>
                                 </Form>
@@ -332,7 +348,7 @@ class CardModal extends React.Component {
         if(!this.state.editTitle){
             return(
                 <h4 onClick={this.toggleEditCardTitle}>
-                    {this.state.titleCard} - <span className={defaultStyle.textColor2}> General List</span>
+                    {this.props.card.titleCard} - <span className={defaultStyle.textColor2}> General List</span>
                 </h4>
             );
         }
@@ -340,7 +356,7 @@ class CardModal extends React.Component {
             return (
                 <Form onSubmit={this.toggleEditCardTitle}>
                     <Form.Field className={style.inputEditTitle}>
-                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.props.card.titleCard}/>
+                        <Input onChange={this.editCardTitle} name="titleCard" type="text" value={this.state.titleCard}/>
                     </Form.Field>
                 </Form>
             );
@@ -348,14 +364,11 @@ class CardModal extends React.Component {
     }
 }
 CardModal.defaultProps = {
-    card:{}
 };
 
 function mapStateToProps(state, ownProps){
-    console.log(ownProps)
-    console.log(state)
     return{
-        card: state.cards.filter(el => el._id === ownProps.card._id)
+        card: state.cards.find(el => el._id === ownProps.card._id)
     }
 };
 

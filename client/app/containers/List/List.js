@@ -161,7 +161,7 @@ const mapStateToProps = (state, ownProps) => {
     if(cardB){
         ownProps.list.cards.forEach((card)=> {
             cardB.forEach((element) => {
-                if(element._id == card){
+                if(element._id === card){
                     result.push(element);
                 }
             })
