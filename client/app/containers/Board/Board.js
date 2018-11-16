@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import bo from '../../common/dataTest';
-import PropTypes from 'prop-types';
-//import listsTest from '../../common/dataTest';
 import {Card, Grid, Input} from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
-
 import {callAddList, callUpdateCardPositionInList, callUpdateCardPositionBetweenList} from '../../objects/List/ListAsyncActions';
 import {callUpdateListPositionInBoard} from '../../objects/Board/BoardAsyncActions';
 import style from './board.styl'
@@ -31,25 +27,19 @@ class Board extends Component {
     }
 
     render () {
-        console.log("props")
-        console.log(this.props);
         if(this.props.board){
             if(this.props.lists){
                 return(
                     <div className={style.generalBoardRendering}>
-                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard} idBoard={this.props.board._id}/>
+                        <BoardMenu board={this.props.board}/>
                         {this.listsIsFilled()}
-
-
                     </div>
                 )
             }else{
                 return(
                     <div className={style.generalBoardRendering}>
-                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                        <BoardMenu board={this.props.board}/>
                         <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
-
-
                     </div>
                 )
             }
@@ -178,10 +168,6 @@ const mapStateToProps = (state, ownProps) => {
             })
         })
     }
-    console.log("result")
-    console.log(result)
-    console.log("listB")
-    console.log(listB)
     return ({
         lists: result.filter(el => el.isDeletedList === false && el.isArchivedList === false),
         boards: state.boards,

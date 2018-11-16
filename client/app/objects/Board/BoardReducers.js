@@ -7,7 +7,7 @@ const boards = (state = [], action) => {
         case ADD_BOARD:
             return add(state, action);
         case UPDATE_BOARD_LIST:
-            const elemToEditArray = state.slice().filter(item => item._id === action.id);
+            var elemToEditArray = state.slice().filter(item => item._id === action.id);
             if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
                 const elemToEditIndex = state.indexOf(elemToEditArray[0]);
                 const newState = state.slice();
@@ -27,20 +27,21 @@ const boards = (state = [], action) => {
                 return state;
             }*/            
         case UPDATE_BOARD_LIST_POSITION:
-            const elemToEditArray2 = state.slice().filter(item => item._id === action.data._id);
-            if((Array.isArray(elemToEditArray2) && elemToEditArray2.length)){
-                const elemToEditIndex = state.indexOf(elemToEditArray2[0]);
+            elemToEditArray = state.slice().filter(item => item._id === action.data._id);
+            if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
+                const elemToEditIndex = state.indexOf(elemToEditArray[0]);
                 const newState = state.slice();
-                if(elemToEditArray2[0].listsId){
+                if(elemToEditArray[0].listsId){
                     newState[elemToEditIndex].listsId=(action.data.listsId)
                     return newState;
                 }
             }
             return state;
         case EDIT_TITLE_BOARD:
+        console.log(action.data)
             const elemToEditTitleBoard = state.slice().filter(item => item._id === action.data._id);
             if (Array.isArray(elemToEditTitleBoard) && elemToEditTitleBoard.length) {
-                const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+                const elemToEditIndex = state.indexOf(elemToEditTitleBoard[0]);
                 const newState = state.slice();
                 newState[elemToEditIndex].titleBoard = action.data.titleBoard;
                 return newState;
