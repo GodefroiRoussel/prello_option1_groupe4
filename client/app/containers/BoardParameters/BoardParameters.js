@@ -29,7 +29,7 @@ class BoardParameters extends Component {
                                             </Tab.Pane> },
         { menuItem: 'Background', render: () => <Tab.Pane><BackgroundParameters/></Tab.Pane> },
         { menuItem: 'Teams', render: () => <Tab.Pane><TeamsParametersBoard _id={this.props.board._id} teams={this.props.teams} teamsSelected={this.props.board.teams} callUpdateTeam={this.props.DispatchCallUpdateTeamBoard}/></Tab.Pane> },
-        { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters/></Tab.Pane> },
+        { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters _id={this.props.board._id}/></Tab.Pane> },
         { menuItem: 'Archived elements', render: () => <Tab.Pane><ArchievedElements/></Tab.Pane> },
         { menuItem: 'History', render: () => <Tab.Pane><HistoryBoard/></Tab.Pane> },
         { menuItem: 'Others', render: () => <Tab.Pane><OtherParameters/></Tab.Pane> },
@@ -41,7 +41,6 @@ class BoardParameters extends Component {
         if(!this.props.board || !this.props.teams){
             return <div/>
         }
-        console.log(this.props.board)
         return (
             <div className={style.generalBoardRendering}>
                 <BoardMenu board={this.props.board}/>

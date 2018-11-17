@@ -106,6 +106,7 @@ Meteor.methods({
             {_id: data._id},
             {$set: {titleBoard: data.titleBoard}}
         )
+        Meteor.call("addLabel", {_id: data._id})
         return Board.findOne(data._id)
     },
 
@@ -122,6 +123,12 @@ Meteor.methods({
         var unique = [...new Set(flat)];
         Board.update({_id: data._id}, {$set: {members: unique}})
         return Board.update({_id: data._id}, {$set: {teams: data.teams}})
+    },
+    updateLabelBoard(data){
+        var board = Meteor.call('getBoard', data._id)
+        var labels = board.labels;
+        labels.push(data.idLabel);
+        return Board.update({_id: data._id}, {$set: {labels: labels}})
     }
 });
 

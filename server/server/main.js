@@ -13,6 +13,7 @@ import './Board/index';
 import './User/index';
 import './Card/index';
 import './Client/index';
+import './Label/index';
 
 // declare MongoDB collection here
 //

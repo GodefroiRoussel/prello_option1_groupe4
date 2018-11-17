@@ -1,6 +1,6 @@
 import {Meteor} from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
-import List from '../List/model';
+import Label from '../Label/model';
 
 const Board = new Meteor.Collection('board');
 
@@ -14,6 +14,8 @@ const BoardSchema = new SimpleSchema({
     isArchivedBoard: {type: Boolean,defaultValue: false},
     canComment: {type: String, defaultValue: "all"},
     seedForGuest: {type: Boolean,optional: true},
+    labels: {type: Array, defaultValue: []},
+    'labels.$': {type: String},
     admins : {type: Array},
     'admins.$':{type: String},
     members : {type: Array},

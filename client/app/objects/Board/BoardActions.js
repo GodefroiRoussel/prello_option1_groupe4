@@ -10,6 +10,7 @@ export const REMOVE_BOARD='REMOVE_BOARD';
 export const EDIT_CAN_COMMENT='EDIT_CAN_COMMENT';
 export const EDIT_INVITATION_BOARD='EDIT_INVITATION_BOARD';
 export const EDIT_TEAMS_BOARD='EDIT_TEAMS_BOARD';
+export const EDIT_LABEL_BOARD='EDIT_LABEL_BOARD';
 
 export function getBoard(_id) {
     return {
@@ -95,6 +96,13 @@ export function updateInvitationsOpenedBoard(data){
 export function updateTeamBoard(data){
     return{
         type : EDIT_TEAMS_BOARD,
+        data,
+    }
+}
+
+export function updateLabelBoard(data){
+    return{
+        type: EDIT_LABEL_BOARD,
         data,
     }
 }

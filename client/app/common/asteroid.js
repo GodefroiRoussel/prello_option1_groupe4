@@ -7,6 +7,7 @@ import { addBoard, editBoard, removeBoard } from '../objects/Board/BoardActions'
 import { addUser } from '../objects/User/UserActions';
 import { addCard, editCard , deleteCard} from '../objects/Card/CardActions';
 import { addClient, removeClient } from '../objects/Client/ClientActions';
+import {addLabel, editLabel} from '../objects/Label/LabelActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -25,6 +26,7 @@ asteroid.subscribe('board');
 asteroid.subscribe('team');
 asteroid.subscribe('card');
 asteroid.subscribe('client');
+asteroid.subscribe('label')
 
 
 asteroid.ddp.on('added', (doc) => {
@@ -32,6 +34,10 @@ asteroid.ddp.on('added', (doc) => {
     if (doc.collection === 'board') {
         const docObj = Object.assign({}, doc.fields, { _id: doc.id });
         store.dispatch(addBoard(docObj));
+    }
+    if (doc.collection === 'label') {
+        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+        store.dispatch(addLabel(docObj));
     }
     if (doc.collection === 'todo') {
         const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -101,6 +107,9 @@ asteroid.ddp.on('changed', (updatedDoc) => {
     }
     if (updatedDoc.collection === 'board') {
         store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'label') {
+        store.dispatch(editLabel(updatedDoc.id, updatedDoc.fields));
     }
 });
 

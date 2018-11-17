@@ -1,57 +1,86 @@
 import React, { Component } from 'react'
-import {Form, Divider, Card, Segment, Input, Icon, Button} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {Form, Divider, Card, Segment, Input, Icon, Button, Modal, Header} from 'semantic-ui-react'
+import { SwatchesPicker } from 'react-color';
+import {callAddLabel, callUpdateColorLabel} from '../../objects/Label/LabelAsyncActions';
 
-export default class LabelsParameters extends Component {
-    state = {
-        labels: [ { key: 'l1', value: 'l1', color:'blue', text: 'label1' },  { key: 'l2', value: 'l2', color: 'red', text: 'label2' }, { key: 'l3', value: 'l3', color: 'green', text: 'label3' } ]
-    };
+
+class LabelsParametersBoard extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state ={
+            modalOpen: false,
+        }
+    }
+
+    handleOpen = () => this.setState({ modalOpen: true })
+    handleClose = () => this.setState({ modalOpen: false })
+
+
+    handleChange(id,color){
+        console.log(id)
+        this.props.DispatchCallUpdateColorLabel({_id: id, colorLabel: [color.rgb.r, color.rgb.g, color.rgb.b]})
+    }
 
     render() {
-        return (
-            <div>
-                <Segment inverted color='red'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='orange'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='yellow'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='olive'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='green'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='teal'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='blue'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='violet'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='purple'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='pink'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='brown'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='grey'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='black'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Button basic inverted>
-                    <Icon name='add' /> Add a new sticker
-                </Button>
-            </div>
-        )
+        if(this.props.board && this.props.labels){
+            return (
+                <div>
+                    {this.props.labels.map(x => {
+                        const style = {
+                            backgroundColor: `rgb(${x.colorLabel})`
+                        }
+                        return (
+                            <div key={x._id}>
+                                <Segment inverted style={style}>
+                                    <Input  name="titleList" type="text" value={"Label f"}></Input>
+                                    <div>
+                                        <Modal  trigger={<a onClick={this.handleOpen}>Change color</a>}
+                                                open={this.state.modalOpen}
+                                                onClose={this.handleClose}
+                                                basic
+                                                size='small'>
+                                            <Modal.Content>
+                                            <SwatchesPicker onChange={(color)=>this.handleChange(x._id, color)}/>
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                                <Button basic color='red' onClick={this.handleClose} inverted>
+                                                    <Icon name='remove' /> Cancel
+                                                </Button>
+                                            </Modal.Actions>
+                                        </Modal>
+                                        </div>
+                                </Segment>
+                            </div>
+                        )
+                    })}
+                    <Button basic onClick={()=> this.props.DispatchCallAddLabel({_id: this.props.board._id})}>
+                        <Icon name='add' /> Add a new label
+                    </Button>
+                </div>
+            )
+        }
+        else{
+            return <div/>
+        }
     }
 }
+
+function mapStateToProps(state, ownProps){
+    const b = state.boards.find(el => el._id === ownProps._id);
+    return{
+        board : state.boards.find(el => el._id === ownProps._id),
+        labels : state.labels.filter(el => b.labels.includes(el._id)),
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        DispatchCallAddLabel: (data) => dispatch(callAddLabel(data)),
+        DispatchCallUpdateColorLabel: (data) => dispatch(callUpdateColorLabel(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LabelsParametersBoard);
+

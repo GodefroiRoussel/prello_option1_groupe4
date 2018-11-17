@@ -8,7 +8,8 @@ import { getBoard,
     editFavoriteBoards, 
     updateBoardTitle,
     updateInvitationsOpenedBoard,
-    updateTeamBoard} from './BoardActions';
+    updateTeamBoard,
+    updateLabelBoard} from './BoardActions';
 
 export function callGetBoard(idBoard) {
     return dispatch => asteroid.call('getBoard', idBoard)
@@ -20,8 +21,10 @@ export function callAddBoard(data) {
     if(data.team){
         finaldata = {...data, ...{teams:[data.team], admins:[data.user], members:[data.user], listsId:[]}}
     }
-    return dispatch => asteroid.call('addBoard', finaldata)
-        .then(result => dispatch(addBoard({ ...{_id: result}, ...finaldata})));
+    return dispatch => asteroid.call('addLabel')
+        .then(result => asteroid.call('addBoard', {...{labels: [result]}, ...finaldata})
+            .then(result2 => dispatch(addBoard({ ...{_id: result2,}, ...finaldata})))
+    )
 }
 
 export function callUpdateBoardListId(id, board){
@@ -67,4 +70,13 @@ export function callUpdateInvitationsOpenedBoard(data){
 export function callUpdateTeamBoard(data){
     return dispatch => asteroid.call('updateTeamBoard', data)
         .then(result => dispatch(updateTeamBoard(data)))
+}
+
+export function callUpdateLabelBoard(data){
+    return dispatch => asteroid.call('updateLabelBoard', data)
+        .then(result => dispatch(updateLabelBoard(data)))
+}
+
+export function callUpdateColorLabel(data){
+    
 }

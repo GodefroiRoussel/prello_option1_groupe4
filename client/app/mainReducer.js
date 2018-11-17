@@ -9,6 +9,7 @@ import cards from './objects/Card/CardReducers';
 import clients from './objects/Client/ClientReducers';
 import checklists from './objects/CheckList/CheckListReducers';
 import items from './objects/Item/ItemReducers';
+import labels from './objects/Label/LabelReducers';
 //import addlists from './objects/Board/AddListReducer';
 
 const mainReducer = combineReducers({
@@ -22,7 +23,8 @@ const mainReducer = combineReducers({
   clients,
   users,
   checklists,
-  items
+  items,
+  labels
 });
 
 export default mainReducer;
