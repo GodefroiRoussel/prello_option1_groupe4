@@ -56,6 +56,8 @@ const lists = (state = listsTest, action) => {
                 }
           }
           return state;
+    case EDIT_LIST:
+          return edit(state, action)
     default:
       return state;
   }

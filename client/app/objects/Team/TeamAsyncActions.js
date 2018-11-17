@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import { addTeam, getAllTeam, editTeamMembers, removeTeam } from './TeamActions';
+import { addTeam, getAllTeam, editTeamMembers, removeTeam, updateVisibilityTeam , deleteMemberTeam} from './TeamActions';
 
 export function callAddTeam(data) {
   const team = {nameTeam: data.nameTeam, idBoards: ["one board"], ownerTeam: data.user, members: [data.user]};
@@ -16,13 +16,33 @@ export function callGetAllTeam() {
 }
 
 export function callAddMember(data){
-  return dispatch => asteroid.call('addMemberTeam', data.id, data.members)
-    .then(() => {
-      dispatch(editTeamMembers(data.id, data.members))
+  console.log(data)
+  return dispatch => asteroid.call('addMemberTeam', data)
+    .then((result) => {
+      if(result){
+        return dispatch(editTeamMembers(data))
+      }
+      else{
+        return dispatch(editTeamMembers())
+      }
     });
 }
 
 export function callRemoveTeam(data){
   return dispatch => asteroid.call('removeTeam', data.id)
     .then(() => dispatch(removeTeam(data.id)));
+}
+
+export function callUpdateVisibilityTeam(data){
+  return dispatch => asteroid.call('updateVisibilityTeam', data)
+    .then(() => {
+      dispatch(updateVisibilityTeam(data))
+    });
+}
+
+export function callDeleteMembers(data){
+  return dispatch => asteroid.call('deleteMemberTeam', data)
+    .then(() => {
+      dispatch(deleteMemberTeam(data))
+    });
 }

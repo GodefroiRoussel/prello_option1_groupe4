@@ -31,6 +31,8 @@ class Board extends Component {
     }
 
     render () {
+        console.log("props")
+        console.log(this.props);
         if(this.props.board){
             if(this.props.lists){
                 return(
@@ -176,10 +178,13 @@ const mapStateToProps = (state, ownProps) => {
             })
         })
     }
+    console.log("result")
+    console.log(result)
+    console.log("listB")
+    console.log(listB)
     return ({
-        lists: listB.filter(el => el.isDeletedList === false && el.isArchivedList === false),
+        lists: result.filter(el => el.isDeletedList === false && el.isArchivedList === false),
         boards: state.boards,
-        //board: board,
         board: state.boards.find(el => el._id === ownProps.location.state.id)
     })
 }

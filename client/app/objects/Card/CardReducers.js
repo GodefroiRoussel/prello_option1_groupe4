@@ -6,9 +6,10 @@ import {
     EDIT_CARD_BILLABLE,
     EDIT_CONTRIBUTOR_CARD,
     EDIT_LABEL_CARD, EDIT_COMMENT_CARD,
-    DELETE_CARD
+    DELETE_CARD,
+    EDIT_CARD
 } from './CardActions';
-import { add } from '../../common/helpers';
+import { add , edit} from '../../common/helpers';
 import {EDIT_TITLE_LIST} from "../List/ListActions";
 //import { remove, edit, add } from '../../common/helpers';
 
@@ -81,6 +82,8 @@ const cards = (state = [], action) => {
                 return newState;
             }
             return state;
+        case EDIT_CARD:
+            return edit(state, action);
         default:
             return state;
     }
