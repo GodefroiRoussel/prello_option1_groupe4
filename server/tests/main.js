@@ -1,8 +1,12 @@
 import assert from "assert";
-import './board.test'
 import Card from '/server/Card/methods'
 import List from '/server/List/methods'
 import chai from 'chai'
+import Board from '../server/Board/methods'
+import '../server/Team/methods'
+import '../server/User/methods'
+import '../server/Item/methods'
+import '../server/CheckList/methods'
 
 describe("server", function () {
     it("package.json has correct name", async function () {
@@ -191,11 +195,81 @@ describe("card", function() {
 /* ------------------------- TESTS ON TEAM -----------------------*/
 
 describe("team", function() {
-    it('should update the title of the card to newTitle', function () {
-        const cardId = Meteor.call('addCard', {titleCard: 'MyCard', listId: 'listId'})
-        Meteor.call('updateCardTitle', {_id: cardId, titleCard: "newTitle"}, () => {
-            const card = Meteor.call('findOneCard', cardId)
-            assert.strictEqual(card.titleCard, "newTitle")
+    /*it('should add member to the team', function () {
+        const user1 = Meteor.call('addUser', {nickname: "test", email: "a@gmail.com", password: "pass", gender: "M", firstname: "first", name: "name"})
+        console.log(user1)
+        const teamId = Meteor.call('addTeam', {nameTeam: 'MyTeam', ownerTeam: 'ownerId', members: []})
+        console.log(teamId)
+        Meteor.call('addMemberTeam', {_id: teamId, member: user1}, () => {
+            const team = Meteor.call('getTeamById', teamId)
+            console.log(team)
+            assert.deepEqual(team.members, [user1])
+        })
+    });*/
+
+    it('should set the visibility of the team to true', function () {
+        const teamId = Meteor.call('addTeam', {nameTeam: 'MyTeam', ownerTeam: 'ownerId', members: ["m1", "m2"]})
+        Meteor.call('updateVisibilityTeam', {_id: teamId, visibilityTeam: true}, () => {
+            const team = Meteor.call('getTeamById', teamId)
+            assert.strictEqual(team.visibilityTeam, true)
+        })
+    });
+
+    it('should delete member from the team', function () {
+       const teamId = Meteor.call('addTeam', {nameTeam: 'MyTeam', ownerTeam: 'ownerId', members: ["m1", "m2", "m3"]})
+        Meteor.call('deleteMemberTeam', {_id: teamId, member: "m2"}, () => {
+            const team = Meteor.call('getTeamById', teamId)
+            assert.deepEqual(team.members, ["m1", "m3"])
         })
     });
 })
+
+/* ------------------------- TESTS ON ITEM -----------------------*/
+
+describe("item", function() {
+    it('should check the item', function () {
+        const itemId = Meteor.call('addItem', {titleItem: "todo"})
+        Meteor.call('checkItem', itemId, () => {
+            const item = Meteor.call('findOneItem', itemId)
+            assert.strictEqual(item.checkedItem, true)
+        })
+    });
+})
+
+/* ------------------------- TESTS ON CHECKLIST -----------------------*/
+
+describe("checkList", function() {
+    it('should add an item to the checklist', function () {
+        const checkListId = Meteor.call('addCheckList', {titleCheckList: "checkList", items: ["i1", "i2"]})
+        Meteor.call('addItemToCheckList', {idCheckList: checkListId, idItem: "i3"}, () => {
+            const checkList = Meteor.call('findOneCheckList', checkListId)
+            assert.deepEqual(checkList.items, ["i1", "i2", "i3"])
+        })
+    });
+    it('should delete an item from the checklist', function () {
+        const checkListId = Meteor.call('addCheckList', {titleCheckList: "checkList", items: ["i1", "i2", "i3"]})
+        Meteor.call('deleteItemFromCheckList', {idCheckList: checkListId, idItem: "i2"}, () => {
+            const checkList = Meteor.call('findOneCheckList', checkListId)
+            assert.deepEqual(checkList.items, ["i1", "i3"])
+        })
+    });
+})
+
+/* ------------------------- TESTS ON WORK -----------------------*/
+/*
+describe("work", function() {
+    it('should give all billable works', function () {
+        const work = Meteor.call('addWork', {_id: "idCard", : ["i1", "i2"]})
+        Meteor.call('addItemToCheckList', {idCheckList: checkListId, idItem: "i3"}, () => {
+            const checkList = Meteor.call('findOneCheckList', checkListId)
+            assert.deepEqual(checkList.items, ["i1", "i2", "i3"])
+        })
+    });
+    it('should delete an item from the checklist', function () {
+        const checkListId = Meteor.call('addCheckList', {titleCheckList: "checkList", items: ["i1", "i2", "i3"]})
+        Meteor.call('deleteItemFromCheckList', {idCheckList: checkListId, idItem: "i2"}, () => {
+            const checkList = Meteor.call('findOneCheckList', checkListId)
+            assert.deepEqual(checkList.items, ["i1", "i3"])
+        })
+    });
+})*/

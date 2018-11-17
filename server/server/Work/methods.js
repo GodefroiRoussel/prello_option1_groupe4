@@ -9,9 +9,9 @@ Meteor.methods({
     getWorkByCard() {
         return Work.find().fetch();
     },
-    getWorkBillableByBoard(data) {
+    getWorkBillableByBoard(data) { //"2HLNE4Fc59GJyReDy"
         console.log('work bill', data)
-        const work = Work.findOne({_id: "2HLNE4Fc59GJyReDy"})
+        const work = Work.findOne({_id: data._id})
         console.log(new Date(data.startDate) < work.day)
         const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
         var worksBill = []
