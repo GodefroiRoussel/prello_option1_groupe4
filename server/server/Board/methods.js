@@ -24,6 +24,9 @@ Meteor.methods({
             }
         }
     },
+    findOneBoard(id) {
+       return Board.findOne({_id: id})
+    },
     // update position of each list of the board according to the new position of one of them
     // idList is the id of the list having a new position
     /*updateListsPositions(data) { //data = {board, idList}

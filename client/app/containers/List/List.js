@@ -149,7 +149,7 @@ class ListC extends Component {
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal card={x}/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />{x.titleCard} <CardModal board={this.props.boardId} card={x}/></Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
@@ -183,6 +183,7 @@ const mapStateToProps = (state, ownProps) => {
             lists: state.lists,
             //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
+            boardId: ownProps.board
         }
     )
 

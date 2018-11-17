@@ -132,7 +132,7 @@ class Board extends Component {
                                             <Grid.Column mobile={16} tablet={16} computer={16} >
                                                 <div className={style.margin}>
                                                     <div className={style.listBox}>
-                                                        <BoardComponent lists={this.props.lists}/>
+                                                        <BoardComponent board={this.props.board._id} lists={this.props.lists}/>
                                                         <div className={style.cardCustom}>
                                                             <Card className={style.ListCard}>
                                                                 <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>

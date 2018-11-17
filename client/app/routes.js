@@ -16,6 +16,7 @@ import AdminMembers from "./containers/AdminMembers/AdminMembers";
 import Client from './containers/Client/Client';
 import ClientManagement from './containers/ClientManagement/ClientManagement';
 import ClientRegistration from './containers/Client/ClientRegistration';
+import BoardWar from './containers/WeeklyActivityReport/BoardWAR';
 
 
 const Root = (
@@ -36,6 +37,7 @@ const Root = (
 
         <Route path="login/polytech" component={LoginPolytech} />
         <Route path = "admin-members" component={AdminMembers}/>
+        <Route path = "boardWar" component={BoardWar}/>
     </Route>
 
 

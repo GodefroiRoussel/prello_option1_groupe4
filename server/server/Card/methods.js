@@ -73,7 +73,6 @@ Meteor.methods({
         return Card.findOne({_id: data.idCard})
     },
     deleteCard(id) {
-        console.log('card', id)
         Card.update( {_id: id}, {$set: {isDeletedCard: true}})
         return Card.findOne({_id: id})
     },
@@ -102,6 +101,10 @@ Meteor.methods({
         Card.update( {_id: data.idCard}, {$set: {comments: comments}})
         return Card.findOne({_id: data.idCard})
     },
+    isBillableCard(idCard) {
+        const card = Card.findOne({_id: idCard})
+        return card.billable
+    }
 });
 
 export default Card;

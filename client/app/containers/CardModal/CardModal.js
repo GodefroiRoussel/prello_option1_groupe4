@@ -301,7 +301,7 @@ class CardModal extends React.Component {
                                         <CardModalMembers/>
                                     </List.Item>
                                     <List.Item>
-                                        <CardModalDeadlines card={this.props.card}/>
+                                        <CardModalDeadlines board={this.props.board} card={this.props.card}/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -367,7 +367,8 @@ CardModal.defaultProps = {
 
 function mapStateToProps(state, ownProps){
     return{
-        card: state.cards.find(el => el._id === ownProps.card._id)
+        card: state.cards.find(el => el._id === ownProps.card._id)       ,
+        board: ownProps.board
     }
 };
 

@@ -36,7 +36,7 @@ class Team extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props != nextProps) {
+        if(this.props !== nextProps) {
             if(nextProps.team.visibilityTeam)
             {
                 this.setState({
