@@ -1,4 +1,4 @@
-import { ADD_LABEL, UPDATE_COLOR_LABEL, EDIT_LABEL} from './LabelActions';
+import { ADD_LABEL, UPDATE_COLOR_LABEL, EDIT_LABEL, UPDATE_TITLE_LABEL} from './LabelActions';
 import { add, edit, update, remove } from '../../common/helpers';
 
 const labels = (state = [], action) => {
@@ -9,6 +9,9 @@ const labels = (state = [], action) => {
       return update(state, action, "colorLabel")
     case EDIT_LABEL:
       return edit(state, action)
+    case UPDATE_TITLE_LABEL:
+      console.log(action.data)
+      return update(state, action, "titleLabel")
     default:
       return state;
   }

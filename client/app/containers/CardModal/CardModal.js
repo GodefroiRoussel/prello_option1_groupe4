@@ -14,7 +14,8 @@ import {
     Modal,
     Header,
     Divider,
-    Icon, Input
+    Icon, Input,
+    Dropdown
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
@@ -45,14 +46,6 @@ class CardModal extends React.Component {
             titleCard: this.props.card.titleCard,
             descriptionCard: this.props.card.descriptionCard,
             billableCard: this.props.card.billable,
-
-            /*card:{
-                titleCard: "The title of this card",
-                descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
-                deadlineCard:"18/11/2018",
-                positionCard:0,
-                billableCard:false
-            }*/
         };
     }
 
@@ -116,8 +109,17 @@ class CardModal extends React.Component {
         //this.props.dispatchCallDeleteComment(data) //to precise
     }
 
+    renderLabel = label => {
+        return({
+        style: {backgroundColor: `rgb(${label.key}`},
+        content: `${label.text}`,
+        })
+    }
+
     render() {
         const { openModal } = this.state;
+        console.log(this.props.options)
+
         return (
 
             <Modal
@@ -143,21 +145,16 @@ class CardModal extends React.Component {
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Sticks</h3>
                                             <Card.Group itemsPerRow={6}>
-                                                <Card raised>
-                                                    <Segment inverted color='red'>
-                                                        label 1
-                                                    </Segment>
-                                                </Card>
-                                                <Card raised>
-                                                    <Segment inverted color='green'>
-                                                        label 2
-                                                    </Segment>
-                                                </Card>
-
                                                 <div className={style.buttonAddStickers}>
-                                                    <Button  icon>
-                                                        <Icon name='add' />
-                                                    </Button>
+                                                <Dropdown
+                                                    multiple
+                                                    selection
+                                                    fluid
+                                                    options={this.props.options}
+                                                    placeholder='Choose an option'
+                                                    defaultValue={this.props.options[2]}
+                                                    renderLabel={this.renderLabel}
+                                                />
                                                 </div>
 
 
@@ -361,8 +358,19 @@ CardModal.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps){
+    var option = []
+    const b = state.boards.find(el => el._id === ownProps.board);
+    if(b){
+        const labels = state.labels.filter(el => b.labels.includes(el._id))
+        if(labels){
+            labels.map(x=> option.push({key: x.colorLabel, text: x.titleLabel, value: x._id, 
+                content: <Header content={x.titleLabel} style={{backgroundColor: `rgb(${x.colorLabel}`}}/>}))
+        }
+    }
+    
     return{
-        card: state.cards.find(el => el._id === ownProps.card._id)
+        card: state.cards.find(el => el._id === ownProps.card._id),
+        options: option
     }
 };
 

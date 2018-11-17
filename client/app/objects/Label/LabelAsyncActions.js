@@ -1,5 +1,5 @@
 import asteroid from '../../common/asteroid';
-import {addLabel, updateColorLabel} from './LabelActions';
+import {addLabel, updateColorLabel, updateNameLabel} from './LabelActions';
 import {callUpdateLabelBoard} from '../../objects/Board/BoardAsyncActions'
 
 export function callAddLabel(data) {
@@ -14,4 +14,10 @@ export function callAddLabel(data) {
 export function callUpdateColorLabel(data){
   return dispatch => asteroid.call('updateColorLabel', data)
     .then(result => dispatch(updateColorLabel(data)))
+}
+
+export function callUpdateNameLabel(data){
+  console.log(data)
+  return dispatch => asteroid.call('updateNameLabel', data)
+    .then(result => dispatch(updateNameLabel(data)))
 }

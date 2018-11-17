@@ -14,6 +14,9 @@ Meteor.methods({
     updateColorLabel(data){
         return Label.update({_id: data._id}, {$set: {colorLabel: data.colorLabel}})
     },
+    updateNameLabel(data){
+        return Label.update({_id: data._id}, {$set:{titleLabel: data.titleLabel}})
+    },
     findOneLabel(id) {
         return Label.findOne(id);
     }
