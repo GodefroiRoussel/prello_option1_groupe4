@@ -142,7 +142,6 @@ class Team extends React.Component {
             )
         }
     isVisibleTeam = (teamVisibility) => {
-        console.log(teamVisibility)
         if(teamVisibility==true){
             return "public"
         }

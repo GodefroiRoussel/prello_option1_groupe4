@@ -42,7 +42,6 @@ const lists = (state = listsTest, action) => {
           }
           return state;
       case EDIT_CARD_POS_BETWEEN_LIST:
-      console.log(action.data)
               const elemToEditStart = state.slice().filter(item => item._id === action.data.startList._id);
               const elemToEditFinish = state.slice().filter(item => item._id === action.data.finishList._id);
               if (Array.isArray(elemToEditFinish) && elemToEditFinish.length && Array.isArray(elemToEditStart) && elemToEditStart.length) {

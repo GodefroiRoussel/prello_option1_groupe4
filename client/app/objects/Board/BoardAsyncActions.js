@@ -23,7 +23,7 @@ export function callAddBoard(data) {
     }
     return dispatch => asteroid.call('addLabel')
         .then(result => asteroid.call('addBoard', {...{labels: [result]}, ...finaldata})
-            .then(result2 => dispatch(addBoard({ ...{_id: result2,}, ...finaldata})))
+            .then(result2 => dispatch(addBoard({ ...{_id: result2, labels: [result]}, ...finaldata})))
     )
 }
 

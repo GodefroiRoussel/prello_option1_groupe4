@@ -11,8 +11,6 @@ Meteor.publish('label', function() {
         if(boards){
             const listLabel = boards.map(x => x.labels)
             var flat = _.reduceRight(listLabel, function(a, b) { return a.concat(b); }, []);
-            console.log(flat)
-            console.log(Label.find({_id: { $in: flat}}).fetch())
             return Label.find({_id: { $in: flat}}) 
         }
         

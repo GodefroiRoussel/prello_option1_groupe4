@@ -11,7 +11,7 @@
     "build": "webpack -p --config webpack.prod.conf.js",
     "lint": "eslint ./app",
     "testonly": "BABEL_DISABLE_CACHE=1 NODE_ENV=test mocha $npm_package_options_mocha",
-    "test": "npm run lint && npm run testonly"
+    "test": "npm run testonly"
   },
   "repository": {
     "type": "git",

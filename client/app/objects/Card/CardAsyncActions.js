@@ -29,7 +29,7 @@ export function callAddCard(data) {
     return dispatch => asteroid.call('addCard', data)
         .then(result => {
             dispatch(callAddCardInList({idList: data.listId, idCard: result}))
-            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false}}))
+            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false, labels: [], checkList:[]}}))
         })
 }
 
@@ -49,7 +49,6 @@ export function callUpdateCardBillable(data) {
 }
 
 export function callDeleteCard(data) {
-    console.log('async', data.idCard)
     return dispatch => asteroid.call('deleteCard', data.idCard)
         .then(result => {
             dispatch(deleteCard(result))
@@ -84,6 +83,7 @@ export function callDeleteMemberAssigned(data) {
 }
 
 export function callAddLabelCard(data) {
+    console.log(data)
     return dispatch => asteroid.call('addLabelCard', data)
         .then(result => dispatch(editLabelCard(result)))
 }

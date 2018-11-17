@@ -10,7 +10,6 @@ const labels = (state = [], action) => {
     case EDIT_LABEL:
       return edit(state, action)
     case UPDATE_TITLE_LABEL:
-      console.log(action.data)
       return update(state, action, "titleLabel")
     default:
       return state;

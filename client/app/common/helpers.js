@@ -27,7 +27,7 @@ export const update = (state, action, variable) => {
   if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
       const elemToEditIndex = state.indexOf(elemToEditArray[0]);
       const newState = state.slice();
-      if(elemToEditArray[0][variable]){
+      if(elemToEditArray[0][variable] != undefined){
           newState[elemToEditIndex][variable]=(action.data[variable])
           return newState;
       }

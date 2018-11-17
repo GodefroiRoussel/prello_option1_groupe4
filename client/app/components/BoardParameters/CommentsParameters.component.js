@@ -6,7 +6,6 @@ import style from '../../containers/BoardParameters/boardParameters.styl';
 const CommentsParametersBoard = (props) =>{
 
     const handleChange = (e, { value }) => {
-        console.log(value)
         props.callUpdateCanComment({canComment: value, _id: props._id});
     }
 

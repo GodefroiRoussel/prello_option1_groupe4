@@ -59,7 +59,6 @@ export function editLabelCard(data) {
 }
 
 export function deleteCard(data) {
-    console.log("action")
     return {
         type: DELETE_CARD,
         data

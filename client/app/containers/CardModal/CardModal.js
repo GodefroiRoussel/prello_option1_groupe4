@@ -30,6 +30,9 @@ import {
     callUpdateCardDescription,
     callUpdateCardTitle
 } from "../../objects/Card/CardAsyncActions";
+import Todo from "../Todo/Todo.js";
+import { callAddTodo } from "../../objects/Todo/TodoAsyncActions";
+
 
 import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 import {callAddComment} from "../../objects/Comment/CommentAsyncAction";
@@ -56,7 +59,6 @@ class CardModal extends React.Component {
     toggleEditDescription = () => this.setState({editDescription: !this.state.editDescription})
 
     editCardTitle = (e) => {
-        console.log(this.props.card._id)
         this.setState({titleCard: e.target.value}, () =>
             this.props.dispatchCallEditCardTitle({titleCard: this.state.titleCard, _id: this.props.card._id})
         )
@@ -86,9 +88,7 @@ class CardModal extends React.Component {
     }
 
     deleteLabelCard = (e) => {
-        if(e.target.value) {
-            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.idCard})
-        }
+        this.props.dispatchCallDeleteLabelCard({idLabel: e, idCard: this.state.idCard})
     }
 
     deleteCard = (e) => {
@@ -116,9 +116,23 @@ class CardModal extends React.Component {
         })
     }
 
+    toggleMultiple = (e, {value}) => {
+        this.props.dispatchCallAddLabelCard({idCard: this.props.card._id, idLabel:value})
+    }
+
+    handleAddTodo = (e) => {
+        if (e.key === 'Enter') {
+          const elem = e.target;
+          e.preventDefault();
+          if (elem.value) {
+            this.props.dispatchCallAddTodo({message: elem.value, idCard:this.props.card._id});
+            elem.value = '';
+          }
+        }
+      };
+
     render() {
         const { openModal } = this.state;
-        console.log(this.props.options)
 
         return (
 
@@ -146,18 +160,24 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Sticks</h3>
                                             <Card.Group itemsPerRow={6}>
                                                 <div className={style.buttonAddStickers}>
+                                                {this.props.defaultValueLabel.map(x => {
+                                                    return(
+                                                    <Card raised>
+                                                        <Segment style={{backgroundColor: `rgb(${x.colorLabel}`}}>
+                                                            {x.titleLabel}
+                                                            <Button icon="delete" onClick={() => this.deleteLabelCard(x._id)}>
+                                                            </Button>
+                                                        </Segment>
+                                                    </Card>)
+                                                })}
                                                 <Dropdown
-                                                    multiple
-                                                    selection
                                                     fluid
                                                     options={this.props.options}
                                                     placeholder='Choose an option'
-                                                    defaultValue={this.props.options[2]}
                                                     renderLabel={this.renderLabel}
+                                                    onChange={this.toggleMultiple}
                                                 />
                                                 </div>
-
-
                                             </Card.Group>
                                             <Divider />
                                         </Grid.Column>
@@ -193,7 +213,18 @@ class CardModal extends React.Component {
                                     <Grid.Row className={style.rowCard}>
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Checklist</h3>
-
+                                            <div>
+                                                <input
+                                                type="text"
+                                                styleName="add-todo-input"
+                                                placeholder="Add todo item ..."
+                                                onKeyPress={this.handleAddTodo}
+                                                />
+                                            </div>
+                                            <div>
+                                                {this.props.todos.map((t, i) =>
+                                                <Todo id={t._id} message={t.message} finished={t.finished} key={i}/>)}
+                                            </div>
                                             <Divider />
                                         </Grid.Column>
                                     </Grid.Row>
@@ -358,19 +389,30 @@ CardModal.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps){
+    const c = state.cards.find(el => el._id === ownProps.card._id)
     var option = []
     const b = state.boards.find(el => el._id === ownProps.board);
-    if(b){
+    const listLabel = state.cards.find(el => el._id === ownProps.card._id).labels
+    var listDefaultValue = []
+    if(b && listLabel){
         const labels = state.labels.filter(el => b.labels.includes(el._id))
         if(labels){
-            labels.map(x=> option.push({key: x.colorLabel, text: x.titleLabel, value: x._id, 
-                content: <Header content={x.titleLabel} style={{backgroundColor: `rgb(${x.colorLabel}`}}/>}))
+            labels.map(x=> {option.push({key: x._id, text: x.titleLabel, value: x._id,
+                    content: <Header content={x.titleLabel} style={{backgroundColor: `rgb(${x.colorLabel}`}}/>})
+                    if(listLabel.includes(x._id)){
+                        listDefaultValue.push(x)
+                    }
+                }
+            )
         }
     }
     
     return{
         card: state.cards.find(el => el._id === ownProps.card._id),
-        options: option
+        options: option,
+        defaultValueLabel : listDefaultValue,
+        todos: state.todos.filter(el => c.checkList.includes(el._id)),
+        t: state.cards
     }
 };
 
@@ -383,7 +425,8 @@ const mapDispatchToProps = dispatch => ({
     dispatchCallDeleteCard: data => dispatch(callDeleteCard(data)),
     dispatchCallArchiveCard: data => dispatch(callArchiveCard(data)),
     dispatchCallEditComment: data => dispatch(callAddCommentCard(data)),
-    dispatchCallDeleteComment: data => dispatch(callAddCommentCard(data))
+    dispatchCallDeleteComment: data => dispatch(callAddCommentCard(data)),
+    dispatchCallAddTodo: data => dispatch(callAddTodo(data)),
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));

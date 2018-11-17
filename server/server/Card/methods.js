@@ -101,6 +101,13 @@ Meteor.methods({
         Card.update( {_id: data.idCard}, {$set: {comments: comments}})
         return Card.findOne({_id: data.idCard})
     },
+    addCheckListCard(data){
+        console.log(data)
+        const card = Card.findOne(data._id)
+        const check = card.checkList
+        check.push(data.checkList)
+        Card.update({_id: data._id}, {$set: {checkList: check}})
+    }
 });
 
 export default Card;
