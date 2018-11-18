@@ -9,6 +9,7 @@ import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
 import { callAddBoard} from '../../objects/Board/BoardAsyncActions';
 import CardTeamsComponent from '../../components/CardTeams/CardTeams.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
+import {callAddFavoriteBoard, callDeleteFavoriteBoard} from '../../objects/User/UserAsyncActions';
 import defaultStyle from "../../styles/settings.styl";
 import style from './home.styl';
 
@@ -68,7 +69,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            {this.callCardBoard(this.props.favoriteBoards)}
+                            {this.callCardBoard(this.props.favoriteBoards,false)}
                         </Grid.Row>
                         <Grid.Row className={style.secondRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
@@ -77,7 +78,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            {this.callCardBoard(userBoard)}
+                            {this.callCardBoard(userBoard, true)}
                         </Grid.Row>
                         <Grid.Row className={style.thirdRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
@@ -104,7 +105,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            {this.callCardBoard(this.props.boards)}
+                            {this.callCardBoard(this.props.boards, false)}
                         </Grid.Row>
                     </Grid>
 
@@ -116,11 +117,12 @@ class Home extends React.Component {
         }
     }
 
-    callCardBoard = (boards) => {
+    callCardBoard = (boards,addable) => {
         console.log(boards)
         return(
             <Grid.Column mobile={15} tablet={13} computer={10}>
-                <CardBoards boards={boards} 
+                <CardBoards boards={boards}
+                            addable={addable}
                 user={this.props.user.username} 
                 dispatchFunc={this.props.dispatchCallAddBoard} 
                 changeNameBoard={this.changeNameBoard}
@@ -168,7 +170,7 @@ function mapDispatchToProps(dispatch){
         dispatchCallAddBoard: data => dispatch(callAddBoard(data)),
         dispatchCallEditUser: data => dispatch(callEditUserProfile(data)),
         dispatchCallAddFavoriteBoard: data => dispatch(callAddFavoriteBoard(data)),
-        dispatchCallDeleteFavoriteBoard: data => dispatch(calllDeleteFavoriteBoard(data)),
+        dispatchCallDeleteFavoriteBoard: data => dispatch(callDeleteFavoriteBoard(data)),
         
     }
 };

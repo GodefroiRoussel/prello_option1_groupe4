@@ -52,6 +52,7 @@ Meteor.methods({
                 languageUser: "",
                 colourBlindUser: "",
                 favoriteBoards: [],
+                isAdminMember: 0
             }
         });
     },
@@ -67,20 +68,45 @@ Meteor.methods({
         return usernames;
     },
     editUserProfile(data) {
-        return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const profile = user.profile
+        var newProfile = {}
+        Object.keys(profile).forEach((f) => {
+            if(data[f]){
+                newProfile[f] = data[f]
+            }
+            else{
+                if(profile[f]){
+                    newProfile[f] = profile[f]
+                }
+                else{
+                    if(f=="favoriteBoards"){
+                        newProfile[f]=[]
+                    }else{
+                        newProfile[f]="";
+                    }
+                }
+            }
+        })
+        return Meteor.users.update(Meteor.userId(), { $set: { profile: newProfile } });
     },
     addFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         favBoards.push(data.boardId)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId();
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
     },
     async loginPolytech(user) {
         const username = user.username;
@@ -132,8 +158,7 @@ Meteor.methods({
                         seedUser: "",
                         avatarUser: "",
                         languageUser: "",
-                        colourBlindUser: "",
-                        favoriteBoards: [],
+                        colourBlindUser: ""
                     }
                 });
                 Meteor.users.update(newUserId,

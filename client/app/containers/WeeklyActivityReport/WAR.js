@@ -30,7 +30,7 @@ const data = {
     }]
 };
 
-/*const dataPieBillable = {
+const dataPieBillable = {
     labels: [
         'Blue',
         'Yellow',
@@ -46,7 +46,7 @@ const data = {
             '#FFCE56'
         ]
     }]
-};*/
+};
 
 const dataBarPlot = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -343,7 +343,7 @@ const War = () => {
         </div >
 
     );
-    if(this.props) {
+    if(true) {
         return <div>{form()}</div>;
     }
 };

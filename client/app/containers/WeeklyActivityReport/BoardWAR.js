@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Button, Form, Grid, Input} from 'semantic-ui-react';
+import {Button, Divider, Form, Grid, Input} from 'semantic-ui-react';
 import {Pie} from "react-chartjs-2";
 import BillableChart from "../../components/WeeklyReport/BillableChart";
 import {callAddBoard} from "../../objects/Board/BoardAsyncActions";
@@ -15,6 +15,8 @@ import {
 import style from './war.styl'
 import asteroid from "../../common/asteroid";
 import {callGetOtherWorksBillable, callGetOtherWorksNotBillable} from "../../objects/OtherWork/OtherWorkAsyncActions";
+import defaultStyle from "../../styles/settings.styl";
+import {browserHistory} from "react-router";
 
 class BoardWAR extends React.Component {
 
@@ -142,44 +144,75 @@ class BoardWAR extends React.Component {
             }]
         }
         return (
-            <Grid centered>
-                <div>
-                    <Form onSubmit={this.getData}>
-                        <Form.Group>
-                            <Form.Field>
-                                <DateInput
-                                    dateFormat={"YYYY-MM-DD"}
-                                    timeFormat={false}
-                                    name="startDate"
-                                    placeholder="Start Date"
-                                    value={this.state.startDate}
-                                    iconPosition="left"
-                                    onChange={this.handleStartDate} />
-                            </Form.Field>
-                            <Form.Field>
-                                <DateInput
-                                    dateFormat={"YYYY-MM-DD"}
-                                    timeFormat={false}
-                                    name="endDate"
-                                    placeholder="End Date"
-                                    value={this.state.endDate}
-                                    iconPosition="left"
-                                    onChange={this.handleEndDate} />
-                            </Form.Field>
-                            <Form.Button>
-                                <Button>Go</Button>
-                            </Form.Button>
-                        </Form.Group>
-                    </Form>
-                </div>
-                {showCRHA && this.state.worksBill? (<div><div> <BillableChart title="Work on cards" data={dataPieWorks}/>
-                    </div>
-                        <div> <BillableChart title="Other works" data={dataPieOther}/></div>
-                        <div> <BillableChart title="Works" data={dataPieBoth}/></div>
-                    </div>)
-                    : null}
 
-            </Grid>
+                <div>
+                    <Grid centered style={style.root}>
+                        <Grid.Row className={style.firstRowHome}>
+                            <Grid.Column mobile={15} tablet={13} computer={10}>
+                                <h2 className={defaultStyle.textColor4}>Weekly activity report - Board name VINCENT ICI !!!!</h2>
+                                <Divider />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row className={style.firstRowHome}>
+                            <Grid.Column mobile={2} tablet={4} computer={2}>
+                                <Button fluid animated='fade' onClick={() => browserHistory.push({pathname: '/board', state:{id: this.props.idBoard}})} >
+                                    <Button.Content hidden>to the board</Button.Content>
+                                    <Button.Content visible>
+                                       Back
+                                    </Button.Content>
+                                </Button>
+                            </Grid.Column>
+                            <Grid.Column mobile={14} tablet={10} computer={6}>
+                                <Form onSubmit={this.getData}>
+                                    <Form.Group>
+                                        <Form.Field>
+                                            <DateInput
+                                                dateFormat={"YYYY-MM-DD"}
+                                                timeFormat={false}
+                                                name="startDate"
+                                                placeholder="Start Date"
+                                                value={this.state.startDate}
+                                                iconPosition="left"
+                                                closeOnMouseLeave={false}
+                                                onChange={this.handleStartDate} />
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <DateInput
+                                                dateFormat={"YYYY-MM-DD"}
+                                                timeFormat={false}
+                                                name="endDate"
+                                                placeholder="End Date"
+                                                value={this.state.endDate}
+                                                iconPosition="left"
+                                                closeOnMouseLeave={false}
+                                                onChange={this.handleEndDate} />
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <Button>Go</Button>
+                                        </Form.Field>
+                                    </Form.Group>
+                                </Form>
+                            </Grid.Column>
+                        </Grid.Row>
+
+
+                        {showCRHA && this.state.worksBill ? (
+                            <Grid.Row className={style.firstRowHome}>
+                                <Grid.Column mobile={15} tablet={5} computer={5}>
+                                    <BillableChart title="Work on cards" data={dataPieWorks}/>
+                                </Grid.Column>
+                                <Grid.Column mobile={15} tablet={5} computer={5}>
+                                    <BillableChart title="Other works" data={dataPieOther}/>
+                                </Grid.Column>
+                                <Grid.Column mobile={15} tablet={5} computer={5}>
+                                    <BillableChart title="Works" data={dataPieBoth}/>
+                                </Grid.Column>
+                            </Grid.Row>
+                           ): null}
+
+                    </Grid>
+                </div>
+
         )
     }
 }

@@ -4,7 +4,7 @@ import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
 import { addList, removeList, editList } from '../objects/List/ListActions';
 import { addTeam, editTeam , removeTeam} from '../objects/Team/TeamActions';
 import { addBoard, editBoard, removeBoard } from '../objects/Board/BoardActions';
-import { addUser } from '../objects/User/UserActions';
+import { addUser, editUserProfile } from '../objects/User/UserActions';
 import { addCard, editCard , deleteCard} from '../objects/Card/CardActions';
 import { addClient, removeClient } from '../objects/Client/ClientActions';
 import {addLabel, editLabel} from '../objects/Label/LabelActions';
@@ -111,6 +111,9 @@ asteroid.ddp.on('changed', (updatedDoc) => {
     }
     if (updatedDoc.collection === 'label') {
         store.dispatch(editLabel(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'users') {
+        store.dispatch(editUserProfile(updatedDoc.id, updatedDoc.fields));
     }
 });
 
