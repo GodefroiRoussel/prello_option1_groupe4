@@ -118,7 +118,6 @@ class Home extends React.Component {
     }
 
     callCardBoard = (boards,addable) => {
-        console.log(boards)
         return(
             <Grid.Column mobile={15} tablet={13} computer={10}>
                 <CardBoards boards={boards}

@@ -6,7 +6,6 @@ const works = (state = [], action) => {
         case ADD_WORK:
             return add(state, action);
         case GET_WORKS_CARD:
-            console.log(action.data)
             return action.data;
         default:
             return state;

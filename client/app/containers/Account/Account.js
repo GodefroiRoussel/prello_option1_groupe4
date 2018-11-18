@@ -79,8 +79,6 @@ class Account extends Component {
             selected: nextProps.user.profile.genderUser
         });
 
-        console.log(nextProps.user.profile.genderUser)
-        console.log(this.state.selected)
     }
 
     handleRemoveAuthorizationClient(_id) {

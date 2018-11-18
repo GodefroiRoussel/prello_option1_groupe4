@@ -17,7 +17,6 @@ export function callAddWork(data) { //data = _id, dateWork, timeWork, boardId,
 }
 
 export function callGetWorksByCard(data){
-    console.log(data)
     return dispatch => asteroid.call('getWorksByCard', data)
         .then(result => {
             dispatch(getWorksByCard(result))
