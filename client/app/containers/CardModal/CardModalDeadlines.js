@@ -94,7 +94,7 @@ class CardModalDeadlines extends React.Component {
                 closeIcon
                 onClose={this.toggleModalDeadlines}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                    Manage members
+                    My work days on the card
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
