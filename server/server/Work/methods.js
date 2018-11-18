@@ -5,8 +5,10 @@ Meteor.methods({
     addWork(data){
         return Work.insert({idCard: data._id, idUser: Meteor.userId(), day: data.dateWork, timeReal: data.timeWork, idBoard: data.boardId});
     },
-    getWorkByCard() {
-        return Work.find().fetch();
+    getWorksByCard(data) {
+        console.log(data)
+        console.log(Work.find({idCard: data.idCard}).fetch())
+        return Work.find({idCard: data.idCard}).fetch();
     },
     getWorkBillableByBoard(data) {
         const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()

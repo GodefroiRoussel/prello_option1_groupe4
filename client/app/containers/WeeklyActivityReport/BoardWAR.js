@@ -194,8 +194,6 @@ class BoardWAR extends React.Component {
                                 </Form>
                             </Grid.Column>
                         </Grid.Row>
-
-
                         {showCRHA && this.state.worksBill ? (
                             <Grid.Row className={style.firstRowHome}>
                                 <Grid.Column mobile={15} tablet={5} computer={5}>

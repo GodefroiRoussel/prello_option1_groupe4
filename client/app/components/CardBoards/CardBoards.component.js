@@ -11,13 +11,11 @@ const CardBoards = (props) => {
 
     const boardsIsFilled = ()=>{
         if(props.boards){
-            console.log(props)
             return (
                 <div>
                     <Card.Group>
                         {props.boards.map(x => {
                             const favorite = props.userFavoriteBoard.includes(x._id);
-                            console.log(favorite)
                             return(<Card key={x._id} className={style.cardBoard}>
                                 <Card.Content>
                                     <Card.Header className={style.cardBoardHeader}>
@@ -63,7 +61,6 @@ const CardBoards = (props) => {
             }
         }
     }
-
     if(props.addable)
     {
         return (
