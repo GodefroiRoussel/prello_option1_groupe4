@@ -40,7 +40,7 @@ class BoardWAR extends React.Component {
     getData = (e) => {
         if(e.target.startDate.value && e.target.endDate.value) {
             const dataGetWork = {
-                idBoard: "57fcHHtxdhgmMunwQ",
+                idBoard: this.props.idBoard,
                 startDate: e.target.startDate.value,
                 endDate: e.target.endDate.value,
             }
@@ -52,6 +52,8 @@ class BoardWAR extends React.Component {
                                 nbHoursBill = nbHoursBill + work.timeReal
                             }
                         )
+                        console.log(this.props.idBoard)
+                        console.log('res bill ', nbHoursBill)
                         this.setState({nbHoursWorkBill: nbHoursBill})
 
                     }
@@ -101,6 +103,8 @@ class BoardWAR extends React.Component {
         this.setState({endDate: value.value})
     }
     render() {
+        console.log('notre state ',this.state)
+        console.log('nos props ',this.props)
         const showCRHA = this.state.displayCRHA
         const dataPieWorks = {
             labels: [
@@ -187,8 +191,10 @@ class BoardWAR extends React.Component {
 BoardWAR.propTypes = {};
 
 function mapStateToProps(state, ownProps){
+    console.log(ownProps.location)
     return{
-        works: state.works
+        works: state.works,
+        idBoard: ownProps.location.state.id
     }
 };
 

@@ -79,7 +79,7 @@ const CardBoards = (props) => {
         <Card.Group>
             {boardsIsFilled()}
             <div className={style.buttonAddBoardTeam}>
-            <Input type='text' onKeyPress={handleAddBoard} action='Add' placeholder='Add a Board'></Input>
+            <Input type='text' onKeyPress={handleAddBoard} action='Add' placeholder='Add a Board'/>
             </div>
         </Card.Group>
       </div>

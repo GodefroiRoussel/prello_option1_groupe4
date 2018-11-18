@@ -43,6 +43,10 @@ class BoardMenu extends Component {
         }
     }
 
+    handleClickWR = () => {
+        browserHistory.push({pathname: '/boardWar', state: {id: this.props._id}});
+    }
+
     render() {
         const { activeItem } = this.state
         const {displayParams} = this.state
@@ -57,7 +61,13 @@ class BoardMenu extends Component {
                 </Menu.Item>
                 {this.titleBoardMode()}
 
-
+                <Menu.Item
+                    className={defaultStyle.textColor3}
+                    position='right'
+                    name='Weekly Report'
+                    onClick={this.handleClickWR}
+                >
+                </Menu.Item>
                 <Menu.Item
                     className={defaultStyle.textColor3}
                     position='right'
@@ -93,6 +103,7 @@ class BoardMenu extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log('props deb ', ownProps)
     return ({
         titleBoard: this.props.titleBoard,
         _id: this.props.idBoard
