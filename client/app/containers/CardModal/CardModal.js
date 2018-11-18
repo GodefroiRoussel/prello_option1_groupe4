@@ -164,9 +164,9 @@ class CardModal extends React.Component {
                                                     return(
                                                     <Card raised>
                                                         <Segment style={{backgroundColor: `rgb(${x.colorLabel}`}}>
-                                                            {x.titleLabel}
-                                                            <Button icon="delete" onClick={() => this.deleteLabelCard(x._id)}>
-                                                            </Button>
+                                                            <span className={defaultStyle.textColor3}> {x.titleLabel}</span>
+                                                            <Icon corner={'true'} name="delete" className={defaultStyle.textColor4} onClick={() => this.deleteLabelCard(x._id)}>
+                                                            </Icon>
                                                         </Segment>
                                                     </Card>)
                                                 })}

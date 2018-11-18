@@ -30,6 +30,7 @@ class Login extends React.Component {
             .catch((error) => {
                 Alert.error(error.message);
             });
+        browserHistory.push('/');
     };
 
     updateUsername = (username) => {
