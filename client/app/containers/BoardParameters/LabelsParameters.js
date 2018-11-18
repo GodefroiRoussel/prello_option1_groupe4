@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Form, Divider, Card, Segment, Input, Icon, Button, Modal, Header} from 'semantic-ui-react'
-import TeamsParametersBoardComponent from '../../components/BoardParameters/LabelParametersBoard.component';
+import LabelParametersBoardComponnent from '../../components/BoardParameters/LabelParametersBoard.component';
 import {callAddLabel, callUpdateColorLabel, callUpdateNameLabel} from '../../objects/Label/LabelAsyncActions';
 
 
@@ -23,12 +23,12 @@ class LabelsParametersBoard extends Component {
             return (
                 <div>
                     {this.props.labels.map(x => (
-                        <TeamsParametersBoardComponent label={x} handleClose={this.handleClose} 
+                        <LabelParametersBoardComponnent label={x} handleClose={this.handleClose}
                         handleOpen={this.handleOpen} 
                         openModal={this.state.openModal} 
                         DispatchCallUpdateColorLabel={this.props.DispatchCallUpdateColorLabel}
                         DispatchCallUpdateNameLabel={this.props.DispatchCallUpdateNameLabel}
-                        ></TeamsParametersBoardComponent>
+                        ></LabelParametersBoardComponnent>
                     ))}
                     <Button basic onClick={()=> this.props.DispatchCallAddLabel({_id: this.props.board._id})}>
                         <Icon name='add' /> Add a new label
