@@ -1,6 +1,6 @@
 import style from "./boardMenu.styl";
 import defaultStyle from "../../styles/settings.styl";
-import {Card, Icon, Input, Menu,Field} from "semantic-ui-react";
+import {Card, Icon, Input, Menu, Field, Button} from "semantic-ui-react";
 import React, { Component } from 'react';
 //import BoardParameters from '../BoardParameters/BoardParameters'
 import { Link, browserHistory } from 'react-router'
@@ -36,7 +36,10 @@ class BoardMenu extends Component {
         return(
             <Menu borderless className={style.menuCustom}>
                 <Menu.Item>
-                    <Icon className={defaultStyle.textColor3}/>
+                    <Icon className={defaultStyle.textColor3} name='home' size='big' link={true}
+                          onClick={() => browserHistory.push({pathname: '/board', state:{id: this.props.board._id}})}
+                    />
+
                 </Menu.Item>
                 <Menu.Item>
                     <Input className='icon' icon='search' placeholder='Search...' />
