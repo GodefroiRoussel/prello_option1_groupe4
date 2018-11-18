@@ -39,13 +39,14 @@ class AdminMembers extends React.Component {
     render() {
 
         if (this.props.user && this.props.user.username) {
+            if (this.props.user.profile.isAdminMember==1) {
 
-            if (!this.state.members) {
-                return <div>No members</div>;
-            }
+                if (!this.state.members) {
+                    return <div>No members</div>;
+                }
 
 
-            return (
+                return (
 
                     <Grid centered style={style.root}>
                         <Grid.Column mobile={12} tablet={12} computer={12}>
@@ -56,7 +57,8 @@ class AdminMembers extends React.Component {
                                 <List divided verticalAlign='middle'>
                                     <List.Item>
                                         <List.Content floated='right'>
-                                            <Button className={defaultStyle.backgroundColorSuccess}>open account</Button>
+                                            <Button className={defaultStyle.backgroundColorSuccess}>open
+                                                account</Button>
                                             <Button className={defaultStyle.backgroundColorAlert}>close account</Button>
                                         </List.Content>
                                         <List.Content className={defaultStyle.textColor1}>
@@ -71,7 +73,9 @@ class AdminMembers extends React.Component {
                     </Grid>
 
 
-            );
+                );
+            }
+            return <div>You are not an admin</div>
         }
         return <Login/>;
     }

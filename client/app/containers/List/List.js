@@ -167,10 +167,10 @@ class ListC extends Component {
                                 <Card.Header className={style.cardBoardHeader}>
                                     <Grid>
                                         <Grid.Row>
-                                            <Grid.Column  width={5} floated='left'>
+                                            <Grid.Column  width={8} floated='left'>
                                                 {x.titleCard}
                                             </Grid.Column>
-                                            <Grid.Column floated='right'  width={5} textAlign='right'>
+                                            <Grid.Column floated='right'  width={3} textAlign='right'>
                                                 {x.billable ? (<Icon name='dollar' floated='right' className={defaultStyle.textColor3} />) : (' ')}
                                                 <CardModal card={x} floated='right' board={this.props.board}/>
                                             </Grid.Column>
