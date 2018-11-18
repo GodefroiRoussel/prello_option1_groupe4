@@ -79,19 +79,19 @@ class ClientManagement extends React.Component {
                             <Form>
                                 <Form.Field>
                                     <label>Name of the application</label>
-                                    <input type="text" defaultValue={this.state.nameClient} name="nameClient" />
+                                    <input type="text" disabled defaultValue={this.state.nameClient} name="nameClient" />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Client description</label>
-                                    <input type="text" defaultValue={this.state.descriptionClient} name="descriptionClient" />
+                                    <input type="text" disabled defaultValue={this.state.descriptionClient} name="descriptionClient" />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Homepage of the application</label>
-                                    <input type="text" defaultValue={this.state.websiteClient} name="websiteClient" />
+                                    <input type="text" disabled defaultValue={this.state.websiteClient} name="websiteClient" />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Redirect URI</label>
-                                    <input type="text" defaultValue={this.state.redirectUris[0]} name="redirectURI" />
+                                    <input type="text" disabled defaultValue={this.state.redirectUris[0]} name="redirectURI" />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Grants</label>
@@ -112,14 +112,6 @@ class ClientManagement extends React.Component {
                                     <label>Application Secret</label>
                                     <input type="text" disabled defaultValue={this.state.clientSecret}
                                         name="clientSecret" />
-                                </Form.Field>
-                                <Form.Field>
-                                    <Button fluid animated='fade'>
-                                        <Button.Content hidden>Save parameters</Button.Content>
-                                        <Button.Content visible>
-                                            <Icon name='arrow right' />
-                                        </Button.Content>
-                                    </Button>
                                 </Form.Field>
                                 <Form.Field>
                                     <Button fluid animated='fade' onClick={() => this.handleDeleteClient()} >
