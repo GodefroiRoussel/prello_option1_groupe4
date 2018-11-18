@@ -5,7 +5,7 @@ import {
     List,
     Button,
     Form,
-    Modal, 
+    Modal,
     Input,
 } from 'semantic-ui-react';
 import style from './cardModal.styl';
@@ -41,7 +41,8 @@ class CardModalDeadlines extends React.Component {
             date: '',
             timeWork: null,
             dateTime: '',
-            datesRange: ''
+            datesRange: '',
+            otherdate: ''
         };
     }
 
@@ -59,7 +60,6 @@ class CardModalDeadlines extends React.Component {
 
     addWork = (e) => {
         if(e.target.dateWork.value && e.target.timeWork.value && e.target.timeWork.value > 0) {
-            console.log("dans le if")
             this.setState({timeWork: e.target.timeWork.value, dateWork: e.target.dateWork.value}, () =>
                 this.props.dispatchCallAddWork({
                     dateWork: this.state.dateWork,
@@ -69,7 +69,7 @@ class CardModalDeadlines extends React.Component {
                 })
             )
         }
-        console.log(e.target.dateWork.value)
+        this.setState({date: '', timeWork: 0})
     }
 
 
@@ -116,7 +116,7 @@ class CardModalDeadlines extends React.Component {
                                             <DateInput
                                                 name="startDate"
                                                 placeholder="Start Date"
-                                                value={this.state.date}
+                                                value={this.state.otherdate}
                                                 iconPosition="left"
                                                 onChange={this.handleDate} />
                                             <DateInput
@@ -124,7 +124,7 @@ class CardModalDeadlines extends React.Component {
                                                 timeFormat={false}
                                                 name="endDate"
                                                 placeholder="date"
-                                                value={this.state.date}
+                                                value={this.state.otherdate}
                                                 iconPosition="left"
                                                 onChange={this.handleDate} />
                                             <Input type={"number"} step={0.25} placeholder='Nb hours' />
@@ -141,20 +141,20 @@ class CardModalDeadlines extends React.Component {
                                     <Form onSubmit={this.addWork}>
                                         <Form.Group>
                                             <Form.Field>
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="dateWork"
-                                                placeholder="Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
+                                                <DateInput
+                                                    dateFormat={"YYYY-MM-DD"}
+                                                    timeFormat={false}
+                                                    name="dateWork"
+                                                    placeholder="Date"
+                                                    value={this.state.date}
+                                                    iconPosition="left"
+                                                    onChange={this.handleDate} />
                                             </Form.Field>
                                             <Form.Field>
-                                            <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Button>
-                                            <Button>Add</Button>
+                                                <Button>Add</Button>
                                             </Form.Button>
                                         </Form.Group>
                                     </Form>
@@ -162,7 +162,7 @@ class CardModalDeadlines extends React.Component {
                             </List.Item>
 
                         </List>
-                        
+
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
