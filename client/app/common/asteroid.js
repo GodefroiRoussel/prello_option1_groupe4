@@ -26,6 +26,7 @@ asteroid.subscribe('board');
 asteroid.subscribe('team');
 asteroid.subscribe('card');
 asteroid.subscribe('client');
+asteroid.subscribe('work');
 asteroid.subscribe('label')
 
 

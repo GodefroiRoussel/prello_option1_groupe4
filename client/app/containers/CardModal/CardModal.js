@@ -331,7 +331,7 @@ class CardModal extends React.Component {
                                         <CardModalMembers idCard={this.props.card._id} idBoard={this.props.board}/>
                                     </List.Item>
                                     <List.Item>
-                                        <CardModalDeadlines card={this.props.card}/>
+                                        <CardModalDeadlines board={this.props.board} card={this.props.card}/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -421,6 +421,7 @@ function mapStateToProps(state, ownProps){
         c: state.cards,
         t: state.todos,
         todosFinished:todosFinished,
+        board: ownProps.board
     }
 };
 

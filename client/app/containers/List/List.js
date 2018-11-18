@@ -194,6 +194,7 @@ const mapStateToProps = (state, ownProps) => {
             lists: state.lists,
             //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
+            boardId: ownProps.board
         }
     )
 

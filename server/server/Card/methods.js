@@ -101,6 +101,10 @@ Meteor.methods({
         Card.update( {_id: data.idCard}, {$set: {comments: comments}})
         return Card.findOne({_id: data.idCard})
     },
+    isBillableCard(idCard) {
+        const card = Card.findOne({_id: idCard})
+        return card.billable
+    },
     addCheckListCard(data){
         const card = Card.findOne(data._id)
         const check = card.checkList

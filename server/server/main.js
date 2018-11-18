@@ -4,9 +4,6 @@ import { Accounts } from 'meteor/accounts-base'
 import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
 
-
-
-import './Todo/index';
 import './List/index';
 import './Team/index';
 import './Board/index';
@@ -18,6 +15,7 @@ import './Item/index';
 import './Comment/index';
 import './Label/index';
 import './Client/index';
+import './OtherWork/index';
 
 // declare MongoDB collection here
 //

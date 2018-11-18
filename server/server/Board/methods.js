@@ -6,13 +6,18 @@ import List from "../List/model";
 
 Meteor.methods({
     addBoard(data) {
-        return Board.insert(data);
+        const userId = Meteor.userId()
+        return Board.insert({titleBoard: data.titleBoard, members: [userId], admins: [userId]});
     },
     getBoard(id) {
         return Board.findOne(id);
     },
     getAllBoard(){
         return Board.find();
+    },
+    getMembersBoard(id) {
+        const board = Board.findOne({_id: id})
+        return board.members
     },
     updateBoardListId(data){
         if(data.id && data.listId){
@@ -23,6 +28,9 @@ Meteor.methods({
                 return Board.update({_id: data.id}, {$set: {listsId: listsId}})
             }
         }
+    },
+    findOneBoard(id) {
+       return Board.findOne({_id: id})
     },
     // update position of each list of the board according to the new position of one of them
     // idList is the id of the list having a new position

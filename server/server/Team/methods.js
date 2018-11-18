@@ -20,6 +20,7 @@ Meteor.methods({
     addMemberTeam(data) {
         const users = Meteor.call("getAllUsersReturnUsername");
         if(users.includes(data.member)){
+            console.log("if")
             var members = Meteor.call("getTeamById",data._id).members
             members.push(data.member)
             return Team.update({_id: data._id}, {$set: {members: members}});
