@@ -11,6 +11,9 @@ const WorkSchema = new SimpleSchema({
     idCard: {
         type: String,
     },
+    idBoard: {
+        type: String,
+    },
     day: {
         type: Date,
         //defaultValue: new Date

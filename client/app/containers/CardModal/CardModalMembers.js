@@ -32,31 +32,31 @@ class CardModalMembers extends React.Component {
                 LastName: "Tarpien",
                 nickname: "TarpM"
 
-            }]
+            }],
+            nameMember:"",
         };
     }
 
     toggleModalMembers = () => this.setState(state => ({ openModal: !state.openModal }));
 
 
+
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
-        console.log(e.target.value)
-        if(e.target.value) {
-            this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+        if(e.type =="submit") {
+            this.props.dispatchCallAddMemberToCard({idCard: this.props.idCard, idMember: this.state.nameMember, idBoard: this.props.idBoard})
         }
     }
 
-    deleteContributorCard = (e) => {
-        if(e.target.value) {
-            this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+    deleteContributorCard = (member) => {
+        if(member) {
+            this.props.dispatchCallDeleteMemberToCard({idCard: this.props.idCard , idMember: member})
         }
 
     }
 
     render() {
         const { openModal } = this.state;
-        console.log(this.props)
         return (
             <Modal
                 trigger={
@@ -82,7 +82,7 @@ class CardModalMembers extends React.Component {
                                 return(
                                     <List.Item>
                                         <List.Content floated='right'>
-                                            <Button>Delete</Button>
+                                            <Button onClick={()=>this.deleteContributorCard(x)}>Delete</Button>
                                         </List.Content>
                                         <Image avatar src={ProfileAnonymous} />
                                         <List.Content>
@@ -92,15 +92,18 @@ class CardModalMembers extends React.Component {
                                 )
                             })}
                         </List>
-                        <Form onSubmit={this.addContributorCard}>
+                        <Form autocomplete="off" onSubmit={this.addContributorCard}>
                             <Form.Field className={style.inputEditTitle}>
                                 <label>Add a new worker</label>
-                                <Input list='members' name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                <Input list='members' onKeyPress={this.addContributorCard} onChange={(name)=>this.setState({nameMember:name.target.value})} name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                <Button type="submit">Add</Button>
                                 <datalist id='members'>
                                 {this.props.board.members.map(x => {
-                                    return(
-                                        <option value={x}/>
-                                    )
+                                    if(!this.props.card.assignedUsers.includes(x)){
+                                        return(
+                                            <option value={x}/>
+                                        )
+                                    }
                                 })}
                                 </datalist>
                             </Form.Field>
@@ -121,13 +124,14 @@ CardModalMembers.defaultProps = {
 function mapStateToProps(state, ownProps){
     return{
         card: state.cards.find(el => el._id==ownProps.idCard),
-        board: state.boards.find(el=> el._id==ownProps.idBoard)
+        board: state.boards.find(el=> el._id==ownProps.idBoard),
+        c: state.cards
     }
 };
 
 const mapDispatchToProps = (dispatch)=> ({
     dispatchCallAddMemberToCard: data => dispatch(callAddMemberAssigned(data)),
-    dispatchCallDeleteMemberToCard: data => dispatch(callDeleteMemberAssigned(data))
+    dispatchCallDeleteMemberToCard: data => dispatch(callDeleteMemberAssigned(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModalMembers);

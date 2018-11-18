@@ -74,7 +74,6 @@ class ListC extends Component {
                     <Card.Content>
                         <Card.Header>
                             {this.titleListMode()}
-
                         </Card.Header>
                     </Card.Content>
 
@@ -201,17 +200,18 @@ const mapStateToProps = (state, ownProps) => {
     if(cardB){
         ownProps.list.cards.forEach((card)=> {
             cardB.forEach((element) => {
-                if(element._id === card){
+                if(element._id === card && !result.includes(element)){
                     result.push(element);
                 }
             })
         })
     }
-
+    
     return({
             lists: state.lists,
             //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
+            boardId: ownProps.board
         }
     )
 

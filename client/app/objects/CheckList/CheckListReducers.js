@@ -2,7 +2,7 @@ import {add, remove} from "../../common/helpers";
 import {ADD_CHECKLIST, DELETE_CHECKLIST, EDIT_ITEMS_CHECKLIST} from "./CheckListAction";
 
 
-const checklists = (state, action) => {
+const checklists = (state= [], action) => {
     switch (action.type) {
         case ADD_CHECKLIST:
             return add(state, action);
@@ -18,7 +18,7 @@ const checklists = (state, action) => {
             }
             return state;
         default:
-            return null; //TODO: change with state
+            return state;
     }
 }
 
