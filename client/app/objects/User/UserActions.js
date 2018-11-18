@@ -48,3 +48,17 @@ export function getAllUser(data) {
         payload: {products},
     };
 }
+
+export function deleteFavoriteBoard(data){
+    return {
+        type: DELETE_FAV_BOARD,
+        data
+    }
+}
+
+export function addFavoriteBoard(data){
+    return {
+        type: ADD_FAV_BOARD,
+        data
+    }
+}

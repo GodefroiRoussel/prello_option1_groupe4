@@ -67,7 +67,28 @@ Meteor.methods({
         return usernames;
     },
     editUserProfile(data) {
-        return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const profile = user.profile
+        var newProfile = {}
+        Object.keys(profile).forEach((f) => {
+            if(data[f]){
+                newProfile[f] = data[f]
+            }
+            else{
+                if(profile[f]){
+                    newProfile[f] = profile[f]
+                }
+                else{
+                    if(f=="favoriteBoards"){
+                        newProfile[f]=[]
+                    }else{
+                        newProfile[f]="";
+                    }
+                }
+            }
+        })
+        return Meteor.users.update(Meteor.userId(), { $set: { profile: newProfile } });
     },
     addFavoriteBoard(data) { // data = userId, boardId
         const userId = Meteor.userId()
