@@ -26,6 +26,7 @@ class Team extends React.Component {
             team: "",
             privacy: "false",
             membersName: "",
+            nameBoard: "",
         };
     }
 
@@ -74,6 +75,14 @@ class Team extends React.Component {
         }
     }
 
+    changeNameBoard = (name) => {
+        this.setState({nameBoard: name.target.value})
+    }
+
+    handleAddBoardOnClick = () => {
+        this.props.DispatchCallAddBoard({titleBoard: this.state.nameBoard, user: this.props.user.username, team: this.props.team._id})
+    }
+
     render() {
         if(!this.props.team || !this.props.user){
             return <div/>
@@ -96,7 +105,12 @@ class Team extends React.Component {
     }
 
     panes = [
-        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} dispatchFunc={this.props.DispatchCallAddBoard} team={this.props.team._id} user={this.props.user.username}/></Tab.Pane> },
+        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} 
+                                                                                dispatchFunc={this.props.DispatchCallAddBoard} 
+                                                                                team={this.props.team._id} 
+                                                                                user={this.props.user.username}
+                                                                                changeNameBoard={this.changeNameBoard}
+                                                                                handleAddBoardOnClick={this.handleAddBoardOnClick}/></Tab.Pane> },
         { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane>{this.users()}</Tab.Pane>},
         { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings()}</Tab.Pane> },
     ]
@@ -142,7 +156,6 @@ class Team extends React.Component {
             )
         }
     isVisibleTeam = (teamVisibility) => {
-        console.log(teamVisibility)
         if(teamVisibility==true){
             return "public"
         }

@@ -1,9 +1,13 @@
 import asteroid from '../../common/asteroid';
 import { addTodo, getAllTodo, removeTodo, editTodo } from './TodoActions';
+import {callAddCheckListCard} from '../Card/CardAsyncActions'
 
-export function callAddTodo(message) {
-  return dispatch => asteroid.call('addTodo', {message: message})
-      .then(result => dispatch(addTodo({ _id: result, message })));
+export function callAddTodo(data) {
+  return dispatch => asteroid.call('addTodo', {message: data.message})
+      .then(result =>{
+        dispatch(callAddCheckListCard({checkList: result, _id: data.idCard}))
+        return dispatch(addTodo({ _id: result, message: data.message, finished: false }))
+      });
   //.then est un promise pour ne pas bloquer la page / id est le retour du serveur avec un message / dispatch grace à redux ajoute à notre state
 }
 
@@ -19,5 +23,5 @@ export function callRemoveTodo(_id) {
 
 export function callEditTodo(_id, finished) {
   return dispatch => asteroid.call('editTodo', _id, finished)
-      .then(() => dispatch(editTodo(_id, finished)));
+      .then(() => dispatch(editTodo({_id: _id, finished: finished})));
 }

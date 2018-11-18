@@ -105,6 +105,12 @@ Meteor.methods({
         const card = Card.findOne({_id: idCard})
         return card.billable
     }
+    addCheckListCard(data){
+        const card = Card.findOne(data._id)
+        const check = card.checkList
+        check.push(data.checkList)
+        Card.update({_id: data._id}, {$set: {checkList: check}})
+    }
 });
 
 export default Card;

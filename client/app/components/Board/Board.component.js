@@ -15,7 +15,6 @@ const BoardComponent = (props) => {
             <Grid.Column mobile={16} tablet={16} computer={16} >
                 <div className={style.margin}>
                     <div className={style.listBox}>
-
                         {props.lists.map((list, index) =>
                             <ListCont list={list} index={index} board={props.board}/>)}
                     </div>

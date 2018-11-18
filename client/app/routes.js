@@ -29,7 +29,7 @@ const Root = (
         <Route path="account" component={Account} />
         <Route path="board" component={Board} />
         <Route path="list" component={List} />
-        <Route path="test" component={BoardParameters} />
+        <Route path="settings" component={BoardParameters} />
         <Route path="card" component={CardModal} />
         <Route path="war" component={War} />
         <Route path="oauth/clients" component={Client} />
