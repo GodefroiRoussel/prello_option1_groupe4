@@ -147,11 +147,7 @@ ClientManagement.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('ownProps')
-    console.log(ownProps.params.id)
 
-    console.log('STATE')
-    console.log(state)
 
     return ({
         client: state.clients.find(client => client._id == ownProps.params.id),

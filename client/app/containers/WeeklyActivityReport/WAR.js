@@ -10,6 +10,7 @@ import style from './war.styl';
 
 import { Doughnut, Bar, Pie, Line } from 'react-chartjs-2';
 import { equal } from 'assert';
+import {connect} from "react-redux";
 
 const data = {
     labels: [
@@ -29,7 +30,7 @@ const data = {
     }]
 };
 
-/*const dataPieBillable = {
+const dataPieBillable = {
     labels: [
         'Blue',
         'Yellow',
@@ -45,7 +46,7 @@ const data = {
             '#FFCE56'
         ]
     }]
-};*/
+};
 
 const dataBarPlot = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -147,7 +148,7 @@ const dataLineChart = {
 //TODO: Refactor in little containers
 //TODO: Right Scroll with the list of members
 //TODO: Fix Bug of cards
-const WeeklyActivityReport = () => {
+const War = () => {
 
     const form = () => (
         <div>
@@ -342,8 +343,15 @@ const WeeklyActivityReport = () => {
         </div >
 
     );
-    return <div>{form()}</div>;
+    if(true) {
+        return <div>{form()}</div>;
+    }
 };
 
+function mapStateToProps(state, ownProps){
+    return{
+        //works: state.works
+    }
+};
 
-export default cssModules(WeeklyActivityReport, style);
+export default connect(mapStateToProps)(War)

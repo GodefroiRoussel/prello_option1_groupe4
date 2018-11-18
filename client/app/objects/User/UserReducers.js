@@ -1,4 +1,4 @@
-import { ADD_USER, REMOVE_USER, EDIT_USER_PROFILE,EDIT_USER_PASSWORD, GET_ALL_USER } from './UserActions';
+import { ADD_USER, REMOVE_USER, EDIT_USER_PROFILE, EDIT_USER_PASSWORD, GET_ALL_USER, REMOVE_AUTHORIZATION_CLIENT } from './UserActions';
 import { remove, edit, add } from '../../common/helpers';
 
 //les apels au serveur sont fait par astéroide grâce aux appel client de modification du state défini dans le reducer et les action / asyncAction
@@ -14,6 +14,8 @@ const users = (state = [], action) => {
             return edit(state, action);
         case GET_ALL_USER:
             return action.payload;
+        case REMOVE_AUTHORIZATION_CLIENT:
+            return remove(state, action);
         default:
             return state;
     }

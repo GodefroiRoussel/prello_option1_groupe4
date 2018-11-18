@@ -78,7 +78,6 @@ Meteor.methods({
         }
     },
     updateCardsPositionsAfterArchiveOrDelete(data) { // data = idList, idCardArcOrDel
-        console.log('list')
         if(data.idList && data.idCardArcOrDel) {
             const position = Meteor.call('findOneCard', data.idCardArcOrDel).positionCard
             const cardsId = data.list.cards
@@ -113,7 +112,6 @@ Meteor.methods({
         )
     },
     updateCardPositionBetweenList(data){
-        console.log(data);
         List.update({_id: data.startList._id},
             {$set: {cards: data.startList.cards}});
         List.update({_id: data.finishList._id},

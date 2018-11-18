@@ -10,11 +10,12 @@ import {
     TextArea,
     Grid,
     Segment,
-    Select,
+    Progress,
     Modal,
     Header,
     Divider,
-    Icon, Input
+    Icon, Input,
+    Dropdown
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
@@ -29,6 +30,9 @@ import {
     callUpdateCardDescription,
     callUpdateCardTitle
 } from "../../objects/Card/CardAsyncActions";
+import Todo from "../Todo/Todo.js";
+import { callAddTodo } from "../../objects/Todo/TodoAsyncActions";
+
 
 import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 import {callAddComment} from "../../objects/Comment/CommentAsyncAction";
@@ -45,14 +49,6 @@ class CardModal extends React.Component {
             titleCard: this.props.card.titleCard,
             descriptionCard: this.props.card.descriptionCard,
             billableCard: this.props.card.billable,
-
-            /*card:{
-                titleCard: "The title of this card",
-                descriptionCard: "A possible description of the task and the goals of this Card. Instruction can be placed here !",
-                deadlineCard:"18/11/2018",
-                positionCard:0,
-                billableCard:false
-            }*/
         };
     }
 
@@ -63,7 +59,6 @@ class CardModal extends React.Component {
     toggleEditDescription = () => this.setState({editDescription: !this.state.editDescription})
 
     editCardTitle = (e) => {
-        console.log(this.props.card._id)
         this.setState({titleCard: e.target.value}, () =>
             this.props.dispatchCallEditCardTitle({titleCard: this.state.titleCard, _id: this.props.card._id})
         )
@@ -93,9 +88,7 @@ class CardModal extends React.Component {
     }
 
     deleteLabelCard = (e) => {
-        if(e.target.value) {
-            this.props.dispatchCallDeleteLabelCard({idLabel: e.target.value, idCard: this.state.idCard})
-        }
+        this.props.dispatchCallDeleteLabelCard({idLabel: e, idCard: this.state.idCard})
     }
 
     deleteCard = (e) => {
@@ -116,8 +109,31 @@ class CardModal extends React.Component {
         //this.props.dispatchCallDeleteComment(data) //to precise
     }
 
+    renderLabel = label => {
+        return({
+        style: {backgroundColor: `rgb(${label.key}`},
+        content: `${label.text}`,
+        })
+    }
+
+    toggleMultiple = (e, {value}) => {
+        this.props.dispatchCallAddLabelCard({idCard: this.props.card._id, idLabel:value})
+    }
+
+    handleAddTodo = (e) => {
+        if (e.key === 'Enter') {
+          const elem = e.target;
+          e.preventDefault();
+          if (elem.value) {
+            this.props.dispatchCallAddTodo({message: elem.value, idCard:this.props.card._id});
+            elem.value = '';
+          }
+        }
+      };
+
     render() {
         const { openModal } = this.state;
+
         return (
 
             <Modal
@@ -143,24 +159,25 @@ class CardModal extends React.Component {
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Sticks</h3>
                                             <Card.Group itemsPerRow={6}>
-                                                <Card raised>
-                                                    <Segment inverted color='red'>
-                                                        label 1
-                                                    </Segment>
-                                                </Card>
-                                                <Card raised>
-                                                    <Segment inverted color='green'>
-                                                        label 2
-                                                    </Segment>
-                                                </Card>
-
                                                 <div className={style.buttonAddStickers}>
-                                                    <Button  icon>
-                                                        <Icon name='add' />
-                                                    </Button>
+                                                {this.props.defaultValueLabel.map(x => {
+                                                    return(
+                                                    <Card raised>
+                                                        <Segment style={{backgroundColor: `rgb(${x.colorLabel}`}}>
+                                                            <span className={defaultStyle.textColor3}> {x.titleLabel}</span>
+                                                            <Icon corner={'true'} name="delete" className={defaultStyle.textColor4} onClick={() => this.deleteLabelCard(x._id)}>
+                                                            </Icon>
+                                                        </Segment>
+                                                    </Card>)
+                                                })}
+                                                <Dropdown
+                                                    fluid
+                                                    options={this.props.options}
+                                                    placeholder='Choose an option'
+                                                    renderLabel={this.renderLabel}
+                                                    onChange={this.toggleMultiple}
+                                                />
                                                 </div>
-
-
                                             </Card.Group>
                                             <Divider />
                                         </Grid.Column>
@@ -196,7 +213,25 @@ class CardModal extends React.Component {
                                     <Grid.Row className={style.rowCard}>
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Checklist</h3>
+                                            <Progress color='green' value={this.props.todosFinished.length} total={this.props.todos.length} progress='ratio' />
+                                            <div>
+                                                <Form>
+                                                    <Form.Field>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Add todo item ..."
+                                                            onKeyPress={this.handleAddTodo}
+                                                            name={"todoTitleAdd"}
+                                                            className={style.inputEditTitle}
+                                                        />
+                                                    </Form.Field>
+                                                </Form>
 
+                                            </div>
+                                            <div>
+                                                {this.props.todos.map((t, i) =>
+                                                <Todo id={t._id} message={t.message} finished={t.finished} key={i}/>)}
+                                            </div>
                                             <Divider />
                                         </Grid.Column>
                                     </Grid.Row>
@@ -299,10 +334,10 @@ class CardModal extends React.Component {
                                 </Form>
                                 <List>
                                     <List.Item>
-                                        <CardModalMembers/>
+                                        <CardModalMembers idCard={this.props.card._id} idBoard={this.props.board}/>
                                     </List.Item>
                                     <List.Item>
-                                        <CardModalDeadlines/>
+                                        <CardModalDeadlines board={this.props.board} card={this.props.card}/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -328,13 +363,7 @@ class CardModal extends React.Component {
                                             </Button.Content>
                                         </Button>
                                     </List.Item>
-
-
                                 </List>
-
-
-
-
                             </Grid.Column>
                         </Grid>
                     </Modal.Description>
@@ -367,8 +396,38 @@ CardModal.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps){
+    const c = state.cards.find(el => el._id === ownProps.card._id)
+    var option = []
+    const b = state.boards.find(el => el._id === ownProps.board);
+    const listLabel = state.cards.find(el => el._id === ownProps.card._id).labels
+    var listDefaultValue = []
+    if(b && listLabel){
+        const labels = state.labels.filter(el => b.labels.includes(el._id))
+        if(labels){
+            labels.map(x=> {option.push({key: x._id, text: x.titleLabel, value: x._id,
+                    content: <Header content={x.titleLabel} style={{backgroundColor: `rgb(${x.colorLabel}`}}/>})
+                    if(listLabel.includes(x._id)){
+                        listDefaultValue.push(x)
+                    }
+                }
+            )
+        }
+    }
+    const allTodos = state.todos.filter(el => c.checkList.includes(el._id))
+    var todosFinished = []
+    if(allTodos){
+        todosFinished = allTodos.filter(x => x.finished==true)
+    }
+    
     return{
-        card: state.cards.find(el => el._id === ownProps.card._id)
+        card: state.cards.find(el => el._id === ownProps.card._id),
+        options: option,
+        defaultValueLabel : listDefaultValue,
+        todos: state.todos.filter(el => c.checkList.includes(el._id)),
+        c: state.cards,
+        t: state.todos,
+        todosFinished:todosFinished,
+        board: ownProps.board
     }
 };
 
@@ -381,7 +440,8 @@ const mapDispatchToProps = dispatch => ({
     dispatchCallDeleteCard: data => dispatch(callDeleteCard(data)),
     dispatchCallArchiveCard: data => dispatch(callArchiveCard(data)),
     dispatchCallEditComment: data => dispatch(callAddCommentCard(data)),
-    dispatchCallDeleteComment: data => dispatch(callAddCommentCard(data))
+    dispatchCallDeleteComment: data => dispatch(callAddCommentCard(data)),
+    dispatchCallAddTodo: data => dispatch(callAddTodo(data)),
 });
 
 //export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModal, style));

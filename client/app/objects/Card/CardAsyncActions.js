@@ -12,11 +12,13 @@ import {
     editCommentCard
 
 } from './CardActions';
+
 import {
     callUpdateCardsPositionsAfterArchiveOrDelete,
     callAddCardInList,
     callUpdateCardsPositionsAfterArchiveOrDeleteId
 } from '../List/ListAsyncActions'
+
 import {addCardInList} from "../List/ListActions";
 import {callAddComment, callDeleteComment} from "../Comment/CommentAsyncAction";
 
@@ -29,7 +31,7 @@ export function callAddCard(data) {
     return dispatch => asteroid.call('addCard', data)
         .then(result => {
             dispatch(callAddCardInList({idList: data.listId, idCard: result}))
-            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false}}))
+            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false, labels: [], checkList:[], assignedUsers:[]}}))
         })
 }
 
@@ -49,7 +51,6 @@ export function callUpdateCardBillable(data) {
 }
 
 export function callDeleteCard(data) {
-    console.log('async', data.idCard)
     return dispatch => asteroid.call('deleteCard', data.idCard)
         .then(result => {
             dispatch(deleteCard(result))
@@ -79,6 +80,7 @@ export function callAddMemberAssigned(data) {
 }
 
 export function callDeleteMemberAssigned(data) {
+    console.log(data)
     return dispatch => asteroid.call('deleteContributorCard', data)
         .then(result => dispatch(editContributorCard(result)))
 }
@@ -108,4 +110,8 @@ export function callDeleteCommentCard(data) { //data = idCard, idComment
             dispatch(editCommentCard(result))
             dispatch(callDeleteComment(result))
         })
+}
+
+export function callAddCheckListCard(data){
+    return dispatch => asteroid.call('addCheckListCard', data)
 }

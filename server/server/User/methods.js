@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import User from "./model";
+import AccessToken from "../AccessToken/model";
+import AuthorizationToken from '../AuthorizationToken/model'
 import { Accounts } from "meteor/accounts-base";
 import { createClient } from "ldapjs"
 import List from "../List/model";
+import Client from '../Client/model';
 
 const URL_LDAP = Meteor.settings.URL_LDAP || process.env.URL_LDAP;
 const CREDENTIALS = Meteor.settings.CREDENTIALS || process.env.CREDENTIALS;
@@ -59,7 +62,8 @@ Meteor.methods({
                 avatarUser: "",
                 languageUser: "",
                 colourBlindUser: "",
-                favoriteBoards: []
+                favoriteBoards: [],
+                isAdminMember: 0
             }
         });
     },
@@ -69,21 +73,62 @@ Meteor.methods({
     getUser(id) {
         return Meteor.users.findOne(id);
     },
+    getAllUsersReturnUsername(){
+        const users = Meteor.users.find().fetch();
+        var usernames = users.map(x => x.username);
+        return usernames;
+    },
     editUserProfile(data) {
-        return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const profile = user.profile
+        var newProfile = {}
+        Object.keys(profile).forEach((f) => {
+            if(data[f]){
+                newProfile[f] = data[f]
+            }
+            else{
+                if(profile[f]){
+                    newProfile[f] = profile[f]
+                }
+                else{
+                    if(f=="favoriteBoards"){
+                        newProfile[f]=[]
+                    }else{
+                        newProfile[f]="";
+                    }
+                }
+            }
+        })
+        return Meteor.users.update(Meteor.userId(), { $set: { profile: newProfile } });
     },
     addFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         favBoards.push(data.boardId)
-        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId();
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        return Meteor.users.update({ _id: data.userId }, { $set: { favoriteBoards: favBoards } })
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
+    },
+    getClientsAuthorizedByUser() {
+        const userId = Meteor.userId();
+        const listAccessToken = AccessToken.find({ "user.id": userId });
+        const clients = Client.find().fetch();
+        return clients;
+    },
+    removeAuthorization(idClient) {
+        const userId = Meteor.userId();
+        AuthorizationToken.remove({ "client.id": idClient, "user.id": userId });
+        return AccessToken.remove({ "client.id": idClient, "user.id": userId });
     },
     async loginPolytech(user) {
         const username = user.username;
@@ -150,8 +195,6 @@ Meteor.methods({
             }
         }
         catch (err) {
-            console.log("ERR")
-            console.log(err)
             return err
         }
     }

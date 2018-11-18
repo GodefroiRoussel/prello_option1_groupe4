@@ -11,18 +11,20 @@ const WorkSchema = new SimpleSchema({
     idCard: {
         type: String,
     },
+    idBoard: {
+        type: String,
+    },
     day: {
         type: Date,
-        defaultValue: new Date
+        //defaultValue: new Date
     },
     timePredicted: {
         type: Number,
-        decimal: true,
-        defaultValue: null
+        defaultValue: 0,
     },
     timeReal: {
-        type: Boolean,
-        defaultValue: false
+        type: Number,
+        min: 0
     },
 });
 

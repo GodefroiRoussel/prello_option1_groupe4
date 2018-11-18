@@ -44,11 +44,12 @@ export function updateListTitle(data){
         data, //data = idList
     };
 }
-export function updateList(data) {
-    return {
+export function editList(_id, data){
+    return{
         type: EDIT_LIST,
+        _id,
         data,
-    }
+    };
 }
 export function deleteList() {
 }
