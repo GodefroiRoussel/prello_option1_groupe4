@@ -5,7 +5,7 @@ import {
     List,
     Button,
     Form,
-    Modal,
+    Modal, 
     Input,
 } from 'semantic-ui-react';
 import style from './cardModal.styl';
@@ -18,6 +18,7 @@ import {
     DatesRangeInput
 } from 'semantic-ui-calendar-react';
 import {callAddWork} from "../../objects/WeeklyReport/WorkAsyncActions";
+import {Grid} from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 
 
 class CardModalDeadlines extends React.Component {
@@ -41,8 +42,7 @@ class CardModalDeadlines extends React.Component {
             date: '',
             timeWork: null,
             dateTime: '',
-            datesRange: '',
-            otherdate: ''
+            datesRange: ''
         };
     }
 
@@ -60,6 +60,7 @@ class CardModalDeadlines extends React.Component {
 
     addWork = (e) => {
         if(e.target.dateWork.value && e.target.timeWork.value && e.target.timeWork.value > 0) {
+            console.log("dans le if")
             this.setState({timeWork: e.target.timeWork.value, dateWork: e.target.dateWork.value}, () =>
                 this.props.dispatchCallAddWork({
                     dateWork: this.state.dateWork,
@@ -69,7 +70,7 @@ class CardModalDeadlines extends React.Component {
                 })
             )
         }
-        this.setState({date: '', timeWork: 0})
+        console.log(e.target.dateWork.value)
     }
 
 
@@ -88,50 +89,48 @@ class CardModalDeadlines extends React.Component {
                 }
                 size={'tiny'}
                 centered={false}
+                className={style.modalCustom2}
                 open={openModal}
                 closeIcon
                 onClose={this.toggleModalDeadlines}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                    Manage members
+                    My work days on the card
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
                         <List verticalAlign='middle'>
                             <List.Item>
                                 <List.Content>
-                                    <List>
-                                        <List.Header>Yours work days on this project</List.Header>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
+                                    <List divided verticalAlign='middle'>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
 
                                     </List>
 
                                 </List.Content>
-                                <List.Content floated='right'>
-                                    <Form>
-                                        <Form.Group>
-                                            <DateInput
-                                                name="startDate"
-                                                placeholder="Start Date"
-                                                value={this.state.otherdate}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="endDate"
-                                                placeholder="date"
-                                                value={this.state.otherdate}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
-                                            <Input type={"number"} step={0.25} placeholder='Nb hours' />
-                                            <Button>Delete</Button>
-                                        </Form.Group>
-                                    </Form>
-                                </List.Content>
+
                             </List.Item>
                             <List.Item>
                                 <List.Content>
@@ -140,29 +139,31 @@ class CardModalDeadlines extends React.Component {
                                 <List.Content floated='right'>
                                     <Form onSubmit={this.addWork}>
                                         <Form.Group>
-                                            <Form.Field>
+
                                                 <DateInput
+                                                    closable={true}
+                                                    closeOnMouseLeave={false}
                                                     dateFormat={"YYYY-MM-DD"}
                                                     timeFormat={false}
                                                     name="dateWork"
                                                     placeholder="Date"
                                                     value={this.state.date}
-                                                    iconPosition="left"
-                                                    onChange={this.handleDate} />
-                                            </Form.Field>
+                                                    iconPosition="left"/>
+
                                             <Form.Field>
                                                 <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
-                                            <Form.Button>
+                                            <Form.Field>
                                                 <Button>Add</Button>
-                                            </Form.Button>
+                                            </Form.Field>
+
                                         </Form.Group>
                                     </Form>
                                 </List.Content>
                             </List.Item>
 
                         </List>
-
+                        
                     </Modal.Description>
                 </Modal.Content>
             </Modal>

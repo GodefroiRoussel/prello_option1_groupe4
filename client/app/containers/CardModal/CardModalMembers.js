@@ -9,6 +9,7 @@ import {
     Modal,
     Input
 } from 'semantic-ui-react';
+
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
@@ -69,6 +70,7 @@ class CardModalMembers extends React.Component {
                 }
                 size={'tiny'}
                 centered={false}
+                className={style.modalCustom2}
                 open={openModal}
                 closeIcon
                 onClose={this.toggleModalMembers}>
@@ -92,21 +94,25 @@ class CardModalMembers extends React.Component {
                                 )
                             })}
                         </List>
-                        <Form autocomplete="off" onSubmit={this.addContributorCard}>
-                            <Form.Field className={style.inputEditTitle}>
-                                <label>Add a new worker</label>
-                                <Input list='members' onKeyPress={this.addContributorCard} onChange={(name)=>this.setState({nameMember:name.target.value})} name="titleList" type="text" placeholder={"Search by nickname"}/>
-                                <Button type="submit">Add</Button>
-                                <datalist id='members'>
-                                {this.props.board.members.map(x => {
-                                    if(!this.props.card.assignedUsers.includes(x)){
-                                        return(
-                                            <option value={x}/>
-                                        )
-                                    }
-                                })}
-                                </datalist>
-                            </Form.Field>
+                        <Form autoComplete="off" onSubmit={this.addContributorCard}>
+                            <Form.Group inline>
+                                <Form.Field>
+                                    <label>Add a new worker</label>
+                                    <Input list='members' onKeyPress={this.addContributorCard} onChange={(name)=>this.setState({nameMember:name.target.value})} name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                    <datalist id='members'>
+                                        {this.props.board.members.map(x => {
+                                            if(!this.props.card.assignedUsers.includes(x)){
+                                                return(
+                                                    <option value={x}/>
+                                                )
+                                            }
+                                        })}
+                                    </datalist>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Button type="submit">Add</Button>
+                                </Form.Field>
+                            </Form.Group>
                         </Form>
                     </Modal.Description>
                 </Modal.Content>

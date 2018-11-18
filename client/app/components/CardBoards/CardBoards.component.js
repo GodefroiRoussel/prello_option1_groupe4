@@ -15,70 +15,24 @@ const CardBoards = (props) => {
                 <div>
                     <Card.Group>
                         {props.boards.map(x => {
-                            if(x.teams){
-                                if(x.teams.includes(props.team)){
-                                    return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
-                                        <Card.Content>
-                                            <Card.Header className={style.cardBoardHeader}>
-                                                <Grid>
-                                                    <Grid.Row>
-                                                        <Grid.Column  width={8} floated='left'>
-                                                            {x.titleBoard}
-                                                        </Grid.Column>
-                                                        <Grid.Column floated='right'  width={2} textAlign='right'>
-                                                            {true ? (<Icon className={defaultStyle.textColor5} name='star' />) : (<Icon className={defaultStyle.textColor3} name='star' />)}
-                                                        </Grid.Column>
-                                                    </Grid.Row>
-                                                </Grid>
-                                            </Card.Header>
-                                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                                        </Card.Content>
-                                    </Card>)
-                                }
-                                else{
-                                    return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
-                                        <Card.Content>
-                                            <Card.Header className={style.cardBoardHeader}>
-                                                <Grid>
-                                                    <Grid.Row>
-                                                        <Grid.Column  width={8} floated='left'>
-                                                            {x.titleBoard}
-                                                        </Grid.Column>
-                                                        <Grid.Column floated='right'  width={2} textAlign='right'>
-                                                            {true ? (<Icon className={defaultStyle.textColor5} name='star' />) : (<Icon className={defaultStyle.textColor3} name='star' />)}
-                                                        </Grid.Column>
-                                                    </Grid.Row>
-                                                </Grid>
-                                            </Card.Header>
-                                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                                        </Card.Content>
-                                    </Card>)
-                                }
-                            }
-                            else{
-                                if(props.team){
-                                    return <div/>
-                                }
-                                else{
-                                    return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
-                                        <Card.Content>
-                                            <Card.Header className={style.cardBoardHeader}>
-                                                <Grid>
-                                                    <Grid.Row>
-                                                        <Grid.Column  width={8} floated='left'>
-                                                            {x.titleBoard}
-                                                        </Grid.Column>
-                                                        <Grid.Column floated='right'  width={2} textAlign='right'>
-                                                            {true ? (<Icon className={defaultStyle.textColor5} name='star' />) : (<Icon className={defaultStyle.textColor3} name='star' />)}
-                                                        </Grid.Column>
-                                                    </Grid.Row>
-                                                </Grid>
-                                            </Card.Header>
-                                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
-                                        </Card.Content>
-                                    </Card>)
-                                }
-                            }
+                            const favorite = props.userFavoriteBoard.includes(x._id);
+                            return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
+                                <Card.Content>
+                                    <Card.Header className={style.cardBoardHeader}>
+                                        <Grid>
+                                            <Grid.Row>
+                                                <Grid.Column  width={8} floated='left'>
+                                                    {x.titleBoard}
+                                                </Grid.Column>
+                                                <Grid.Column floated='right'  width={2} textAlign='right'>
+                                                    {favorite ? (<Icon onClick={()=>props.handleAddFavoriteBoard(x._id)} className={defaultStyle.textColor5} name='star' />) : (<Icon onClick={()=>props.handleDeleteFavoriteBoard(x._id)} className={defaultStyle.textColor3} name='star' />)}
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                        </Grid>
+                                    </Card.Header>
+                                    <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                                </Card.Content>
+                            </Card>)
                         })}
                     </Card.Group>
                 </div>)
@@ -122,10 +76,7 @@ const CardBoards = (props) => {
                         <Form.Field>
                             <Button type="submit">Add</Button>
                         </Form.Field>
-
                     </Form.Group>
-
-
                 </Form.Field>
                 </Form>
             </div>
