@@ -45,10 +45,14 @@ class Board extends Component {
                     <div className={style.generalBoardRendering}>
                         <BoardMenu board={this.props.board}/>
                         <Form onSubmit={this.handleAddList}>
-                            <Form.Field className={style.inputForm}>
-                                <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
-                                <Button type="submit">Add</Button>
-                            </Form.Field>
+                                <Form.Group inline>
+                                    <Form.Field>
+                                        <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <Button type="submit">Add</Button>
+                                    </Form.Field>
+                                </Form.Group>
                         </Form>
                     </div>
                 )
@@ -134,14 +138,19 @@ class Board extends Component {
                                             <Grid.Column mobile={16} tablet={16} computer={16} >
                                                 <div className={style.margin}>
                                                     <div className={style.listBox}>
-                                                        <BoardComponent lists={this.props.lists} board={this.props.board._id}/>
+                                                        <BoardComponent board={this.props.board._id} lists={this.props.lists}/>
                                                         <div className={style.cardCustom}>
                                                             <Card className={style.ListCard}>
                                                             <Form onSubmit={this.handleAddList}>
-                                                                <Form.Field className={style.inputForm}>
-                                                                    <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
-                                                                    <Button type="submit">Add</Button>
-                                                                </Form.Field>
+                                                                <Form.Group inline>
+                                                                    <Form.Field>
+                                                                        <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                                                    </Form.Field>
+                                                                    <Form.Field>
+                                                                        <Button type="submit">Add</Button>
+                                                                    </Form.Field>
+
+                                                                </Form.Group>
                                                             </Form>
                                                             </Card>
                                                         </div>

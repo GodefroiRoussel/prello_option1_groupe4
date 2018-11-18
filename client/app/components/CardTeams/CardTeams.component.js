@@ -26,8 +26,8 @@ const CardTeams = (props) => {
                     <Card.Content extra>
                         <div className='ui three buttons'>
                             <Button onClick={() => browserHistory.push({pathname: '/team', state:{team: x._id}})}>Boards</Button>
-                            <Button>Members</Button>
-                            <Button>Settings</Button>
+                            <Button onClick={() => browserHistory.push({pathname: '/team', state:{team: x._id}})}>Members</Button>
+                            <Button onClick={() => browserHistory.push({pathname: '/team', state:{team: x._id}})}>Settings</Button>
                         </div>
                     </Card.Content>
                 </Card>

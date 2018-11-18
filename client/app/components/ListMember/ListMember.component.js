@@ -16,7 +16,7 @@ const ListMember = (props) => {
                         <Image avatar src={logoAnonymous} />
                         <List.Content>
                         <List.Header className={defaultStyle.textColor1}>{x}</List.Header>
-                            <span className={defaultStyle.textColor4}>{x==props.ownerTeam ? 'admin' : 'member'}</span>
+                            <span className={defaultStyle.textColor4}>{x===props.ownerTeam ? 'admin' : 'member'}</span>
                             <Button icon="delete" onClick={() => props.callDelete(x)}></Button>
                         </List.Content>
                     </List.Item>

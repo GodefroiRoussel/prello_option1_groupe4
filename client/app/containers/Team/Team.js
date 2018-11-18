@@ -63,7 +63,6 @@ class Team extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props != nextProps) {
             if(nextProps.team){
                 if(nextProps.team.visibilityTeam)
                 {
@@ -71,6 +70,7 @@ class Team extends React.Component {
                         privacy: nextProps.team.visibilityTeam
                     });
                 }
+        if(this.props != nextProps) {
             }
         }
     }

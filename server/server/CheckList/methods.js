@@ -2,8 +2,12 @@ import {Meteor} from 'meteor/meteor';
 import CheckList from './model';
 
 Meteor.methods({
+
+    findOneCheckList(id) {
+        return CheckList.findOne({_id: id});
+    },
     addCheckList(data) {
-        return CheckList.insert(data.titleItem);
+        return CheckList.insert(data);
     },
     deleteCheckList(id) {
         return CheckList.remove({_id: id});
@@ -24,4 +28,4 @@ Meteor.methods({
     },
 })
 
-export default Item;
+export default CheckList;

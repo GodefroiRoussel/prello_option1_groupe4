@@ -28,6 +28,10 @@ class BoardMenu extends Component {
         }
     }
 
+    handleClickWR = () => {
+        browserHistory.push({pathname: '/boardWar', state: {id: this.props._id}});
+    }
+
     render() {
         return(
             <Menu borderless className={style.menuCustom}>
@@ -41,7 +45,14 @@ class BoardMenu extends Component {
                 <Menu.Item
                     className={defaultStyle.textColor3}
                     position='right'
-                    name='parameters'
+                    name='Weekly Report'
+                    onClick={this.handleClickWR}
+                >
+                </Menu.Item>
+                <Menu.Item
+                    className={defaultStyle.textColor3}
+                    position='right'
+                    name='Settings'
                     onClick={() => browserHistory.push({pathname: '/settings', state:{_id: this.props.board._id}})}
                 >
                 </Menu.Item>
@@ -70,10 +81,11 @@ class BoardMenu extends Component {
     }
 };
 
-function mapStateToProps(state, ownProps){
+const mapStateToProps = (state, ownProps) => {
     return ({
         board: ownProps.board,
-        boards: state.boards
+        boards: state.boards,
+        //_id: this.props.idBoard //TODO: vu qu a change modif
     })
 };
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Button, Modal, Form, Input, List ,Header, Icon} from "semantic-ui-react";
+import {Card, Button, Grid, Modal, Form, Input, List ,Header, Icon} from "semantic-ui-react";
 import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
@@ -105,10 +105,14 @@ class ListC extends Component {
                                 </Header>
                                 <Modal.Content>
                                     <Form onSubmit={this.handleCreateCard}>
-                                        <Form.Field className={style.inputForm}>
-                                            <Input type='text' autoFocus visible onKeyPress={this.handleCreateCard} onChange={(name)=> this.setState({nameCard: name.target.value})} placeholder='New card title'></Input>
-                                            <Button type="submit">Add</Button>
-                                        </Form.Field>
+                                        <Form.Group inline>
+                                            <Form.Field>
+                                                <Input type='text' autoFocus visible onKeyPress={this.handleCreateCard} onChange={(name)=> this.setState({nameCard: name.target.value})} placeholder='New card title'></Input>
+                                            </Form.Field>
+                                            <Form.Field>
+                                                <Button type="submit">Add</Button>
+                                            </Form.Field>
+                                        </Form.Group>
                                     </Form>
                                 </Modal.Content>
                                 <Modal.Actions>
@@ -156,10 +160,24 @@ class ListC extends Component {
                         isDragging={snapshot.isDragging}>
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
+
+
+
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />
-                                {x.titleCard} 
-                                <CardModal card={x} board={this.props.board}/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}>
+                                    <Grid>
+                                        <Grid.Row>
+                                            <Grid.Column  width={5} floated='left'>
+                                                {x.titleCard}
+                                            </Grid.Column>
+                                            <Grid.Column floated='right'  width={5} textAlign='right'>
+                                                {x.billable ? (<Icon name='dollar' floated='right' className={defaultStyle.textColor3} />) : (' ')}
+                                                <CardModal card={x} floated='right' board={this.props.board}/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+
+                                </Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
@@ -193,6 +211,7 @@ const mapStateToProps = (state, ownProps) => {
             lists: state.lists,
             //cards: state.cards.filter(el => el.listId === ownProps.list._id && el.isDeletedCard === false && el.isArchivedCard === false)
             cards: result,
+            boardId: ownProps.board
         }
     )
 

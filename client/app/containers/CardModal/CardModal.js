@@ -164,9 +164,9 @@ class CardModal extends React.Component {
                                                     return(
                                                     <Card raised>
                                                         <Segment style={{backgroundColor: `rgb(${x.colorLabel}`}}>
-                                                            {x.titleLabel}
-                                                            <Button icon="delete" onClick={() => this.deleteLabelCard(x._id)}>
-                                                            </Button>
+                                                            <span className={defaultStyle.textColor3}> {x.titleLabel}</span>
+                                                            <Icon corner={'true'} name="delete" className={defaultStyle.textColor4} onClick={() => this.deleteLabelCard(x._id)}>
+                                                            </Icon>
                                                         </Segment>
                                                     </Card>)
                                                 })}
@@ -331,7 +331,7 @@ class CardModal extends React.Component {
                                         <CardModalMembers idCard={this.props.card._id} idBoard={this.props.board}/>
                                     </List.Item>
                                     <List.Item>
-                                        <CardModalDeadlines/>
+                                        <CardModalDeadlines board={this.props.board} card={this.props.card}/>
                                     </List.Item>
                                     <List.Item>
                                         <Button fluid animated='fade' className={style.settingsButtons} >
@@ -421,6 +421,7 @@ function mapStateToProps(state, ownProps){
         c: state.cards,
         t: state.todos,
         todosFinished:todosFinished,
+        board: ownProps.board
     }
 };
 
