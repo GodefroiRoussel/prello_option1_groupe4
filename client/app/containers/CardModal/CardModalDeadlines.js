@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-
+import moment from 'moment'
 import {
     DateInput,
     TimeInput,
@@ -119,7 +119,7 @@ class CardModalDeadlines extends React.Component {
                                                     iconPosition="left"
                                                     onChange={this.handleDate}/>
                                             <Form.Field>
-                                                <Input onChange={this.handleTime} name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} min="0" step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Field>
                                                 <Button>Add</Button>
@@ -148,7 +148,7 @@ class CardModalDeadlines extends React.Component {
                             <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
                         </List.Content>
                         <List.Content className={defaultStyle.textColor1}>
-                         - {x.timeReal}
+                         {moment(x.day).subtract(10, 'days').calendar()} - {x.timeReal}
                         </List.Content>
                     </List.Item>
                 )
