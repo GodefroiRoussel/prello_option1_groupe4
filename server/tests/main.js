@@ -3,10 +3,12 @@ import Card from '/server/Card/methods'
 import List from '/server/List/methods'
 import chai from 'chai'
 import Board from '../server/Board/methods'
+import Todo from '/server/Todo/methods'
 import '../server/Team/methods'
 import '../server/User/methods'
 import '../server/Item/methods'
 import '../server/CheckList/methods'
+import '../server/Work/methods'
 
 describe("server", function () {
     it("package.json has correct name", async function () {
@@ -270,3 +272,15 @@ describe("work", function() {
         })
     });
 })*/
+
+/* ------------------------- TESTS ON TODOS -----------------------*/
+
+describe("todo", function() {
+    it('should update the todo as finished', function () {
+        const todoId = Todo.insert({message: "new todo"})
+        Meteor.call('editTodo', todoId, true, () => {
+            const todo = Meteor.call('getTodo', todoId)
+            assert.strictEqual(todo.finished, true)
+        })
+    });
+})

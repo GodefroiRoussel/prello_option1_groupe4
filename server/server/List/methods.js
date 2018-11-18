@@ -2,22 +2,51 @@ import {Meteor} from 'meteor/meteor';
 import List from './model';
 
 Meteor.methods({
+    /**
+     * Provide the list identified by a given id
+     * @param id The id of the list wanted
+     * @returns {any} The list wanted
+     */
     getList(id) {
         return List.findOne(id);
     },
+    /**
+     * Create a list
+     * @param data The data necessary, it contains the titleList
+     * @returns {any} The id of the list just created
+     */
     addList(data) {
         return List.insert(data);
     },
-    /*remove the list from db */
+    /**
+     * Remove definitively the list from the collection
+     * @param id The id of the list to remove
+     * @returns {any} 1 if the deletion succeeded else 0
+     */
     removeList(id){
         return List.remove({_id: id});
     },
+    /**
+     * Provide the list identified by a given id
+     * @param id The id of the list wanted
+     * @returns {any} The id of the list just created
+     */
     findOneList(id) {
         return List.findOne(id)
     },
-    updatePosition(data) { // data = idList, position
+    /**
+     * Update the position of the list
+     * @param data The data necessary for the update, it contains _id the id of the list and the new position
+     * @returns {any}
+     */
+    updatePosition(data) {
         return List.update( {_id: data.idList}, {$set: {positionList: data.position}})
     },
+    /**
+     * Update a list
+     * @param data the data necessary for a complete update : titleList, positionList, isDeletedList, isArchivedList, cards
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateList(data) {
         return List.update(
             {_id:  data._id},

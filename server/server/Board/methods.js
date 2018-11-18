@@ -154,7 +154,11 @@ Meteor.methods({
             { $set: { listsId: data.listsId } }
         )
     },
-    //change position after delete or archive
+    /**
+     * Update the lists positions when an update or a deletion occured
+     * @param data The data necessary for the update, it contains the board object and the id of the list just archived or deleted (idListArchived)
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateListsPositionsAfterArchiveOrDelete(data) { // data = board, idListArchived
         if (data.board._id && data.idListArchived) {
             const position = Meteor.call('findOneList', data.idListArchived).positionList

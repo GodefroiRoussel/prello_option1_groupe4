@@ -42,6 +42,9 @@ class CardModalDeadlines extends React.Component {
             this.setState({ [name]: value });
         }
     }
+    handleTime = (e, value) => {
+        this.setState({timeWork: value.value})
+    }
 
     handleDate = (e, value) => {
         this.setState({date: value.value})
@@ -116,7 +119,7 @@ class CardModalDeadlines extends React.Component {
                                                     iconPosition="left"
                                                     onChange={this.handleDate}/>
                                             <Form.Field>
-                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                                                <Input onChange={this.handleTime} name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Field>
                                                 <Button>Add</Button>
