@@ -21,6 +21,7 @@ import ClientRegistration from './containers/Client/ClientRegistration';
 const Root = (
     <Route path="/" component={Main}>
         <IndexRoute component={Home} />
+        <Route path="home" component={Home} />
         <Route path="team" component={Team} />
         <Route path="login" component={Login} />
         <Route path="registration" component={Registration} />

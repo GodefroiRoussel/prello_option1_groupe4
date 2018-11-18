@@ -215,12 +215,18 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Checklist</h3>
                                             <Progress color='green' value={this.props.todosFinished.length} total={this.props.todos.length} progress='ratio' />
                                             <div>
-                                                <input
-                                                type="text"
-                                                styleName="add-todo-input"
-                                                placeholder="Add todo item ..."
-                                                onKeyPress={this.handleAddTodo}
-                                                />
+                                                <Form>
+                                                    <Form.Field>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Add todo item ..."
+                                                            onKeyPress={this.handleAddTodo}
+                                                            name={"todoTitleAdd"}
+                                                            className={style.inputEditTitle}
+                                                        />
+                                                    </Form.Field>
+                                                </Form>
+
                                             </div>
                                             <div>
                                                 {this.props.todos.map((t, i) =>
