@@ -27,12 +27,8 @@ class BoardParameters extends Component {
                                             <InvitationParametersBoard _id={this.props.board._id} invitationsOpenedBoard={this.props.board.invitationsOpenedBoard} callUpdateInvitationsOpenedBoard={this.props.DispatchCallInvitationsOpenedBoard}/>
                                             <JoinParametersBoard _id={this.props.board._id} />
                                             </Tab.Pane> },
-        { menuItem: 'Background', render: () => <Tab.Pane><BackgroundParameters/></Tab.Pane> },
         { menuItem: 'Teams', render: () => <Tab.Pane><TeamsParametersBoard _id={this.props.board._id} teams={this.props.teams} teamsSelected={this.props.board.teams} callUpdateTeam={this.props.DispatchCallUpdateTeamBoard}/></Tab.Pane> },
         { menuItem: 'Labels', render: () => <Tab.Pane><LabelsParameters _id={this.props.board._id}/></Tab.Pane> },
-        { menuItem: 'Archived elements', render: () => <Tab.Pane><ArchievedElements/></Tab.Pane> },
-        { menuItem: 'History', render: () => <Tab.Pane><HistoryBoard/></Tab.Pane> },
-        { menuItem: 'Others', render: () => <Tab.Pane><OtherParameters/></Tab.Pane> },
     ];
 
     MenuParams = () => <Tab className={style.tabTeam} panes={this.panes} />
