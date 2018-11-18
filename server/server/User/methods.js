@@ -133,8 +133,7 @@ Meteor.methods({
                         seedUser: "",
                         avatarUser: "",
                         languageUser: "",
-                        colourBlindUser: "",
-                        isAdminMember: 0
+                        colourBlindUser: ""
                     }
                 });
                 Meteor.users.update(newUserId,
