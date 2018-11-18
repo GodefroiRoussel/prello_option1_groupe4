@@ -12,6 +12,11 @@ import './Team/index';
 import './Board/index';
 import './User/index';
 import './Card/index';
+import './Work/index';
+import './CheckList/index';
+import './Item/index';
+import './Comment/index';
+import './Label/index';
 import './Client/index';
 
 // declare MongoDB collection here

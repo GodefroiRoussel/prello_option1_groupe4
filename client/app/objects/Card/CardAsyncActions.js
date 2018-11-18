@@ -5,9 +5,22 @@ import {
     updateCardTitle,
     updateCardDescription,
     updateCardBillable,
-    editContributorCard, editLabelCard
+    editContributorCard,
+    editLabelCard,
+    deleteCard,
+    archiveCard,
+    editCommentCard
+
 } from './CardActions';
-import {callUpdateCardsPositionsAfterArchiveOrDelete, callAddCardInList} from '../List/ListAsyncActions'
+
+import {
+    callUpdateCardsPositionsAfterArchiveOrDelete,
+    callAddCardInList,
+    callUpdateCardsPositionsAfterArchiveOrDeleteId
+} from '../List/ListAsyncActions'
+
+import {addCardInList} from "../List/ListActions";
+import {callAddComment, callDeleteComment} from "../Comment/CommentAsyncAction";
 
 export function callGetCard(idCard) {
     return dispatch => asteroid.call('getCard', idCard)
@@ -18,7 +31,7 @@ export function callAddCard(data) {
     return dispatch => asteroid.call('addCard', data)
         .then(result => {
             dispatch(callAddCardInList({idList: data.listId, idCard: result}))
-            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false}}))
+            dispatch(addCard({...data, ...{_id: result, isDeletedCard: false, isArchivedCard: false, billable: false, labels: [], checkList:[]}}))
         })
 }
 
@@ -37,11 +50,27 @@ export function callUpdateCardBillable(data) {
         .then(result => dispatch(updateCardBillable(result)))
 }
 
-export function deleteCard(list, card) {
-    return dispatch => asteroid.call('updateCard', card)
+export function callDeleteCard(data) {
+    return dispatch => asteroid.call('deleteCard', data.idCard)
         .then(result => {
             dispatch(deleteCard(result))
-            callUpdateCardsPositionsAfterArchiveOrDelete({list: list, idCardArcOrDel: result}) //result or result.id ?
+            dispatch(callUpdateCardsPositionsAfterArchiveOrDelete({idList: result.idList, idCardArcOrDel: result._id}))
+        })
+}
+
+export function callArchiveCard(idCard) {
+    return dispatch => asteroid.call('archiveCard', idCard)
+        .then(result => {
+            dispatch(archiveCard(result))
+            dispatch(callUpdateCardsPositionsAfterArchiveOrDeleteId({idList: result.idList, idCardArcOrDel: result._id}))
+        })
+}
+
+export function callUnarchiveCard(idCard) {
+    return dispatch => asteroid.call('unarchiveCard', idCard)
+        .then(result => {
+            dispatch(unarchiveCard(result))
+            //callUpdateCardsPositionsAfterArchiveOrDelete({idList: list, idCardArcOrDel: idCard})
         })
 }
 
@@ -65,4 +94,23 @@ export function callDeleteLabelCard(data) {
         .then(result => dispatch(editLabelCard(data)))
 }
 
+export function callAddCommentCard(data) { //data = idCard, idComment
+    return dispatch => asteroid.call('addCommentCard', data)
+        .then(result => {
+            dispatch(callAddComment(result))
+            dispatch(editCommentCard(result))
+        }
+        )
+}
 
+export function callDeleteCommentCard(data) { //data = idCard, idComment
+    return dispatch => asteroid.call('deleteCommentCard', data)
+        .then(result => {
+            dispatch(editCommentCard(result))
+            dispatch(callDeleteComment(result))
+        })
+}
+
+export function callAddCheckListCard(data){
+    return dispatch => asteroid.call('addCheckListCard', data)
+}

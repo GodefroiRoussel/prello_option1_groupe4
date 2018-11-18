@@ -5,7 +5,7 @@ import { callUpdateBoardListId, callUpdateListsPosition, callUpdateListsPosition
 export function callAddList(data, board) {
   return dispatch => asteroid.call('addList', data)
       .then(result => {
-          dispatch(addList({ ...{_id: result, cards: []}, ...data }))
+          dispatch(addList({ ...{_id: result, cards: [], isArchivedList: false, isDeletedList: false}, ...data }))
           dispatch(callUpdateBoardListId(result, board))
         });
 }
@@ -55,6 +55,11 @@ export function callUnarchiveList(data, board) {
         })
 }
 
+export function callUpdateCardsPositionsAfterArchiveOrDeleteId(idCard, idList) {
+    return dispatch => asteroid.call('findOneList', idList)
+        .then(result => {dispatch(callUpdateCardsPositionsAfterArchiveOrDelete({idCard: idCard, list: result}))})
+}
+
 export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
     return dispatch => asteroid.call('updateCardsPositionsAfterArchiveOrDelete', {list: list, idCardArcOrDel: idCard})
         .then(result => dispatch(updateCardsPosArcDel({list: result})))
@@ -63,7 +68,7 @@ export function callUpdateCardsPositionsAfterArchiveOrDelete (idCard, list) {
 export function callAddCardInList(data) {
     return dispatch => asteroid.call('addCardInList', data)
         .then(result => {
-            dispatch(addCardInList(data))
+            dispatch(addCardInList(data)) //TODO: result ??
         })
 }
 
@@ -72,7 +77,6 @@ export function callUpdateCardPositionInList(data){
             dispatch(updateCardPositionInList(data));
             asteroid.call('updateCardPositionInList', data)
             .then(result => {
-                console.log("ok")
             })
     }
 }
@@ -82,7 +86,6 @@ export function callUpdateCardPositionBetweenList(data){
         dispatch(updateCardPositionBetweenList(data));
         asteroid.call('updateCardPositionBetweenList', data)
             .then(result => {
-                console.log("ok")
             })
     }
 }

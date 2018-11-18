@@ -3,7 +3,7 @@
  */
 
 //Constant pour simplifier l'appel
-export const ADD_USER = 'ADD_TODO';
+export const ADD_USER = 'ADD_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 export const EDIT_USER_PROFILE = 'EDIT_USER_PROFILE';
 export const EDIT_USER_PASSWORD = 'EDIT_USER_PASSWORD';

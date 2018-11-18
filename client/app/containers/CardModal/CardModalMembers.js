@@ -2,25 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import {
-    Tab,
-    Card,
     Image,
     List,
     Button,
     Form,
-    TextArea,
-    Grid,
-    Segment,
-    Select,
     Modal,
-    Header,
-    Divider,
-    Icon, Input
+    Input
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
 import ProfileAnonymous from '../../styles/assets/hanonyme.png'
 import {callAddMemberAssigned, callDeleteMemberAssigned} from "../../objects/Card/CardAsyncActions";
 
@@ -50,21 +41,23 @@ class CardModalMembers extends React.Component {
 
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
-        this.setState({members: this.state.members.push(e.target.value)}, () =>
+        console.log(e.target.value)
+        if(e.target.value) {
             this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
-        )
+        }
     }
 
     deleteContributorCard = (e) => {
-        this.setState({members: this.state.members.splice(this.state.members.indexOf(e.target.value), 1)}, () =>
+        if(e.target.value) {
             this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
-        )
+        }
+
     }
 
     render() {
         const { openModal } = this.state;
+        console.log(this.props)
         return (
-
             <Modal
                 trigger={
                     <Button onClick={this.toggleModalMembers} fluid animated='fade' className={style.settingsButtons} >
@@ -80,47 +73,35 @@ class CardModalMembers extends React.Component {
                 closeIcon
                 onClose={this.toggleModalMembers}>
                 <Modal.Header className={defaultStyle.textColor1}>
-                   Manage members
+                    Manage members
                 </Modal.Header>
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
                         <List verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Helen</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Christian</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Daniel</List.Header>
-                                </List.Content>
-                            </List.Item>
+                            {this.props.card.assignedUsers.map(x => {
+                                return(
+                                    <List.Item>
+                                        <List.Content floated='right'>
+                                            <Button>Delete</Button>
+                                        </List.Content>
+                                        <Image avatar src={ProfileAnonymous} />
+                                        <List.Content>
+                                            <List.Header>{x}</List.Header>
+                                        </List.Content>
+                                    </List.Item>
+                                )
+                            })}
                         </List>
-                        <Form onSubmit={this.toggleEditCardTitle}>
+                        <Form onSubmit={this.addContributorCard}>
                             <Form.Field className={style.inputEditTitle}>
                                 <label>Add a new worker</label>
-                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}/>
-                                <datalist id='languages'>
-                                    <option value='English' />
-                                    <option value='Chinese' />
-                                    <option value='Dutch' />
+                                <Input list='members' name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                <datalist id='members'>
+                                {this.props.board.members.map(x => {
+                                    return(
+                                        <option value={x}/>
+                                    )
+                                })}
                                 </datalist>
                             </Form.Field>
                         </Form>
@@ -139,6 +120,8 @@ CardModalMembers.defaultProps = {
 
 function mapStateToProps(state, ownProps){
     return{
+        card: state.cards.find(el => el._id==ownProps.idCard),
+        board: state.boards.find(el=> el._id==ownProps.idBoard)
     }
 };
 

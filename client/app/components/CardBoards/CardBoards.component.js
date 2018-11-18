@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Tab, Card, Image, List, Button , Header, Input, Loader, Dropdown, Modal, Icon} from 'semantic-ui-react';
+import { Form, Card, Button , Input, Icon} from 'semantic-ui-react';
 import defaultStyle from "../../styles/settings.styl";
 import style from './cardBoards.styl';
 import cssModules from 'react-css-modules';
@@ -19,13 +18,24 @@ const CardBoards = (props) => {
                                 if(x.teams.includes(props.team)){
                                     return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
                                         <Card.Content>
-                                            <Card.Header className={style.cardBoardHeader}>{x.titleBoard}</Card.Header>
+                                            <Card.Header className={style.cardBoardHeader}>{x.titleBoard}
+                                                <Icon className={defaultStyle.textColor3} name='star' />
+                                                <Icon className={defaultStyle.textColor5} name='star' />
+                                            </Card.Header>
                                             <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                                         </Card.Content>
                                     </Card>)
                                 }
                                 else{
-                                    return <div/>
+                                    return(<Card key={x._id} className={style.cardBoard} onClick={() => handleOnClick(x._id)}>
+                                        <Card.Content>
+                                            <Card.Header className={style.cardBoardHeader}>{x.titleBoard}
+                                                <Icon className={defaultStyle.textColor3} name='star' />
+                                                <Icon className={defaultStyle.textColor5} name='star' />
+                                            </Card.Header>
+                                            <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                                        </Card.Content>
+                                    </Card>)
                                 }
                             }
                             else{
@@ -79,7 +89,12 @@ const CardBoards = (props) => {
         <Card.Group>
             {boardsIsFilled()}
             <div className={style.buttonAddBoardTeam}>
-            <Input type='text' onKeyPress={handleAddBoard} action='Add' placeholder='Add a Board'></Input>
+                <Form onSubmit={props.handleAddBoardOnClick}>
+                <Form.Field className={style.inputForm}>
+                    <Input type='text' onKeyPress={handleAddBoard} onChange={props.changeNameBoard} placeholder='Add a Board'></Input>
+                    <Button type="submit">Add</Button>
+                </Form.Field>
+                </Form>
             </div>
         </Card.Group>
       </div>

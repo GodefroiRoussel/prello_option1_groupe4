@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import Board from './model';
 import '../List/index'
+import List from "../List/model";
 
 
 Meteor.methods({
@@ -98,6 +99,36 @@ Meteor.methods({
             const listsOfBoard = [...anteriorLists, ...ids, ...listsNotDisplayed]
             return Board.update({_id: data.board._id}, {$set: {listsId: listsOfBoard}})
         }
+    },
+
+    updateBoardTitle(data) {
+        Board.update(
+            {_id: data._id},
+            {$set: {titleBoard: data.titleBoard}}
+        )
+        Meteor.call("addLabel", {_id: data._id})
+        return Board.findOne(data._id)
+    },
+
+    updateCanComment(data){
+        return Board.update({_id: data._id}, {$set: {canComment: data.canComment}})
+    },
+    updateInvitationsOpenedBoard(data){
+        return Board.update({_id: data._id}, {$set: {invitationsOpenedBoard: data.invitationsOpenedBoard}})
+    },
+    updateTeamBoard(data){
+        var members = []
+        data.teams.map(x => members.push(Meteor.call("getTeamById", x).members))
+        var flat = _.reduceRight(members, function(a, b) { return a.concat(b); }, []);
+        var unique = [...new Set(flat)];
+        Board.update({_id: data._id}, {$set: {members: unique}})
+        return Board.update({_id: data._id}, {$set: {teams: data.teams}})
+    },
+    updateLabelBoard(data){
+        var board = Meteor.call('getBoard', data._id)
+        var labels = board.labels;
+        labels.push(data.idLabel);
+        return Board.update({_id: data._id}, {$set: {labels: labels}})
     }
 });
 

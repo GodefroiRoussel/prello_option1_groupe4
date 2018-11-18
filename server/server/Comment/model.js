@@ -9,7 +9,8 @@ const CommentSchema = new SimpleSchema({
         type: String
     },
     dateComment: {
-        type: Date
+        type: Date,
+        defaultValue: new Date
     },
     isDeletedComment: {
         type: Boolean,

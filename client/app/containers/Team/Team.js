@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
-import { Tab, Card, Image, List, Button ,Form, Grid, Segment,Select} from 'semantic-ui-react';
+import { Tab, Card, Image, List, Button ,Form, Grid, Segment,Select, Input} from 'semantic-ui-react';
 import ListMember from '../../components/ListMember/ListMember.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
-import { callAddMember, callRemoveTeam } from '../../objects/Team/TeamAsyncActions';
-import {callGetAllUser} from '../../objects/User/UserAsyncActions';
+import { callAddMember, callRemoveTeam, callUpdateVisibilityTeam, callDeleteMembers} from '../../objects/Team/TeamAsyncActions';
 import {callAddBoard} from '../../objects/Board/BoardAsyncActions';
 import { browserHistory } from 'react-router';
 import style from './team.styl';
@@ -25,11 +24,39 @@ class Team extends React.Component {
         super(props)
         this.state = {
             team: "",
-            privacy: "false"
+            privacy: "false",
+            membersName: "",
+            nameBoard: "",
         };
     }
 
+    membersNameFromInput = (e) => {
+        this.setState({
+            membersName: e
+        })
+    }
+
+    addMembersFromButton = () => {
+        this.props.DispatchCallAddMember({_id: this.props.team._id, member: this.state.membersName})
+    }
+
+    callAddMember = (e) =>{
+        if (e.key === 'Enter') {
+            this.props.DispatchCallAddMember({_id: this.props.team._id, member: e.target.value})
+            e.target.value = "";
+        }
+    }
+
+    callDelete = (member) => {
+        this.props.DispatchCallDeleteMembers({member : member, _id: this.props.team._id})
+    }
+
     changePrivacyValue=(e, {value})=>{
+        var v = true;
+        if(value=="false"){
+            v=false
+        }
+        this.props.DispatchCallUpdateVisibilityTeam({visibilityTeam:v, _id: this.props.team._id});
         this.setState({
             privacy: value
         });
@@ -37,14 +64,23 @@ class Team extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if(this.props != nextProps) {
-            if(nextProps.team.visibilityTeam)
-            {
-                this.setState({
-                    privacy: nextProps.team.visibilityTeam
-                });
+            if(nextProps.team){
+                if(nextProps.team.visibilityTeam)
+                {
+                    this.setState({
+                        privacy: nextProps.team.visibilityTeam
+                    });
+                }
             }
-
         }
+    }
+
+    changeNameBoard = (name) => {
+        this.setState({nameBoard: name.target.value})
+    }
+
+    handleAddBoardOnClick = () => {
+        this.props.DispatchCallAddBoard({titleBoard: this.state.nameBoard, user: this.props.user.username, team: this.props.team._id})
     }
 
     render() {
@@ -69,32 +105,64 @@ class Team extends React.Component {
     }
 
     panes = [
-        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} dispatchFunc={this.props.DispatchCallAddBoard} team={this.props.team._id} user={this.props.user.username}/></Tab.Pane> },
-        { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane><ListMember id={this.props.team._id} ownerTeam={this.props.ownerTeam} members={this.props.team.members} addMembers={this.props.DispatchCallAddMember}/></Tab.Pane>},
-        { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings}</Tab.Pane> },
+        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} 
+                                                                                dispatchFunc={this.props.DispatchCallAddBoard} 
+                                                                                team={this.props.team._id} 
+                                                                                user={this.props.user.username}
+                                                                                changeNameBoard={this.changeNameBoard}
+                                                                                handleAddBoardOnClick={this.handleAddBoardOnClick}/></Tab.Pane> },
+        { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane>{this.users()}</Tab.Pane>},
+        { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings()}</Tab.Pane> },
     ]
 
-    settings = (
-        <div>
-            <h3 className={defaultStyle.textColor1}>Team visibility</h3>
-            <Form.Group inline>
-                <label className={defaultStyle.textColor4}>This team is </label>
-                <Select
-                    onChange={this.changePrivacyValue.bind(this)}
-                    options={options}
-                    name="privacy"
-                    className={style.privacySelect}
-                >
-                </Select>
+    users = () => {
+        if(!this.props.team){
+            return <div/>
+        }
+        else{
+            return(
+                <div>
+                    <Input list='members' placeholder='Choose members to add...' onKeyPress={this.callAddMember} onChange={(nameMember) => this.setState({membersName: nameMember.target.value})}/>
+                    <Button onClick={this.addMembersFromButton} >ADD</Button>
+                    <ListMember id={this.props.team._id} ownerTeam={this.props.team.ownerTeam} members={this.props.team.members} callDelete={this.callDelete}/>
+                </div>
+            )
+        }
+    }
+
+    settings = () => {
+        if(!this.props.team){
+            return <div/>
+        }
+            return(<div>
+                <h3 className={defaultStyle.textColor1}>Team visibility</h3>
+                <Form.Group inline>
+                    <label className={defaultStyle.textColor4}>This team is {this.isVisibleTeam(this.props.team.visibilityTeam)}</label>
+                    <Select
+                        onChange={this.changePrivacyValue.bind(this)}
+                        options={options}
+                        name="privacy"
+                        className={style.privacySelect}
+                    >
+                    </Select>
 
 
-            </Form.Group>
+                </Form.Group>
 
-            <h3  className={defaultStyle.textColor1}>Actions</h3>
+                <h3  className={defaultStyle.textColor1}>Actions</h3>
 
-            <Button onClick={this.handleDeleteTeam.bind(this)}>Delete the team</Button>
-        </div>
-    )
+                <Button onClick={this.handleDeleteTeam.bind(this)}>Delete the team</Button>
+            </div>
+            )
+        }
+    isVisibleTeam = (teamVisibility) => {
+        if(teamVisibility==true){
+            return "public"
+        }
+        else{
+            return "private"
+        }
+    }
 
     handleDeleteTeam(){
         this.props.DispatchCallRemoveTeam({id: this.props.team._id});
@@ -116,6 +184,8 @@ const mapDispatchToProps = (dispatch)=> ({
     DispatchCallAddBoard: data=> dispatch(callAddBoard(data)),
     DispatchCallAddMember: data => dispatch(callAddMember(data)),
     DispatchCallRemoveTeam: data => dispatch(callRemoveTeam(data)),
+    DispatchCallUpdateVisibilityTeam: data => dispatch(callUpdateVisibilityTeam(data)),
+    DispatchCallDeleteMembers: data => dispatch(callDeleteMembers(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(cssModules(Team, style));

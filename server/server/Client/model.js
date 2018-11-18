@@ -10,6 +10,8 @@ const clientSchema = new SimpleSchema({
     'redirectUris.$': { type: String },
     grants: { type: Array },
     'grants.$': { type: String },
+    scopes: { type: Array },
+    'scopes.$': { type: String },
     nameClient: { type: String },
     logoClient: { type: String, optional: true },
     descriptionClient: { type: String, optional: true },

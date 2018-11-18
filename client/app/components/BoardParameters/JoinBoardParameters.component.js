@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Form, Divider, Radio, Button} from 'semantic-ui-react'
 
-export default class JoinBoardParameters extends Component {
-    state = {
-        value:'yes'
-    }
-    handleChange = (e, { value }) => this.setState({ value })
+const JoinParametersBoard= (props) => {
 
-    render() {
+    var value = 'yes'
+    const handleChange = (e, { value }) => value=value
+
         return (
             <Form>
                 <h4>Join the board</h4>
@@ -20,8 +18,8 @@ export default class JoinBoardParameters extends Component {
                             label='Yes'
                             name='radioGroup'
                             value='yes'
-                            checked={this.state.value === 'yes'}
-                            onChange={this.handleChange}
+                            checked={value === 'yes'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -29,13 +27,14 @@ export default class JoinBoardParameters extends Component {
                             label='No'
                             name='radioGroup'
                             value='no'
-                            checked={this.state.value === 'no'}
-                            onChange={this.handleChange}
+                            checked={value === 'no'}
+                            onChange={handleChange}
                         />
                     </Form.Field>
                 </Form.Group>
                 <Divider/>
             </Form>
         )
-    }
 }
+
+export default JoinParametersBoard;

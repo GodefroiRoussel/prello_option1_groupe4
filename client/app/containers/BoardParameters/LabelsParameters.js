@@ -1,57 +1,63 @@
 import React, { Component } from 'react'
-import {Form, Divider, Card, Segment, Input, Icon, Button} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {Form, Divider, Card, Segment, Input, Icon, Button, Modal, Header} from 'semantic-ui-react'
+import TeamsParametersBoardComponent from '../../components/BoardParameters/LabelParametersBoard.component';
+import {callAddLabel, callUpdateColorLabel, callUpdateNameLabel} from '../../objects/Label/LabelAsyncActions';
 
-export default class LabelsParameters extends Component {
-    state = {
-        labels: [ { key: 'l1', value: 'l1', color:'blue', text: 'label1' },  { key: 'l2', value: 'l2', color: 'red', text: 'label2' }, { key: 'l3', value: 'l3', color: 'green', text: 'label3' } ]
-    };
+
+class LabelsParametersBoard extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state={
+            openModal:false,
+        }
+    }
+
+    handleOpen = () => this.setState({modalOpen: true})
+    handleClose = () => this.setState({modalOpen: false})
+
 
     render() {
-        return (
-            <div>
-                <Segment inverted color='red'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='orange'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='yellow'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='olive'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='green'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='teal'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='blue'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='violet'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='purple'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='pink'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='brown'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='grey'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Segment inverted color='black'>
-                    <Input  name="titleList" type="text" value={"Label Sticker"}></Input>
-                </Segment>
-                <Button basic inverted>
-                    <Icon name='add' /> Add a new sticker
-                </Button>
-            </div>
-        )
+        if(this.props.board && this.props.labels){
+            return (
+                <div>
+                    {this.props.labels.map(x => (
+                        <TeamsParametersBoardComponent label={x} handleClose={this.handleClose} 
+                        handleOpen={this.handleOpen} 
+                        openModal={this.state.openModal} 
+                        DispatchCallUpdateColorLabel={this.props.DispatchCallUpdateColorLabel}
+                        DispatchCallUpdateNameLabel={this.props.DispatchCallUpdateNameLabel}
+                        ></TeamsParametersBoardComponent>
+                    ))}
+                    <Button basic onClick={()=> this.props.DispatchCallAddLabel({_id: this.props.board._id})}>
+                        <Icon name='add' /> Add a new label
+                    </Button>
+                </div>
+            )
+        }
+        else{
+            return <div/>
+        }
     }
 }
+
+function mapStateToProps(state, ownProps){
+    const b = state.boards.find(el => el._id === ownProps._id);
+    return{
+        board : state.boards.find(el => el._id === ownProps._id),
+        labels : state.labels.filter(el => b.labels.includes(el._id)),
+        l: state.labels
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        DispatchCallAddLabel: (data) => dispatch(callAddLabel(data)),
+        DispatchCallUpdateColorLabel: (data) => dispatch(callUpdateColorLabel(data)),
+        DispatchCallUpdateNameLabel: (data)=>dispatch(callUpdateNameLabel(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LabelsParametersBoard);
+

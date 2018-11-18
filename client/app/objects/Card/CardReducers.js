@@ -5,9 +5,11 @@ import {
     EDIT_CARD_DESCRIPTION,
     EDIT_CARD_BILLABLE,
     EDIT_CONTRIBUTOR_CARD,
-    EDIT_LABEL_CARD
+    EDIT_LABEL_CARD, EDIT_COMMENT_CARD,
+    DELETE_CARD,
+    EDIT_CARD
 } from './CardActions';
-import { add } from '../../common/helpers';
+import { add , edit} from '../../common/helpers';
 import {EDIT_TITLE_LIST} from "../List/ListActions";
 //import { remove, edit, add } from '../../common/helpers';
 
@@ -62,6 +64,26 @@ const cards = (state = [], action) => {
                 return newState;
             }
             return state;
+        case EDIT_COMMENT_CARD:
+            const elemEditComment = state.slice().filter(item => item._id === action.data._id);
+            if (Array.isArray(elemEditComment) && elemEditComment.length) {
+                const elemToEditIndex = state.indexOf(elemEditComment[0]);
+                const newState = state.slice();
+                newState[elemToEditIndex].comments = action.data.comments;
+                return newState;
+            }
+            return state;
+        case DELETE_CARD:
+            const elemEditDelete = state.slice().filter(item => item._id === action.data._id);
+            if (Array.isArray(elemEditDelete) && elemEditDelete.length) {
+                const elemToEditIndex = state.indexOf(elemEditDelete[0]);
+                const newState = state.slice();
+                newState[elemToEditIndex].isDeletedCard = action.data.isDeletedCard;
+                return newState;
+            }
+            return state;
+        case EDIT_CARD:
+            return edit(state, action);
         default:
             return state;
     }

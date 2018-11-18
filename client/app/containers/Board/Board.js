@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import bo from '../../common/dataTest';
-import PropTypes from 'prop-types';
-//import listsTest from '../../common/dataTest';
-import {Card, Grid, Input} from 'semantic-ui-react';
+import {Card, Grid, Input, Form, Button} from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
-
 import {callAddList, callUpdateCardPositionInList, callUpdateCardPositionBetweenList} from '../../objects/List/ListAsyncActions';
 import {callUpdateListPositionInBoard} from '../../objects/Board/BoardAsyncActions';
 import style from './board.styl'
@@ -16,7 +12,9 @@ import style from './board.styl'
 class Board extends Component {
     constructor(props) {
         super(props)
-        this.state ={}
+        this.state ={
+            nameList: "",
+        }
     }
 
     handleAddList=(e)=>{
@@ -28,6 +26,9 @@ class Board extends Component {
                 elem.value = '';
             }
         }
+        else if(e.type=="submit"){
+            this.props.dispatchCallAddList(({titleList: this.state.nameList, positionList: 0}), this.props.board);
+        }
     }
 
     render () {
@@ -35,19 +36,20 @@ class Board extends Component {
             if(this.props.lists){
                 return(
                     <div className={style.generalBoardRendering}>
-                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
+                        <BoardMenu board={this.props.board}/>
                         {this.listsIsFilled()}
-
-
                     </div>
                 )
             }else{
                 return(
                     <div className={style.generalBoardRendering}>
-                        <BoardMenu visibilityBoard={'All'} titleBoard={this.props.board.titleBoard}/>
-                        <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
-
-
+                        <BoardMenu board={this.props.board}/>
+                        <Form onSubmit={this.handleAddList}>
+                            <Form.Field className={style.inputForm}>
+                                <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                <Button type="submit">Add</Button>
+                            </Form.Field>
+                        </Form>
                     </div>
                 )
             }
@@ -66,8 +68,8 @@ class Board extends Component {
         }
 
         if(
-            destination.draggableId ===source.droppableId &&
-            destination.index ===source.index
+            destination.draggableId === source.droppableId &&
+            destination.index === source.index
         ){
             return;
         }
@@ -84,8 +86,8 @@ class Board extends Component {
             return;
         }
 
-        const start = this.props.lists.find(el => el._id == source.droppableId);
-        const finish = this.props.lists.find(el => el._id ==destination.droppableId);
+        const start = this.props.lists.find(el => el._id === source.droppableId);
+        const finish = this.props.lists.find(el => el._id === destination.droppableId);
         
         if(start === finish){
             const newCardIds = Array.from(start.cards);
@@ -132,10 +134,15 @@ class Board extends Component {
                                             <Grid.Column mobile={16} tablet={16} computer={16} >
                                                 <div className={style.margin}>
                                                     <div className={style.listBox}>
-                                                        <BoardComponent lists={this.props.lists}/>
+                                                        <BoardComponent lists={this.props.lists} board={this.props.board._id}/>
                                                         <div className={style.cardCustom}>
                                                             <Card className={style.ListCard}>
-                                                                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'></Input>
+                                                            <Form onSubmit={this.handleAddList}>
+                                                                <Form.Field className={style.inputForm}>
+                                                                    <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                                                    <Button type="submit">Add</Button>
+                                                                </Form.Field>
+                                                            </Form>
                                                             </Card>
                                                         </div>
                                                     </div>
@@ -157,8 +164,9 @@ class Board extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     let listB=[];
-    let board = state.boards.find(el => el._id == ownProps.location.state.id);
+    let board = state.boards.find(el => el._id === ownProps.location.state.id);
     state.lists.find(x => {
+        let board = state.boards.find(el => el._id === ownProps.location.state.id);
         if(board){
             if(board.listsId.includes(x._id)){
                 listB.push(x);
@@ -169,16 +177,16 @@ const mapStateToProps = (state, ownProps) => {
     if(listB && board){
         board.listsId.forEach((list)=> {
             listB.forEach((element) => {
-                if(element._id == list){
+                if(element._id === list){
                     result.push(element);
                 }
             })
         })
     }
     return ({
-        lists: result,
-        board: board,
+        lists: result.filter(el => el.isDeletedList === false && el.isArchivedList === false),
         boards: state.boards,
+        board: state.boards.find(el => el._id === ownProps.location.state.id)
     })
 }
 
