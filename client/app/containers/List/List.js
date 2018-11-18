@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Button, Modal, Form, Input, List ,Header, Icon} from "semantic-ui-react";
+import {Card, Button, Grid, Modal, Form, Input, List ,Header, Icon} from "semantic-ui-react";
 import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
@@ -157,10 +157,24 @@ class ListC extends Component {
                         isDragging={snapshot.isDragging}>
                         <List.Item>
                         <Card key={x._id} className={style.cardBoard}>
+
+
+
                             <Card.Content>
-                                <Card.Header className={style.cardBoardHeader}><Icon name="dollar sign" className={defaultStyle.textColor5} />
-                                {x.titleCard} 
-                                <CardModal card={x} board={this.props.board}/></Card.Header>
+                                <Card.Header className={style.cardBoardHeader}>
+                                    <Grid>
+                                        <Grid.Row>
+                                            <Grid.Column  width={5} floated='left'>
+                                                {x.titleCard}
+                                            </Grid.Column>
+                                            <Grid.Column floated='right'  width={5} textAlign='right'>
+                                                {x.billable ? (<Icon name='dollar' floated='right' className={defaultStyle.textColor3} />) : (' ')}
+                                                <CardModal card={x} floated='right' board={this.props.board}/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+
+                                </Card.Header>
                                 <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
                             </Card.Content>
                         </Card>
