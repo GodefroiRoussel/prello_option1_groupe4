@@ -2,17 +2,33 @@ import {Meteor} from 'meteor/meteor';
 import Work from './model';
 
 Meteor.methods({
-    addWork(team){
-        return Work.insert(team);
+    addWork(data){
+        return Work.insert({idCard: data._id, idUser: Meteor.userId(), day: data.dateWork, timeReal: data.timeWork, idBoard: data.boardId});
     },
     getWorkByCard() {
         return Work.find().fetch();
     },
     getWorkBillableByBoard(data) {
-        return Work.find({idBoard: data.idBoard})
+        const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
+        var worksBill = []
+        works.map(work => {
+            const billCard = Meteor.call('isBillableCard', work.idCard)
+            if(billCard === true) {
+                worksBill.push(work)
+            }
+        })
+        return worksBill
     },
-    getWorkNotBillableByBoard(idBoard) {
-        return Work.find({idBoard: data.idBoard})
+    getWorkNotBillableByBoard(data) {
+        const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
+        var worksNotBill = []
+        works.map(work => {
+            const billCard = Meteor.call('isBillableCard', work.idCard)
+            if(billCard === false) {
+                worksNotBill.push(work)
+            }
+        })
+        return worksNotBill
     },
     removeWork(idWork) {
         return Work.remove({_id: idWork})

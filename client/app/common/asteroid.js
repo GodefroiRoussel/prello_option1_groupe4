@@ -1,12 +1,13 @@
 import { createClass } from 'asteroid';
 import { setLoggedUser, unsetLoggedUser } from '../objects/Login/LoginActions';
 import { addTodo, removeTodo, editTodo } from '../objects/Todo/TodoActions';
-import { addList, removeList } from '../objects/List/ListActions';
-import { addTeam } from '../objects/Team/TeamActions';
-import { addBoard } from '../objects/Board/BoardActions';
+import { addList, removeList, editList } from '../objects/List/ListActions';
+import { addTeam, editTeam , removeTeam} from '../objects/Team/TeamActions';
+import { addBoard, editBoard, removeBoard } from '../objects/Board/BoardActions';
 import { addUser } from '../objects/User/UserActions';
-import { addCard } from '../objects/Card/CardActions';
+import { addCard, editCard , deleteCard} from '../objects/Card/CardActions';
 import { addClient, removeClient } from '../objects/Client/ClientActions';
+import {addLabel, editLabel} from '../objects/Label/LabelActions';
 import store from '../store';
 
 const Asteroid = createClass();
@@ -25,6 +26,8 @@ asteroid.subscribe('board');
 asteroid.subscribe('team');
 asteroid.subscribe('card');
 asteroid.subscribe('client');
+asteroid.subscribe('work');
+asteroid.subscribe('label')
 
 
 asteroid.ddp.on('added', (doc) => {
@@ -32,6 +35,10 @@ asteroid.ddp.on('added', (doc) => {
     if (doc.collection === 'board') {
         const docObj = Object.assign({}, doc.fields, { _id: doc.id });
         store.dispatch(addBoard(docObj));
+    }
+    if (doc.collection === 'label') {
+        const docObj = Object.assign({}, doc.fields, { _id: doc.id });
+        store.dispatch(addLabel(docObj));
     }
     if (doc.collection === 'todo') {
         const docObj = Object.assign({}, doc.fields, { _id: doc.id });
@@ -69,25 +76,43 @@ asteroid.ddp.on('removed', (removedDoc) => {
     if (removedDoc.collection === 'list') {
         store.dispatch(removeList(removedDoc.id));
     }
+    if (removedDoc.collection === 'board') {
+        store.dispatch(removeBoard(removedDoc.id));
+    }
+    if (removedDoc.collection === 'card') {
+        store.dispatch(deleteCard(removedDoc.id));
+    }
+    if (removedDoc.collection === 'team') {
+        store.dispatch(removeTeam(removedDoc.id));
+    }
     if (removedDoc.collection === 'users') {
         store.dispatch(unsetLoggedUser());
     }
     if (removedDoc.collection === 'clients') {
-        console.log("coucou ? ")
         store.dispatch(removeClient(removedDoc.id));
     }
 });
 
 asteroid.ddp.on('changed', (updatedDoc) => {
     if (updatedDoc.collection === 'todo') {
-        store.dispatch(editTodo(updatedDoc.id, updatedDoc.fields.finished));
+        store.dispatch(editTodo(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'team') {
+        store.dispatch(editTeam(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'card') {
+        store.dispatch(editCard(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'list') {
+        store.dispatch(editList(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'board') {
+        store.dispatch(editBoard(updatedDoc.id, updatedDoc.fields));
+    }
+    if (updatedDoc.collection === 'label') {
+        store.dispatch(editLabel(updatedDoc.id, updatedDoc.fields));
     }
 });
 
-/*asteroid.ddp.on('get', (getdDoc) => {
-    if (getdDoc.collection === 'board') {
-        store.dispatch(getBoard(getDoc.id));
-    }
-});*/
 
 export default asteroid;

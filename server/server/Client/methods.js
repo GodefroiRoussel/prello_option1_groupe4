@@ -28,7 +28,6 @@ Meteor.method("getClients", function (userId) {
                 });
                 return [decoded.userId];
             } catch (err) {
-                console.log(err);
                 throw new Meteor.Error('Token Invalid', "This token is not valid");
             }
         },

@@ -54,7 +54,7 @@ Meteor.methods({
                 avatarUser: "",
                 languageUser: "",
                 colourBlindUser: "",
-                favoriteBoards: []
+                favoriteBoards: [],
             }
         });
     },
@@ -63,6 +63,11 @@ Meteor.methods({
     },
     getUser(id) {
         return Meteor.users.findOne(id);
+    },
+    getAllUsersReturnUsername(){
+        const users = Meteor.users.find().fetch();
+        var usernames = users.map(x => x.username);
+        return usernames;
     },
     editUserProfile(data) {
         return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
@@ -141,7 +146,8 @@ Meteor.methods({
                         seedUser: "",
                         avatarUser: "",
                         languageUser: "",
-                        colourBlindUser: ""
+                        colourBlindUser: "",
+                        favoriteBoards: [],
                     }
                 });
                 Meteor.users.update(newUserId,
@@ -156,8 +162,6 @@ Meteor.methods({
             }
         }
         catch (err) {
-            console.log("ERR")
-            console.log(err)
             return err
         }
     }

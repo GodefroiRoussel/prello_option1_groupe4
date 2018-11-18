@@ -23,13 +23,22 @@ class Login extends React.Component {
 
     handleLogin = (e) => {
         e.preventDefault();
-        asteroid.loginWithPassword({
-            username: this.state.username,
-            password: this.state.password,
-        })
-            .catch((error) => {
+        if(!this.state.username)
+        {
+            Alert.error("Type your nickname");
+        }else if(!this.state.password)
+        {
+            Alert.error("Type your password");
+        }else{
+            asteroid.loginWithPassword({
+                username: this.state.username,
+                password: this.state.password,
+            }).catch((error) => {
                 Alert.error(error.message);
             });
+            browserHistory.push('/home');
+        }
+
     };
 
     updateUsername = (username) => {
@@ -57,7 +66,7 @@ class Login extends React.Component {
                                     <input onChange={(password) => { this.updatePassword(password.target.value) }} name="password" type="password" placeholder="Your password" />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button fluid animated='fade' onClick={() => browserHistory.push('/')}>
+                                    <Button fluid animated='fade'>
                                         <Button.Content hidden>Login</Button.Content>
                                         <Button.Content visible>
                                             <Icon name='arrow right' />

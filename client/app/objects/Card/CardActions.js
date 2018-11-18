@@ -7,6 +7,7 @@ export const EDIT_CONTRIBUTOR_CARD = 'EDIT_CONTRIBUTOR_CARD';
 export const EDIT_LABEL_CARD = 'EDIT_LABEL_CARD';
 export const EDIT_COMMENT_CARD = 'EDIT_COMMENT_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
+export const EDIT_CARD='EDIT_CARD';
 
 export function getCard(_id) {
     return {
@@ -58,7 +59,6 @@ export function editLabelCard(data) {
 }
 
 export function deleteCard(data) {
-    console.log("action")
     return {
         type: DELETE_CARD,
         data
@@ -73,4 +73,12 @@ export function editCommentCard (data){
         type: EDIT_COMMENT_CARD,
         data
     }
+}
+
+export function editCard(_id, data){
+    return{
+        type: EDIT_CARD,
+        _id,
+        data,
+    };
 }

@@ -14,6 +14,10 @@ Meteor.methods({
     getAllBoard(){
         return Board.find();
     },
+    getMembersBoard(id) {
+        const board = Board.findOne({_id: id})
+        return board.members
+    },
     updateBoardListId(data){
         if(data.id && data.listId){
             const board = Board.findOne(data.id)
@@ -23,6 +27,9 @@ Meteor.methods({
                 return Board.update({_id: data.id}, {$set: {listsId: listsId}})
             }
         }
+    },
+    findOneBoard(id) {
+       return Board.findOne({_id: id})
     },
     // update position of each list of the board according to the new position of one of them
     // idList is the id of the list having a new position
@@ -106,8 +113,30 @@ Meteor.methods({
             {_id: data._id},
             {$set: {titleBoard: data.titleBoard}}
         )
+        Meteor.call("addLabel", {_id: data._id})
         return Board.findOne(data._id)
     },
+
+    updateCanComment(data){
+        return Board.update({_id: data._id}, {$set: {canComment: data.canComment}})
+    },
+    updateInvitationsOpenedBoard(data){
+        return Board.update({_id: data._id}, {$set: {invitationsOpenedBoard: data.invitationsOpenedBoard}})
+    },
+    updateTeamBoard(data){
+        var members = []
+        data.teams.map(x => members.push(Meteor.call("getTeamById", x).members))
+        var flat = _.reduceRight(members, function(a, b) { return a.concat(b); }, []);
+        var unique = [...new Set(flat)];
+        Board.update({_id: data._id}, {$set: {members: unique}})
+        return Board.update({_id: data._id}, {$set: {teams: data.teams}})
+    },
+    updateLabelBoard(data){
+        var board = Meteor.call('getBoard', data._id)
+        var labels = board.labels;
+        labels.push(data.idLabel);
+        return Board.update({_id: data._id}, {$set: {labels: labels}})
+    }
 });
 
 export default Board;

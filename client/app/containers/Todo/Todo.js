@@ -3,10 +3,28 @@ import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { callRemoveTodo, callEditTodo } from '../../objects/Todo/TodoAsyncActions';
 import style from './todo.styl';
-import PropTypes from 'prop-types';
+
+import {
+    Tab,
+    Card,
+    Image,
+    List,
+    Button,
+    Form,
+    TextArea,
+    Grid,
+    Segment,
+    Progress,
+    Modal,
+    Header,
+    Divider,
+    Icon, Input,
+    Dropdown,
+    Checkbox
+} from 'semantic-ui-react';
 
 const Todo = (props) => {
-
+  const { id, finished, message, dispatchCallRemoveTodo, dispatchCallEditTodo} = props;
   const handleRemove = () => {
     dispatchCallRemoveTodo(id);
   };
@@ -20,24 +38,21 @@ const Todo = (props) => {
     return 'todo-item';
   };
   return (
-    <div styleName={finishedClass()}>
-      <input type="checkbox" checked={finished || false} onChange={handleEdit} />
-      {message}
-      <button type="button" onClick={handleRemove}>
-        <i className="fa fa-times" />
-      </button>
-    </div>
+      <List divided verticalAlign='middle'>
+          <List.Item>
+              <List.Content floated='right'>
+                  <Button onClick={handleRemove}>Delete</Button>
+              </List.Content>
+
+              <List.Content floated='left' styleName={finishedClass()}>
+                  <Checkbox label={message} checked={finished} onChange={handleEdit}/>
+
+              </List.Content>
+          </List.Item>
+      </List>
   );
 };
 
-Todo.propTypes = {
-  /* James : Je met en commentaire car erreur avec react 16
-  message: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,*/
-  finished: PropTypes.bool,
-  dispatchCallRemoveTodo: PropTypes.func.isRequired,
-  dispatchCallEditTodo: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => ({

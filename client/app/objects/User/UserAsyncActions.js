@@ -26,6 +26,11 @@ export function callEditUserPassword(data) {
         .then(() => dispatch(editUserPassword(data)));
 }
 
+export function callAddFavoriteBoard(data){
+    return dispatch => asteroid.call('addFavoriteBoard', data)
+        .then(() => dispatch(addFavoriteBoard(data)));
+}
+
 export function callRemoveAuthorizationClient(_id) {
     return dispatch => asteroid.call('removeAuthorization', _id)
         .then(() => dispatch(removeAuthorizationClient(_id)));

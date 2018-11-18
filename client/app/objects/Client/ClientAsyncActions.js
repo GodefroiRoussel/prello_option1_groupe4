@@ -23,7 +23,6 @@ export function callRemoveClient(data) {
     return dispatch => asteroid.call('removeClient', data.id)
         .then(() => dispatch(removeClient(data.id)))
         .catch(err => {
-            console.log(err)
             dispatch(failRemoveClient(data.id))
         });
 }

@@ -2,25 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import {
-    Tab,
-    Card,
     Image,
     List,
     Button,
     Form,
-    TextArea,
-    Grid,
-    Segment,
-    Select,
     Modal,
-    Header,
-    Divider,
-    Icon, Input
+    Input
 } from 'semantic-ui-react';
+
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
 import ProfileAnonymous from '../../styles/assets/hanonyme.png'
 import {callAddMemberAssigned, callDeleteMemberAssigned} from "../../objects/Card/CardAsyncActions";
 
@@ -41,23 +33,25 @@ class CardModalMembers extends React.Component {
                 LastName: "Tarpien",
                 nickname: "TarpM"
 
-            }]
+            }],
+            nameMember:"",
         };
     }
 
     toggleModalMembers = () => this.setState(state => ({ openModal: !state.openModal }));
 
 
+
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
-        if(e.target.value) {
-            this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+        if(e.type =="submit") {
+            this.props.dispatchCallAddMemberToCard({idCard: this.props.idCard, idMember: this.state.nameMember, idBoard: this.props.idBoard})
         }
     }
 
-    deleteContributorCard = (e) => {
-        if(e.target.value) {
-            this.props.dispatchCallDeleteMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
+    deleteContributorCard = (member) => {
+        if(member) {
+            this.props.dispatchCallDeleteMemberToCard({idCard: this.props.idCard , idMember: member})
         }
 
     }
@@ -65,7 +59,6 @@ class CardModalMembers extends React.Component {
     render() {
         const { openModal } = this.state;
         return (
-
             <Modal
                 trigger={
                     <Button onClick={this.toggleModalMembers} fluid animated='fade' className={style.settingsButtons} >
@@ -77,6 +70,7 @@ class CardModalMembers extends React.Component {
                 }
                 size={'tiny'}
                 centered={false}
+                className={style.modalCustom2}
                 open={openModal}
                 closeIcon
                 onClose={this.toggleModalMembers}>
@@ -86,44 +80,39 @@ class CardModalMembers extends React.Component {
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
                         <List verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Helen</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Christian</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Daniel</List.Header>
-                                </List.Content>
-                            </List.Item>
+                            {this.props.card.assignedUsers.map(x => {
+                                return(
+                                    <List.Item>
+                                        <List.Content floated='right'>
+                                            <Button onClick={()=>this.deleteContributorCard(x)}>Delete</Button>
+                                        </List.Content>
+                                        <Image avatar src={ProfileAnonymous} />
+                                        <List.Content>
+                                            <List.Header>{x}</List.Header>
+                                        </List.Content>
+                                    </List.Item>
+                                )
+                            })}
                         </List>
-                        <Form onSubmit={this.toggleEditCardTitle}>
-                            <Form.Field className={style.inputEditTitle}>
-                                <label>Add a new worker</label>
-                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}/>
-                                <datalist id='languages'>
-                                    <option value='English' />
-                                    <option value='Chinese' />
-                                    <option value='Dutch' />
-                                </datalist>
-                            </Form.Field>
+                        <Form autoComplete="off" onSubmit={this.addContributorCard}>
+                            <Form.Group inline>
+                                <Form.Field>
+                                    <label>Add a new worker</label>
+                                    <Input list='members' onKeyPress={this.addContributorCard} onChange={(name)=>this.setState({nameMember:name.target.value})} name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                    <datalist id='members'>
+                                        {this.props.board.members.map(x => {
+                                            if(!this.props.card.assignedUsers.includes(x)){
+                                                return(
+                                                    <option value={x}/>
+                                                )
+                                            }
+                                        })}
+                                    </datalist>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Button type="submit">Add</Button>
+                                </Form.Field>
+                            </Form.Group>
                         </Form>
                     </Modal.Description>
                 </Modal.Content>
@@ -140,12 +129,15 @@ CardModalMembers.defaultProps = {
 
 function mapStateToProps(state, ownProps){
     return{
+        card: state.cards.find(el => el._id==ownProps.idCard),
+        board: state.boards.find(el=> el._id==ownProps.idBoard),
+        c: state.cards
     }
 };
 
 const mapDispatchToProps = (dispatch)=> ({
     dispatchCallAddMemberToCard: data => dispatch(callAddMemberAssigned(data)),
-    dispatchCallDeleteMemberToCard: data => dispatch(callDeleteMemberAssigned(data))
+    dispatchCallDeleteMemberToCard: data => dispatch(callDeleteMemberAssigned(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardModalMembers);
