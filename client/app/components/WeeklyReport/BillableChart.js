@@ -8,8 +8,8 @@ const BillableChart = (props) => {
         <Grid>
             <Grid.Column>
                 <div>
-                    <h2>Number of hours of billable tasks</h2>
-                    <Pie data={props.dataBillable}/>
+                    <h2>{props.title}</h2>
+                    <Pie data={props.data}/>
                 </div>
             </Grid.Column>
 

@@ -4,7 +4,7 @@ import {Button, Form, Grid, Input} from 'semantic-ui-react';
 import {Pie} from "react-chartjs-2";
 import BillableChart from "../../components/WeeklyReport/BillableChart";
 import {callAddBoard} from "../../objects/Board/BoardAsyncActions";
-import {callGetBillableWorks} from "../../objects/WeeklyReport/WorkAsyncActions";
+import {callGetBillableWorks, callGetNotBillableWorks} from "../../objects/WeeklyReport/WorkAsyncActions";
 import {callUpdateCardTitle} from "../../objects/Card/CardAsyncActions";
 import {
     DateInput,
@@ -13,6 +13,8 @@ import {
     DatesRangeInput
 } from 'semantic-ui-calendar-react';
 import style from './war.styl'
+import asteroid from "../../common/asteroid";
+import {callGetOtherWorksBillable, callGetOtherWorksNotBillable} from "../../objects/OtherWork/OtherWorkAsyncActions";
 
 class BoardWAR extends React.Component {
 
@@ -24,38 +26,69 @@ class BoardWAR extends React.Component {
             idBoard:"",
             worksBill: [],
             worksNotBill: [],
+            nbHoursWorkBill: 0,
+            nbHoursWorkNotBill: 0,
+            otherBill: [],
+            otherNotBill: [],
+            nbHoursOtherBill: 0,
+            nbHoursOtherNotBill: 0,
             displayCRHA: false,
-            dataPieBillable: {
-                labels: [
-                    'Billable',
-                    'Not Billable',
-                ],
-                datasets: [{
-                    data: [300, 100],
-                    backgroundColor: [
-                        '#36A2EB',
-                        '#FFCE56'
-                    ],
-                }]
-            },
             works: []
         }
     }
 
     getData = (e) => {
-        console.log('coucou')
         if(e.target.startDate.value && e.target.endDate.value) {
-            console.log('if')
             const dataGetWork = {
-                idBoard: "7rGJaTtgx4xzJyvFj",
+                idBoard: "57fcHHtxdhgmMunwQ",
                 startDate: e.target.startDate.value,
                 endDate: e.target.endDate.value,
             }
             this.props.dispatchCallGetWorksBillable(dataGetWork)
-                .then(result => this.setState({worksBill: result}))
+                .then(result => {
+                        this.setState({worksBill: result})
+                        var nbHoursBill = 0
+                        result.map(work => {
+                                nbHoursBill = nbHoursBill + work.timeReal
+                            }
+                        )
+                        this.setState({nbHoursWorkBill: nbHoursBill})
 
-            console.log('state', this.state.worksBill)
-            //const worksNotbill = this.props.dispatchCallGetWorksBillable(dataGetWork)
+                    }
+                )
+            this.props.dispatchCallGetWorksNotBillable(dataGetWork)
+                .then(result => {
+                    this.setState({worksNotBill: result})
+                    var nbHoursNotBill = 0
+                    result.map(work => {
+                            nbHoursNotBill = nbHoursNotBill + work.timeReal
+                        }
+                    )
+                    this.setState({nbHoursWorkNotBill: nbHoursNotBill})
+                })
+
+            this.props.dispatchCallGetOtherWorksBillable(dataGetWork)
+                .then(result => {
+                    this.setState({otherBill: result})
+                    var nbHoursBill = 0
+                    result.map(work => {
+                            nbHoursBill = nbHoursBill + work.nbHoursSpent
+                        }
+                    )
+                    this.setState({nbHoursOtherBill: nbHoursBill})
+                })
+            this.props.dispatchCallGetOtherWorksNotBillable(dataGetWork)
+                .then(result => {
+                    this.setState({otherNotBill: result})
+                    var nbHoursNotBill = 0
+                    result.map(work => {
+                            nbHoursNotBill = nbHoursNotBill + work.nbHoursSpent
+                        }
+                    )
+                    this.setState({nbHoursOtherNotBill: nbHoursNotBill})
+
+                })
+
             this.setState({displayCRHA: true})
         }
     }
@@ -68,8 +101,46 @@ class BoardWAR extends React.Component {
         this.setState({endDate: value.value})
     }
     render() {
-        console.log(this.state)
         const showCRHA = this.state.displayCRHA
+        const dataPieWorks = {
+            labels: [
+                'Billable',
+                'Not Billable',
+            ],
+            datasets: [{
+                data: [this.state.nbHoursWorkBill, this.state.nbHoursWorkNotBill],
+                backgroundColor: [
+                    '#FFCE56',
+                    '#36A2EB'
+                ],
+            }]
+        }
+        const dataPieOther = {
+            labels: [
+                'Billable',
+                'Not Billable',
+            ],
+            datasets: [{
+                data: [this.state.nbHoursOtherBill, this.state.nbHoursOtherNotBill],
+                backgroundColor: [
+                    '#FFCE56',
+                    '#36A2EB'
+                ],
+            }]
+        }
+        const dataPieBoth = {
+            labels: [
+                'Billable',
+                'Not Billable',
+            ],
+            datasets: [{
+                data: [this.state.nbHoursOtherBill + this.state.nbHoursWorkBill, this.state.nbHoursOtherNotBill + this.state.nbHoursWorkNotBill],
+                backgroundColor: [
+                    '#FFCE56',
+                    '#36A2EB'
+                ],
+            }]
+        }
         return (
             <Grid centered>
                 <div>
@@ -101,8 +172,12 @@ class BoardWAR extends React.Component {
                         </Form.Group>
                     </Form>
                 </div>
-                {showCRHA && this.state.worksBill? (<div> <BillableChart dataBillable={this.state.dataPieBillable}/>
-                </div>) : null}
+                {showCRHA && this.state.worksBill? (<div><div> <BillableChart title="Work on cards" data={dataPieWorks}/>
+                    </div>
+                        <div> <BillableChart title="Other works" data={dataPieOther}/></div>
+                        <div> <BillableChart title="Works" data={dataPieBoth}/></div>
+                    </div>)
+                    : null}
 
             </Grid>
         )
@@ -113,12 +188,16 @@ BoardWAR.propTypes = {};
 
 function mapStateToProps(state, ownProps){
     return{
+        works: state.works
     }
 };
 
 function mapDispatchToProps(dispatch){
     return {
-        dispatchCallGetWorksBillable: data => dispatch(callGetBillableWorks(data))
+        dispatchCallGetWorksBillable: data => dispatch(callGetBillableWorks(data)),
+        dispatchCallGetWorksNotBillable: data => dispatch(callGetNotBillableWorks(data)),
+        dispatchCallGetOtherWorksBillable: data => dispatch(callGetOtherWorksBillable(data)),
+        dispatchCallGetOtherWorksNotBillable: data => dispatch(callGetOtherWorksNotBillable(data)),
     }
 };
 

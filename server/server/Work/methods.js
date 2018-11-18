@@ -9,15 +9,13 @@ Meteor.methods({
     getWorkByCard() {
         return Work.find().fetch();
     },
-    getWorkBillableByBoard(data) { //"2HLNE4Fc59GJyReDy"
+    getWorkBillableByBoard(data) {
         console.log('work bill', data)
-        const work = Work.findOne({_id: data._id})
-        console.log(new Date(data.startDate) < work.day)
         const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
         var worksBill = []
         works.map(work => {
             const billCard = Meteor.call('isBillableCard', work.idCard)
-            if(billCard === false) {
+            if(billCard === true) {
                 worksBill.push(work)
             }
         })
@@ -25,19 +23,16 @@ Meteor.methods({
         return worksBill
     },
     getWorkNotBillableByBoard(data) {
-        console.log('work bill', data)
-        const work = Work.findOne({_id: "2HLNE4Fc59GJyReDy"})
-        console.log(new Date(data.startDate) < work.day)
         const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
-        var worksBill = []
+        var worksNotBill = []
         works.map(work => {
             const billCard = Meteor.call('isBillableCard', work.idCard)
             if(billCard === false) {
-                worksBill.push(work)
+                worksNotBill.push(work)
             }
         })
-        console.log(worksBill)
-        return worksBill
+        console.log(worksNotBill)
+        return worksNotBill
     },
     removeWork(idWork) {
         return Work.remove({_id: idWork})
