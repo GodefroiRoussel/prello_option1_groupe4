@@ -18,6 +18,7 @@ import {
     DatesRangeInput
 } from 'semantic-ui-calendar-react';
 import {callAddWork} from "../../objects/WeeklyReport/WorkAsyncActions";
+import {Grid} from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 
 
 class CardModalDeadlines extends React.Component {
@@ -88,6 +89,7 @@ class CardModalDeadlines extends React.Component {
                 }
                 size={'tiny'}
                 centered={false}
+                className={style.modalCustom2}
                 open={openModal}
                 closeIcon
                 onClose={this.toggleModalDeadlines}>
@@ -99,39 +101,36 @@ class CardModalDeadlines extends React.Component {
                         <List verticalAlign='middle'>
                             <List.Item>
                                 <List.Content>
-                                    <List>
-                                        <List.Header>Yours work days on this project</List.Header>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
-                                        <List.Item>Date - nb heures</List.Item>
+                                    <List divided verticalAlign='middle'>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
+                                        <List.Item>
+                                            <List.Content floated='right'>
+                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                                            </List.Content>
+                                            <List.Content className={defaultStyle.textColor1}>
+                                                Date - nb heures
+                                            </List.Content>
+                                        </List.Item>
 
                                     </List>
 
                                 </List.Content>
-                                <List.Content floated='right'>
-                                    <Form>
-                                        <Form.Group>
-                                            <DateInput
-                                                name="startDate"
-                                                placeholder="Start Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="endDate"
-                                                placeholder="date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
-                                            <Input type={"number"} step={0.25} placeholder='Nb hours' />
-                                            <Button>Delete</Button>
-                                        </Form.Group>
-                                    </Form>
-                                </List.Content>
+
                             </List.Item>
                             <List.Item>
                                 <List.Content>
@@ -140,22 +139,23 @@ class CardModalDeadlines extends React.Component {
                                 <List.Content floated='right'>
                                     <Form onSubmit={this.addWork}>
                                         <Form.Group>
+
+                                                <DateInput
+                                                    closable={true}
+                                                    closeOnMouseLeave={false}
+                                                    dateFormat={"YYYY-MM-DD"}
+                                                    timeFormat={false}
+                                                    name="dateWork"
+                                                    placeholder="Date"
+                                                    value={this.state.date}
+                                                    iconPosition="left"/>
+
                                             <Form.Field>
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="dateWork"
-                                                placeholder="Date"
-                                                value={this.state.date}
-                                                iconPosition="left"
-                                                onChange={this.handleDate} />
+                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Field>
-                                            <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                                                <Button>Add</Button>
                                             </Form.Field>
-                                            <Form.Button>
-                                            <Button>Add</Button>
-                                            </Form.Button>
                                         </Form.Group>
                                     </Form>
                                 </List.Content>
