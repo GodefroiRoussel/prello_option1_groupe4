@@ -9,6 +9,8 @@ const todos = (state = [], action) => {
     case REMOVE_TODO:
       return remove(state, action);
     case EDIT_TODO:
+      console.log(action.data)
+      console.log(state)
       return update(state, action, "finished");
     case GET_ALL_TODO:
       return action.data;

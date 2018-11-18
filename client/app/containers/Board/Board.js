@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Card, Grid, Input} from 'semantic-ui-react';
+import {Card, Grid, Input, Form, Button} from 'semantic-ui-react';
 //import MenuParameters from '../../components/BoardParameters/MenuParameters';
 import BoardComponent from '../../components/Board/Board.component';
 import BoardMenu from './BoardMenu';
@@ -12,7 +12,9 @@ import style from './board.styl'
 class Board extends Component {
     constructor(props) {
         super(props)
-        this.state ={}
+        this.state ={
+            nameList: "",
+        }
     }
 
     handleAddList=(e)=>{
@@ -23,6 +25,9 @@ class Board extends Component {
                 this.props.dispatchCallAddList(({titleList: elem.value, positionList: 0}), this.props.board);
                 elem.value = '';
             }
+        }
+        else if(e.type=="submit"){
+            this.props.dispatchCallAddList(({titleList: this.state.nameList, positionList: 0}), this.props.board);
         }
     }
 
@@ -39,7 +44,12 @@ class Board extends Component {
                 return(
                     <div className={style.generalBoardRendering}>
                         <BoardMenu board={this.props.board}/>
-                        <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
+                        <Form onSubmit={this.handleAddList}>
+                            <Form.Field className={style.inputForm}>
+                                <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                <Button type="submit">Add</Button>
+                            </Form.Field>
+                        </Form>
                     </div>
                 )
             }
@@ -127,7 +137,12 @@ class Board extends Component {
                                                         <BoardComponent lists={this.props.lists} board={this.props.board._id}/>
                                                         <div className={style.cardCustom}>
                                                             <Card className={style.ListCard}>
-                                                                <Input type='text' action='Add' onKeyPress={this.handleAddList} placeholder='Add a List'/>
+                                                            <Form onSubmit={this.handleAddList}>
+                                                                <Form.Field className={style.inputForm}>
+                                                                    <Input type='text' onKeyPress={this.handleAddList} onChange={(name)=> this.setState({nameList: name.target.value})} placeholder='Add a List'></Input>
+                                                                    <Button type="submit">Add</Button>
+                                                                </Form.Field>
+                                                            </Form>
                                                             </Card>
                                                         </div>
                                                     </div>

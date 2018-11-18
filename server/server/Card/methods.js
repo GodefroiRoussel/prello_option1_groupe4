@@ -102,7 +102,6 @@ Meteor.methods({
         return Card.findOne({_id: data.idCard})
     },
     addCheckListCard(data){
-        console.log(data)
         const card = Card.findOne(data._id)
         const check = card.checkList
         check.push(data.checkList)

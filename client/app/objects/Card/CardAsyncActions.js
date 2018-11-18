@@ -12,11 +12,13 @@ import {
     editCommentCard
 
 } from './CardActions';
+
 import {
     callUpdateCardsPositionsAfterArchiveOrDelete,
     callAddCardInList,
     callUpdateCardsPositionsAfterArchiveOrDeleteId
 } from '../List/ListAsyncActions'
+
 import {addCardInList} from "../List/ListActions";
 import {callAddComment, callDeleteComment} from "../Comment/CommentAsyncAction";
 
@@ -83,7 +85,6 @@ export function callDeleteMemberAssigned(data) {
 }
 
 export function callAddLabelCard(data) {
-    console.log(data)
     return dispatch => asteroid.call('addLabelCard', data)
         .then(result => dispatch(editLabelCard(result)))
 }
@@ -108,4 +109,8 @@ export function callDeleteCommentCard(data) { //data = idCard, idComment
             dispatch(editCommentCard(result))
             dispatch(callDeleteComment(result))
         })
+}
+
+export function callAddCheckListCard(data){
+    return dispatch => asteroid.call('addCheckListCard', data)
 }

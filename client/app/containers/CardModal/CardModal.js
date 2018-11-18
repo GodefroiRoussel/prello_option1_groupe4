@@ -10,7 +10,7 @@ import {
     TextArea,
     Grid,
     Segment,
-    Select,
+    Progress,
     Modal,
     Header,
     Divider,
@@ -213,6 +213,7 @@ class CardModal extends React.Component {
                                     <Grid.Row className={style.rowCard}>
                                         <Grid.Column mobile={15} tablet={15} computer={14}>
                                             <h3 className={defaultStyle.textColor4}>Checklist</h3>
+                                            <Progress color='green' value={this.props.todosFinished.length} total={this.props.todos.length} progress='ratio' />
                                             <div>
                                                 <input
                                                 type="text"
@@ -327,7 +328,7 @@ class CardModal extends React.Component {
                                 </Form>
                                 <List>
                                     <List.Item>
-                                        <CardModalMembers/>
+                                        <CardModalMembers idCard={this.props.card._id} idBoard={this.props.board}/>
                                     </List.Item>
                                     <List.Item>
                                         <CardModalDeadlines/>
@@ -406,13 +407,20 @@ function mapStateToProps(state, ownProps){
             )
         }
     }
+    const allTodos = state.todos.filter(el => c.checkList.includes(el._id))
+    var todosFinished = []
+    if(allTodos){
+        todosFinished = allTodos.filter(x => x.finished==true)
+    }
     
     return{
         card: state.cards.find(el => el._id === ownProps.card._id),
         options: option,
         defaultValueLabel : listDefaultValue,
         todos: state.todos.filter(el => c.checkList.includes(el._id)),
-        t: state.cards
+        c: state.cards,
+        t: state.todos,
+        todosFinished:todosFinished,
     }
 };
 

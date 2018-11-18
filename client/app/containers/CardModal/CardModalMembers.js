@@ -2,25 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import {
-    Tab,
-    Card,
     Image,
     List,
     Button,
     Form,
-    TextArea,
-    Grid,
-    Segment,
-    Select,
     Modal,
-    Header,
-    Divider,
-    Icon, Input
+    Input
 } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
 import ProfileAnonymous from '../../styles/assets/hanonyme.png'
 import {callAddMemberAssigned, callDeleteMemberAssigned} from "../../objects/Card/CardAsyncActions";
 
@@ -64,8 +55,8 @@ class CardModalMembers extends React.Component {
 
     render() {
         const { openModal } = this.state;
+        console.log(this.props)
         return (
-
             <Modal
                 trigger={
                     <Button onClick={this.toggleModalMembers} fluid animated='fade' className={style.settingsButtons} >
@@ -118,11 +109,7 @@ class CardModalMembers extends React.Component {
                             <Form.Field className={style.inputEditTitle}>
                                 <label>Add a new worker</label>
                                 <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}/>
-                                <datalist id='languages'>
-                                    <option value='English' />
-                                    <option value='Chinese' />
-                                    <option value='Dutch' />
-                                </datalist>
+                                
                             </Form.Field>
                         </Form>
                     </Modal.Description>
@@ -140,6 +127,8 @@ CardModalMembers.defaultProps = {
 
 function mapStateToProps(state, ownProps){
     return{
+        card: state.cards.find(el => el._id==ownProps.idCard),
+        board: state.boards.find(el=> el._id==ownProps.idBoard)
     }
 };
 

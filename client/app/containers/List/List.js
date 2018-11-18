@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
-import {Card, Button, Modal,Grid, Form, Input, List, Image,Header, Icon} from "semantic-ui-react";
-import ListComponent from '../../components/List/List.component';
+import {Card, Button, Modal, Form, Input, List ,Header, Icon} from "semantic-ui-react";
 import style from './List.styl';
 import {connect} from "react-redux";
 import {callAddCard} from "../../objects/Card/CardAsyncActions";
-import BoardComponent from "../../components/Board/Board.component";
 import CardModal from "../CardModal/CardModal";
 import {callEditListTitle} from "../../objects/List/ListAsyncActions";
 import {Droppable, Draggable} from 'react-beautiful-dnd';
 import defaultStyle from "../../styles/settings.styl";
-import hamburgerDefault from "../../styles/assets/hamburgerDefault.png"
 
 class ListC extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            nameCard: "",
+        }
     }
 
 
@@ -26,6 +26,10 @@ class ListC extends Component {
                 this.setState(state => ({ modalOpen: !state.modalOpen }))
                 elem.value = '';
             }
+        }
+        else if(e.type=="submit"){
+            this.props.dispatchCallAddCard({titleCard: this.state.nameCard, listId: this.props.list._id });
+            this.setState(state => ({ modalOpen: !state.modalOpen }))
         }
     }
 
@@ -101,7 +105,12 @@ class ListC extends Component {
                                     New card in {this.props.titleList}
                                 </Header>
                                 <Modal.Content>
-                                    <Input type='text' autoFocus visible action='Add' onKeyPress={this.handleCreateCard} placeholder='New card title'/>
+                                    <Form onSubmit={this.handleCreateCard}>
+                                        <Form.Field className={style.inputForm}>
+                                            <Input type='text' autoFocus visible onKeyPress={this.handleCreateCard} onChange={(name)=> this.setState({nameCard: name.target.value})} placeholder='New card title'></Input>
+                                            <Button type="submit">Add</Button>
+                                        </Form.Field>
+                                    </Form>
                                 </Modal.Content>
                                 <Modal.Actions>
                                     <Button basic color='red' onClick={this.handleClose} inverted>

@@ -2,27 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import {
-    Tab,
-    Card,
-    Image,
     List,
     Button,
     Form,
-    TextArea,
-    Grid,
-    Segment,
-    Select,
-    Modal,
-    Header,
-    Divider,
-    Icon, Input,
-    CustomCalendar
+    Modal, 
+    Input,
 } from 'semantic-ui-react';
-import { browserHistory } from 'react-router';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-import classNames from 'classnames'
-import ProfileAnonymous from '../../styles/assets/hanonyme.png';
 
 import {
     DateInput,
