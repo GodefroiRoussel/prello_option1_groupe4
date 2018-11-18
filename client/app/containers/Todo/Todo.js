@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cssModules from 'react-css-modules';
 import { callRemoveTodo, callEditTodo } from '../../objects/Todo/TodoAsyncActions';
-import style from './todo.styl';
+//import style from './todo.styl';
 import PropTypes from 'prop-types';
 
 const Todo = (props) => {
@@ -20,7 +20,7 @@ const Todo = (props) => {
     return 'todo-item';
   };
   return (
-    <div styleName={finishedClass()}>
+    <div /*styleName={finishedClass()}*/>
       <input type="checkbox" checked={finished || false} onChange={handleEdit} />
       {message}
       <button type="button" onClick={handleRemove}>
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  cssModules(Todo, style, { allowMultiple: true }));
+  cssModules(Todo, /*style, */{ allowMultiple: true }));

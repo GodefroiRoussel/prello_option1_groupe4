@@ -84,8 +84,8 @@ class BoardMenu extends Component {
 const mapStateToProps = (state, ownProps) => {
     return ({
         board: ownProps.board,
-        boards: state.boards
-        _id: this.props.idBoard //TODO: vu qu a changé, modif
+        boards: state.boards,
+        //_id: this.props.idBoard //TODO: vu qu a change modif
     })
 };
 
