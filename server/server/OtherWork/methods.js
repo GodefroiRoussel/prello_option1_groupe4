@@ -4,8 +4,9 @@ import Work from "../Work/model";
 
 Meteor.methods({
     addOtherWork(data) {
+        const user = Meteor.call('getUser', Meteor.userId())
         return OtherWork.insert({
-            idUser: Meteor.userId(),
+            idUser: user.username,
             otherWorkTitle: data.otherWorkTitle,
             dateOtherWork: data.dateOtherWork,
             nbHoursSpent: data.timeOtherWork,

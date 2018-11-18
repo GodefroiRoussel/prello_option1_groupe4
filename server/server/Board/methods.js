@@ -6,8 +6,7 @@ import List from "../List/model";
 
 Meteor.methods({
     addBoard(data) {
-        const userId = Meteor.userId()
-        return Board.insert({titleBoard: data.titleBoard, members: [userId], admins: [userId]});
+        return Board.insert(data);
     },
     getBoard(id) {
         return Board.findOne(id);
