@@ -51,7 +51,8 @@ Meteor.methods({
                 avatarUser: "",
                 languageUser: "",
                 colourBlindUser: "",
-                favoriteBoards: []
+                favoriteBoards: [],
+                isAdminMember: 0
             }
         });
     },
@@ -132,7 +133,8 @@ Meteor.methods({
                         seedUser: "",
                         avatarUser: "",
                         languageUser: "",
-                        colourBlindUser: ""
+                        colourBlindUser: "",
+                        isAdminMember: 0
                     }
                 });
                 Meteor.users.update(newUserId,
