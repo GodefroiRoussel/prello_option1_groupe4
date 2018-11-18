@@ -146,71 +146,37 @@ class BoardWAR extends React.Component {
         return (
 
                 <div>
-                    <Grid centered style={style.root}>
-                        <Grid.Row className={style.firstRowHome}>
-                            <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <h2 className={defaultStyle.textColor4}>Weekly activity report - Board name VINCENT ICI !!!!</h2>
-                                <Divider />
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row className={style.firstRowHome}>
-                            <Grid.Column mobile={2} tablet={4} computer={2}>
-                                <Button fluid animated='fade' onClick={() => browserHistory.push({pathname: '/board', state:{id: this.props.idBoard}})} >
-                                    <Button.Content hidden>to the board</Button.Content>
-                                    <Button.Content visible>
-                                       Back
-                                    </Button.Content>
-                                </Button>
-                            </Grid.Column>
-                            <Grid.Column mobile={14} tablet={10} computer={6}>
-                                <Form onSubmit={this.getData}>
-                                    <Form.Group>
-                                        <Form.Field>
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="startDate"
-                                                placeholder="Start Date"
-                                                value={this.state.startDate}
-                                                iconPosition="left"
-                                                closeOnMouseLeave={false}
-                                                onChange={this.handleStartDate} />
-                                        </Form.Field>
-                                        <Form.Field>
-                                            <DateInput
-                                                dateFormat={"YYYY-MM-DD"}
-                                                timeFormat={false}
-                                                name="endDate"
-                                                placeholder="End Date"
-                                                value={this.state.endDate}
-                                                iconPosition="left"
-                                                closeOnMouseLeave={false}
-                                                onChange={this.handleEndDate} />
-                                        </Form.Field>
-                                        <Form.Field>
-                                            <Button>Go</Button>
-                                        </Form.Field>
-                                    </Form.Group>
-                                </Form>
-                            </Grid.Column>
-                        </Grid.Row>
-
-
-                        {showCRHA && this.state.worksBill ? (
-                            <Grid.Row className={style.firstRowHome}>
-                                <Grid.Column mobile={15} tablet={5} computer={5}>
-                                    <BillableChart title="Work on cards" data={dataPieWorks}/>
-                                </Grid.Column>
-                                <Grid.Column mobile={15} tablet={5} computer={5}>
-                                    <BillableChart title="Other works" data={dataPieOther}/>
-                                </Grid.Column>
-                                <Grid.Column mobile={15} tablet={5} computer={5}>
-                                    <BillableChart title="Works" data={dataPieBoth}/>
-                                </Grid.Column>
-                            </Grid.Row>
-                           ): null}
-
-                    </Grid>
+                    <Form onSubmit={this.getData}>
+                        <Form.Group>
+                            <Form.Field>
+                                <DateInput
+                                    closable={true}
+                                    closeOnMouseLeave={false}
+                                    dateFormat={"YYYY-MM-DD"}
+                                    timeFormat={false}
+                                    name="startDate"
+                                    placeholder="Start Date"
+                                    value={this.state.startDate}
+                                    iconPosition="left"
+                                    onChange={this.handleStartDate} />
+                            </Form.Field>
+                            <Form.Field>
+                                <DateInput
+                                    closable={true}
+                                    closeOnMouseLeave={false}
+                                    dateFormat={"YYYY-MM-DD"}
+                                    timeFormat={false}
+                                    name="endDate"
+                                    placeholder="End Date"
+                                    value={this.state.endDate}
+                                    iconPosition="left"
+                                    onChange={this.handleEndDate} />
+                            </Form.Field>
+                            <Form.Button>
+                                <Button>Go</Button>
+                            </Form.Button>
+                        </Form.Group>
+                    </Form>
                 </div>
 
         )

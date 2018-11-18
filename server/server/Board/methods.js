@@ -1,23 +1,46 @@
 import { Meteor } from 'meteor/meteor'
 import Board from './model';
 import '../List/index'
-import List from "../List/model";
-
 
 Meteor.methods({
+    /**
+     * Add a new board
+     *
+     * @param data The data necessary to create a board, it contains the titleBoard
+     * @returns {any} The id of the board just created
+     */
     addBoard(data) {
         return Board.insert(data);
     },
+    /**
+     * Provide the board identified by the given id
+     * @param id The id of the board
+     * @returns {any} An object being the board wanted
+     */
     getBoard(id) {
         return Board.findOne(id);
     },
+    /**
+     * Provide all the boards registered
+     * @returns {Mongo.Cursor} The collection of boards
+     */
     getAllBoard(){
         return Board.find();
     },
+    /**
+     * Provide the members of a given board
+     * @param id The id of the board from which we want the members
+     * @returns {*} The array of objects members
+     */
     getMembersBoard(id) {
         const board = Board.findOne({_id: id})
         return board.members
     },
+    /**
+     * Update the array of lists id of the board
+     * @param data The data necessary for the update, it contains the id of the board we want to update lists and the listId of the list we want to add in
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateBoardListId(data){
         if(data.id && data.listId){
             const board = Board.findOne(data.id)
@@ -28,57 +51,22 @@ Meteor.methods({
             }
         }
     },
-    findOneBoard(id) {
-       return Board.findOne({_id: id})
-    },
-    // update position of each list of the board according to the new position of one of them
-    // idList is the id of the list having a new position
-    /*updateListsPositions(data) { //data = {board, idList}
-        if(data.board._id && data.board.listsId && data.idList) {
-            const list = Meteor.call('findOneList',data.idList) // the list for which the position has changed
-            const newPos = list.positionList // the new position of this anterior list
-            const board = Board.findOne(data.board._id)
-            if(board) {
-                const listId = board.listsId
-                let arrayLists = []
-                let arrayNotDisplayedLists = []
-                listId.map(listId => {
-                    if(listId !== data.idList) {
-                        const l = Meteor.call('findOneList',listId)
-                        if(l.isDeletedList === false && l.isArchived === false) {
-                            arrayLists.push(l)
-                        } else {
-                            arrayNotDisplayedLists.push(l._id)
-                        }
-                    }
-                })
-                // order lists by position
-                arrayLists.sort((l1, l2) => (l1.positionList > l2.positionList) ? 1 : -1)
-                // array of the positions possible for the board
-                let arrayPos = Array.from(new Array(listId.length), (val, index) => index + 1)
-                // delete the position already taken by the list having idList as id
-                arrayPos.splice(newPos - 1, 1)
-                let newListsBoard = [] // the array that contains lists id sorted by position
-                // give the good position to other elements
-                arrayLists.map(list => {
-                    Meteor.call('updatePosition', {idList: list._id, position: arrayPos[arrayLists.indexOf(list)]})
-                    newListsBoard.push(list._id)
-                })
-                // add the list which changed position
-                newListsBoard.splice(newPos - 1, 0, data.idList)
-                newListsBoard = [...newListsBoard, ...arrayNotDisplayedLists]
-                // update the board's lists
-                return Board.update({_id: board._id}, {$set: {listsId: newListsBoard}})
-            }
-        }
-    },*/
+    /**
+     * Update the list of lists id of a given board
+     * @param data The data necessary for the update, it contains _id the id of the board to update and listsId the new array of lists id
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateListsPositions(data) {
         return Board.update(
             {_id: data._id},
             {$set: {listsId: data.listsId}}
         )
     },
-    //change position after delete or archive
+    /**
+     * Update the lists positions when an update or a deletion occured
+     * @param data The data necessary for the update, it contains the board object and the id of the list just archived or deleted (idListArchived)
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateListsPositionsAfterArchiveOrDelete(data) { // data = board, idListArchived
         if(data.board._id && data.idListArchived) {
             const position = Meteor.call('findOneList', data.idListArchived).positionList
@@ -108,6 +96,11 @@ Meteor.methods({
         }
     },
 
+    /**
+     * Update the board title
+     * @param data The data necessary for the update, it contains _id the id of the board to update and the new titleBoard
+     * @returns {any} The board updated
+     */
     updateBoardTitle(data) {
         Board.update(
             {_id: data._id},
@@ -117,12 +110,27 @@ Meteor.methods({
         return Board.findOne(data._id)
     },
 
+    /**
+     * Update the possibility to comment or not a board
+     * @param data The data necessary for the update, it contains _id, the id of the board to update and canComment a boolean telling if comments can occur on the board
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateCanComment(data){
         return Board.update({_id: data._id}, {$set: {canComment: data.canComment}})
     },
+    /**
+     * Update the possibility to invite members on the board
+     * @param data The necessary data for the update, it contains _id the id of the board and invitationsOpenedBoard a boolean telling if invitations are possibe on the board or not
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateInvitationsOpenedBoard(data){
         return Board.update({_id: data._id}, {$set: {invitationsOpenedBoard: data.invitationsOpenedBoard}})
     },
+    /**
+     * Update the teams of the board
+     * @param data The necessary data for the update, it contains _id the id of the board and the new array of teams
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateTeamBoard(data){
         var members = []
         data.teams.map(x => members.push(Meteor.call("getTeamById", x).members))
@@ -131,6 +139,11 @@ Meteor.methods({
         Board.update({_id: data._id}, {$set: {members: unique}})
         return Board.update({_id: data._id}, {$set: {teams: data.teams}})
     },
+    /**
+     * Update the labels of a board
+     * @param data The necessary data for the update
+     * @returns {any} 1 if the update succeeded else 0
+     */
     updateLabelBoard(data){
         var board = Meteor.call('getBoard', data._id)
         var labels = board.labels;
