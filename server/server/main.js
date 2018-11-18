@@ -71,7 +71,7 @@ Meteor.startup(() => {
     const theOnlyUser = Meteor.users.find().fetch();
 
     if (!theOnlyUser.length) {
-        Accounts.createUser({
+        /*Accounts.createUser({
             username: process.env.USERNAME_ADMIN,
             email: process.env.EMAIL_ADMIN,
             password: process.env.PASSWORD,
@@ -91,6 +91,6 @@ Meteor.startup(() => {
                 favoriteBoards: [],
                 isAdminMember: 1
             }
-        });
+        });*/
     }
 });
