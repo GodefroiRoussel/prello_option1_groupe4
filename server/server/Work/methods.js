@@ -3,14 +3,12 @@ import Work from './model';
 
 Meteor.methods({
     addWork(data){
-        console.log('serveur work add', data)
         return Work.insert({idCard: data._id, idUser: Meteor.userId(), day: data.dateWork, timeReal: data.timeWork, idBoard: data.boardId});
     },
     getWorkByCard() {
         return Work.find().fetch();
     },
     getWorkBillableByBoard(data) {
-        console.log('work bill', data)
         const works = Work.find({idBoard: data.idBoard, day: {$gte: new Date(data.startDate), $lt: new Date(data.endDate)}}).fetch()
         var worksBill = []
         works.map(work => {
@@ -19,7 +17,6 @@ Meteor.methods({
                 worksBill.push(work)
             }
         })
-        console.log(worksBill)
         return worksBill
     },
     getWorkNotBillableByBoard(data) {
@@ -31,7 +28,6 @@ Meteor.methods({
                 worksNotBill.push(work)
             }
         })
-        console.log(worksNotBill)
         return worksNotBill
     },
     removeWork(idWork) {

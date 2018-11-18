@@ -148,8 +148,6 @@ Meteor.methods({
             }
         }
         catch (err) {
-            console.log("ERR")
-            console.log(err)
             return err
         }
     }

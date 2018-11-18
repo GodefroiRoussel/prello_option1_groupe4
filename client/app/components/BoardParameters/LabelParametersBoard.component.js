@@ -23,26 +23,31 @@ const TeamsParametersBoardComponent = (props) => {
         }
     }
 
+
+
     return (
         <div key={props.label._id}>
             <Segment inverted style={style}>
-                <Input  name="titleList" type="text" defaultValue={props.label.titleLabel} onKeyPress={callUpdateNameLabel}></Input>
-                <div>
-                    <Modal  trigger={<a onClick={props.handleOpen}>Change color</a>}
-                            open={props.modalOpen}
-                            onClose={props.handleClose}
-                            basic
-                            size='mini'>
-                        <Modal.Content>
-                        <SwatchesPicker onChange={handleChange}/>
-                        </Modal.Content>
-                        <Modal.Actions>
-                            <Button basic color='red' onClick={props.handleClose} inverted>
-                                <Icon name='remove' /> Cancel
-                            </Button>
-                        </Modal.Actions>
-                    </Modal>
-                    </div>
+                <Form>
+                    <Form.Group inline>
+                        <Form.Field>
+                            <Input  name="titleList" type="text" defaultValue={props.label.titleLabel} onKeyPress={callUpdateNameLabel}></Input>
+                        </Form.Field>
+                        <Form.Field>
+                            <Modal  trigger={<Button onClick={props.handleOpen}>Change color</Button>}
+                                    open={props.modalOpen}
+                                    onClose={props.handleClose}
+                                    size='small'
+                                    closeIcon
+                            >
+                                <Modal.Content>
+                                    <SwatchesPicker onChange={handleChange}/>
+                                </Modal.Content>
+                            </Modal>
+                        </Form.Field>
+                    </Form.Group>
+                </Form>
+
             </Segment>
         </div>
     )

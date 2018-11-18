@@ -70,6 +70,7 @@ class Navbar extends Component {
         asteroid.logout();
         this.props.dispatchCallResetTeam();
         this.props.dispatchCallResetBoard();
+        browserHistory.push('/');
 
     };
 

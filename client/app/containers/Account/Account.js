@@ -26,7 +26,8 @@ class Account extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            genderValue: ""
+            genderValue: "",
+            selected: ""
         };
 
     }
@@ -39,9 +40,7 @@ class Account extends Component {
             firstNameUser: e.target.firstName.value,
             lastNameUser: e.target.name.value,
             mailUser: e.target.email.value,
-        }).catch((error) => {
-            Alert.error(error.message);
-        });
+        })
         Alert.success("Profile updated")
     };
 
@@ -70,12 +69,17 @@ class Account extends Component {
                 genderValue: nextProps.user.profile.genderUser
             });
         }
+        this.setState({
+            selected: nextProps.user.profile.genderUser
+        });
+
+        console.log(nextProps.user.profile.genderUser)
+        console.log(this.state.selected)
     }
 
 
 
     render() {
-
 
         if (this.props.user && this.props.user.username) {
 
@@ -92,7 +96,7 @@ class Account extends Component {
                                     <Select
                                             onChange={this.changeGenderSelect.bind(this)}
                                             options={options}
-                                            value={this.state.genderValue}
+                                            defaultValue={this.state.selected}
                                             name="gender">
                                     </Select>
                                 </Form.Field>
