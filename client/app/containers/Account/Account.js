@@ -83,24 +83,6 @@ class Account extends Component {
         console.log(this.state.selected)
     }
 
-    displayListClients() {
-        if (this.state.clients) {
-            return (
-                <div>
-                    {this.state.clients.map(client => {
-                        <div>
-                            <label>"HELLO"</label>
-                            <Button onClick={this.handleRemoveAuthorizationClient(client._id)}>Remove authorization</Button>
-                        </div>
-                    })}
-                </div>
-            )
-        }
-
-        else
-            return <div />
-    }
-
     handleRemoveAuthorizationClient(_id) {
         this.props.dispatchCallRemoveAuthorizationClient({ _id: _id });
     }
@@ -182,13 +164,6 @@ class Account extends Component {
                                     </Button>
                                 </Form.Field>
                             </Form>
-                        </div>
-
-                    </Grid.Column>
-                    <Grid.Column mobile={12} tablet={8} computer={6}>
-                        <div className={style.AccountBox}>
-                            <h2 className={style.titleAccountBox}>Applications authorized</h2>
-                            {this.displayListClients()}
                         </div>
 
                     </Grid.Column>
