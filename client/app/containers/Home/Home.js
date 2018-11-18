@@ -9,6 +9,7 @@ import { callAddTeam } from '../../objects/Team/TeamAsyncActions';
 import { callAddBoard} from '../../objects/Board/BoardAsyncActions';
 import CardTeamsComponent from '../../components/CardTeams/CardTeams.component';
 import CardBoards from '../../components/CardBoards/CardBoards.component';
+import {callAddFavoriteBoard, callDeleteFavoriteBoard} from '../../objects/User/UserAsyncActions';
 import defaultStyle from "../../styles/settings.styl";
 import style from './home.styl';
 
@@ -117,7 +118,6 @@ class Home extends React.Component {
     }
 
     callCardBoard = (boards) => {
-        console.log(boards)
         return(
             <Grid.Column mobile={15} tablet={13} computer={10}>
                 <CardBoards boards={boards} 
@@ -168,7 +168,7 @@ function mapDispatchToProps(dispatch){
         dispatchCallAddBoard: data => dispatch(callAddBoard(data)),
         dispatchCallEditUser: data => dispatch(callEditUserProfile(data)),
         dispatchCallAddFavoriteBoard: data => dispatch(callAddFavoriteBoard(data)),
-        dispatchCallDeleteFavoriteBoard: data => dispatch(calllDeleteFavoriteBoard(data)),
+        dispatchCallDeleteFavoriteBoard: data => dispatch(callDeleteFavoriteBoard(data)),
         
     }
 };
