@@ -27,18 +27,6 @@ class CardModalDeadlines extends React.Component {
         super(props)
         this.state = {
             openModal: false,
-            members:[{
-                id: "1",
-                firstName: "Charles",
-                LastName: "Dupont",
-                nickname: "charlyd"
-            },{
-                id: "2",
-                firstName: "Maurice",
-                LastName: "Tarpien",
-                nickname: "TarpM"
-
-            }],
             date: '',
             timeWork: null,
             dateTime: '',
@@ -60,7 +48,6 @@ class CardModalDeadlines extends React.Component {
 
     addWork = (e) => {
         if(e.target.dateWork.value && e.target.timeWork.value && e.target.timeWork.value > 0) {
-            console.log("dans le if")
             this.setState({timeWork: e.target.timeWork.value, dateWork: e.target.dateWork.value}, () =>
                 this.props.dispatchCallAddWork({
                     dateWork: this.state.dateWork,
@@ -139,7 +126,6 @@ class CardModalDeadlines extends React.Component {
                                 <List.Content floated='right'>
                                     <Form onSubmit={this.addWork}>
                                         <Form.Group>
-
                                                 <DateInput
                                                     closable={true}
                                                     closeOnMouseLeave={false}
@@ -148,8 +134,8 @@ class CardModalDeadlines extends React.Component {
                                                     name="dateWork"
                                                     placeholder="Date"
                                                     value={this.state.date}
-                                                    iconPosition="left"/>
-
+                                                    iconPosition="left"
+                                                    onChange={this.handleDate}/>
                                             <Form.Field>
                                                 <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>

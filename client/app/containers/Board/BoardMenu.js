@@ -29,7 +29,7 @@ class BoardMenu extends Component {
     }
 
     handleClickWR = () => {
-        browserHistory.push({pathname: '/boardWar', state: {id: this.props._id}});
+        browserHistory.push({pathname: '/boardWar', state: {id: this.props.board._id}});
     }
 
     render() {
