@@ -30,3 +30,9 @@ export function callAddFavoriteBoard(data){
     return dispatch => asteroid.call('addFavoriteBoard', data)
         .then(() => dispatch(addFavoriteBoard(data)));
 }
+
+export function callDeleteFavoriteBoard(data){
+    console.log(data)
+    return dispatch => asteroid.call('deleteFavoriteBoard', data)
+        .then(() => dispatch(deleteFavoriteBoard(data)));
+}
