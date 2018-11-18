@@ -125,7 +125,9 @@ class Home extends React.Component {
                 dispatchFunc={this.props.dispatchCallAddBoard} 
                 changeNameBoard={this.changeNameBoard}
                 handleAddBoardOnClick={this.handleAddBoardOnClick}
-                userFavoriteBoard={this.props.user.profile.favoriteBoards}></CardBoards>
+                userFavoriteBoard={this.props.user.profile.favoriteBoards}
+                handleAddFavoriteBoard={this.props.dispatchCallAddFavoriteBoard}
+                handleDeleteFavoriteBoard={this.props.dispatchCallDeleteFavoriteBoard}></CardBoards>
             </Grid.Column>
         )
     }
@@ -164,7 +166,10 @@ function mapDispatchToProps(dispatch){
     return{
         dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
         dispatchCallAddBoard: data => dispatch(callAddBoard(data)),
-        dispatchCallEditUser: data => dispatch(callEditUserProfile(data))
+        dispatchCallEditUser: data => dispatch(callEditUserProfile(data)),
+        dispatchCallAddFavoriteBoard: data => dispatch(callAddFavoriteBoard(data)),
+        dispatchCallDeleteFavoriteBoard: data => dispatch(calllDeleteFavoriteBoard(data)),
+        
     }
 };
 
