@@ -78,6 +78,7 @@ class Registration extends Component {
             }).catch((error) => {
                 Alert.error(error.message);
             });
+            Alert.success("Account created !");
             browserHistory.push('/login');
         }
 
