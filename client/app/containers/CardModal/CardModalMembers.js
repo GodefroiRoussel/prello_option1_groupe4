@@ -41,7 +41,6 @@ class CardModalMembers extends React.Component {
 
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
-        console.log(e.target.value)
         if(e.target.value) {
             this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
         }
@@ -56,7 +55,6 @@ class CardModalMembers extends React.Component {
 
     render() {
         const { openModal } = this.state;
-        console.log(this.props)
         return (
             <Modal
                 trigger={
@@ -97,11 +95,11 @@ class CardModalMembers extends React.Component {
                                 <label>Add a new worker</label>
                                 <Input list='members' name="titleList" type="text" placeholder={"Search by nickname"}/>
                                 <datalist id='members'>
-                                {this.props.board.members.map(x => {
-                                    return(
-                                        <option value={x}/>
-                                    )
-                                })}
+                                    {this.props.board.members.map(x => {
+                                        return(
+                                            <option value={x}/>
+                                        )
+                                    })}
                                 </datalist>
                             </Form.Field>
                         </Form>
