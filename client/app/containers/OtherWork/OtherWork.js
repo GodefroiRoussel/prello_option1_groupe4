@@ -25,7 +25,8 @@ class OtherWork extends React.Component {
             timeWork: null,
             workName: "",
             dateTime: '',
-            datesRange: ''
+            datesRange: '',
+            billable: false,
         };
     }
 
@@ -33,14 +34,24 @@ class OtherWork extends React.Component {
         this.setState({workName: value.value})
     }
 
+    editBillable = (e, value) => {
+        var billable = false
+        if(value.value === 'true') {
+            billable = true
+        }
+        this.setState({billable: billable})
+    }
+
     addOtherWork = (e) => {
         const data = {
             otherWorkTitle: e.target.workdone.value,
             dateOtherWork: this.state.date,
             timeOtherWork: e.target.timeWork.value,
-            //billable: data.billable
+            billable: this.state.billable
         }
         this.props.dispatchCallAddOtherWork(data)
+            this.setState({otherWorkTitle: "", dateOtherWork: '', timeOtherWork: null, billable: false})
+
     }
     handleDate = (e, value) => {
         this.setState({date: value.value})
@@ -48,29 +59,43 @@ class OtherWork extends React.Component {
 
     render() {
         return( //TODO: if has the time -> display every other works of the user
-        <Form onSubmit={this.addOtherWork}>
-            <Form.Group>
-                <Form.Field>
-                    <Input onChange={this.handleChangeNameWork} name="workdone" value={this.state.workName} type={"text"} placeholder='work done' />
-                </Form.Field>
-                <Form.Field>
-                    <DateInput
-                        dateFormat={"YYYY-MM-DD"}
-                        timeFormat={false}
-                        name="dateWork"
-                        placeholder="Date"
-                        value={this.state.date}
-                        iconPosition="left"
-                        onChange={this.handleDate} />
-                </Form.Field>
-                <Form.Field>
-                    <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
-                </Form.Field>
-                <Form.Button>
-                    <Button>Add</Button>
-                </Form.Button>
-            </Form.Group>
-        </Form>
+            <Form onSubmit={this.addOtherWork}>
+                <Form.Group>
+                    <Form.Field>
+                        <Input onChange={this.handleChangeNameWork} name="workdone" value={this.state.workName} type={"text"} placeholder='work done' />
+                    </Form.Field>
+                    <Form.Field>
+                        <DateInput
+                            dateFormat={"YYYY-MM-DD"}
+                            timeFormat={false}
+                            name="dateWork"
+                            placeholder="Date"
+                            value={this.state.date}
+                            iconPosition="left"
+                            onChange={this.handleDate} />
+                    </Form.Field>
+                    <Form.Field>
+                        <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                    </Form.Field>
+                    <Form.Radio
+                        label='Yes'
+                        name='billable'
+                        value='true'
+                        checked={this.state.billable === true}
+                        onChange={this.editBillable}
+                    />
+                    <Form.Radio
+                        label='No'
+                        name='billable'
+                        value='false'
+                        checked={this.state.billable === false}
+                        onChange={this.editBillable}
+                    />
+                    <Form.Button>
+                        <Button>Add</Button>
+                    </Form.Button>
+                </Form.Group>
+            </Form>
         )}
 
 }

@@ -149,8 +149,6 @@ const dataLineChart = {
 //TODO: Right Scroll with the list of members
 //TODO: Fix Bug of cards
 const War = () => {
-    console.log('coucou')
-    console.log(this.props.works)
 
     const form = () => (
         <div>
@@ -351,7 +349,6 @@ const War = () => {
 };
 
 function mapStateToProps(state, ownProps){
-    console.log(state)
     return{
         //works: state.works
     }
