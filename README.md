@@ -1,11 +1,23 @@
-# Simple Todo List
+# AWI Project - Prello
 
-The Meteor Tutorial app.
+This web application is a 5th year project of IT students at Polytech Montpellier, France. 
 
-Use it to share a single todo list with your friends. The list updates on everyone's screen in real time, and you can make tasks private if you don't want others to see them.
+The app can be launched in dev mode following these steps :
+- Pull the project
+- Create a stettings.json in ther server folder (see the structure downbellow)
+- Open two terminal
+  - In the first one, go in the client folder and run "npm start"
+  - In the second terminal, go in ther server "meteor -p 9000 --settings settings.json"
 
-Learn how to build this app by following the [Meteor Tutorial](https://www.meteor.com/tutorials/react/creating-an-app).
 
-Read more about building apps with Meteor in the [Meteor Guide](http://guide.meteor.com).
+# Structure of the settings.json
 
-![screenshot](screenshot.png)
+This file set up the variable to use the functionnalites of the Polytech Login in the app
+{
+"CREDENTIALS": "",
+"URL_LDAP": "",
+"BASE_DN": "",
+"BASE_STUDENT_SEARCH": "",
+"BASE_PERMANENT_SEARCH": "",
+"PASSWORD": ""
+}
