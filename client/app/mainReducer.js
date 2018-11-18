@@ -11,6 +11,7 @@ import items from './objects/Item/ItemReducers';
 import works from './objects/WeeklyReport/WorkReducers';
 import otherworks from './objects/OtherWork/OtherWorkReducers';
 import labels from './objects/Label/LabelReducers';
+import todos from './objects/Todo/TodoReducers';
 //import addlists from './objects/Board/AddListReducer';
 
 const mainReducer = combineReducers({
@@ -24,8 +25,9 @@ const mainReducer = combineReducers({
   checklists,
   items,
   works,
-  otherworks
-  labels
+  otherworks,
+  labels,
+    todos
 });
 
 export default mainReducer;
