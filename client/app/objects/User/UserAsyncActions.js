@@ -25,3 +25,8 @@ export function callEditUserPassword(data) {
     return dispatch => asteroid.call('editUserPassword',data)
         .then(() => dispatch(editUserPassword(data)));
 }
+
+export function callAddFavoriteBoard(data){
+    return dispatch => asteroid.call('addFavoriteBoard', data)
+        .then(() => dispatch(addFavoriteBoard(data)));
+}
