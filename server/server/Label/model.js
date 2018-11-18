@@ -9,7 +9,10 @@ const LabelSchema = new SimpleSchema({
         type: String
     },
     colorLabel: {
-        type: String
+        type: Array
+    },
+    'colorLabel.$':{
+        type: Number
     },
     isDeletedLabel: {
         type: Boolean,

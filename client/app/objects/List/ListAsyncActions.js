@@ -77,7 +77,6 @@ export function callUpdateCardPositionInList(data){
             dispatch(updateCardPositionInList(data));
             asteroid.call('updateCardPositionInList', data)
             .then(result => {
-                console.log("ok")
             })
     }
 }
@@ -87,7 +86,6 @@ export function callUpdateCardPositionBetweenList(data){
         dispatch(updateCardPositionBetweenList(data));
         asteroid.call('updateCardPositionBetweenList', data)
             .then(result => {
-                console.log("ok")
             })
     }
 }

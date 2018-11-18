@@ -22,6 +22,19 @@ export const edit = (state, action) => {
   return state;
 };
 
+export const update = (state, action, variable) => {
+  const elemToEditArray = state.slice().filter(item => item._id === action.data._id);
+  if((Array.isArray(elemToEditArray) && elemToEditArray.length)){
+      const elemToEditIndex = state.indexOf(elemToEditArray[0]);
+      const newState = state.slice();
+      if(elemToEditArray[0][variable] != undefined){
+          newState[elemToEditIndex][variable]=(action.data[variable])
+          return newState;
+      }
+  }
+  return state;
+}
+
 export const add = (state, action) => {
   const newItemId = action.data._id;
   const isNotUniq = state.find(i => i._id === newItemId);

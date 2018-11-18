@@ -5,11 +5,17 @@ Meteor.methods({
     getLabels() {
         return Label.find().fetch();
     },
-    addLabel(data) {
-        return Label.insert(data);
+    addLabel() {
+        return Label.insert({titleLabel: "Label Sticker", colorLabel: [225, 4, 4]})
     },
     removeLabel(id) {
         return Label.remove({_id: id});
+    },
+    updateColorLabel(data){
+        return Label.update({_id: data._id}, {$set: {colorLabel: data.colorLabel}})
+    },
+    updateNameLabel(data){
+        return Label.update({_id: data._id}, {$set:{titleLabel: data.titleLabel}})
     },
     findOneLabel(id) {
         return Label.findOne(id);

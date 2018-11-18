@@ -17,6 +17,7 @@ import './CheckList/index';
 import './Item/index';
 import './Comment/index';
 import './Label/index';
+import './Client/index';
 
 // declare MongoDB collection here
 //
