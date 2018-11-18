@@ -47,7 +47,7 @@ JsonRoutes.setResponseHeaders({
 //
 // Read more: http://guide.meteor.com/methods.html
 Meteor.methods({
-    'user.register' (data) {
+    'user.register'(data) {
         Accounts.createUser({
             email: data.username,
             password: data.password
@@ -69,11 +69,28 @@ Meteor.methods({
 // Read more at: https://guide.meteor.com/accounts.html
 Meteor.startup(() => {
     const theOnlyUser = Meteor.users.find().fetch();
-    /*
+
     if (!theOnlyUser.length) {
         Accounts.createUser({
-            username: 'admin',
-            password: 'pass'
+            username: process.env.USERNAME_ADMIN,
+            email: process.env.EMAIL_ADMIN,
+            password: process.env.PASSWORD,
+            profile: {
+                genderUser: process.env.GENDER,
+                firstNameUser: process.env.FIRSTNAME,
+                lastNameUser: process.env.NAME,
+                nickNameUser: process.env.NICKNAME,
+                mailUser: process.env.EMAIL_ADMIN,
+                biographyUser: "",
+                initialsUser: "",
+                passwordUser: "",
+                seedUser: "",
+                avatarUser: "",
+                languageUser: "",
+                colourBlindUser: "",
+                favoriteBoards: [],
+                isAdminMember: 1
+            }
         });
-    }*/
+    }
 });
