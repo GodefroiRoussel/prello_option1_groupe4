@@ -27,7 +27,7 @@ class Account extends Component {
         super(props)
         this.state = {
             genderValue: "",
-            selected: []
+            selected: ""
         };
 
     }
@@ -40,9 +40,7 @@ class Account extends Component {
             firstNameUser: e.target.firstName.value,
             lastNameUser: e.target.name.value,
             mailUser: e.target.email.value,
-        }).catch((error) => {
-            Alert.error(error.message);
-        });
+        })
         Alert.success("Profile updated")
     };
 
