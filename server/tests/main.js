@@ -197,12 +197,9 @@ describe("card", function() {
 describe("team", function() {
     /*it('should add member to the team', function () {
         const user1 = Meteor.call('addUser', {nickname: "test", email: "a@gmail.com", password: "pass", gender: "M", firstname: "first", name: "name"})
-        console.log(user1)
         const teamId = Meteor.call('addTeam', {nameTeam: 'MyTeam', ownerTeam: 'ownerId', members: []})
-        console.log(teamId)
         Meteor.call('addMemberTeam', {_id: teamId, member: user1}, () => {
             const team = Meteor.call('getTeamById', teamId)
-            console.log(team)
             assert.deepEqual(team.members, [user1])
         })
     });*/

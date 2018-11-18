@@ -52,8 +52,6 @@ class BoardWAR extends React.Component {
                                 nbHoursBill = nbHoursBill + work.timeReal
                             }
                         )
-                        console.log(this.props.idBoard)
-                        console.log('res bill ', nbHoursBill)
                         this.setState({nbHoursWorkBill: nbHoursBill})
 
                     }
@@ -103,8 +101,6 @@ class BoardWAR extends React.Component {
         this.setState({endDate: value.value})
     }
     render() {
-        console.log('notre state ',this.state)
-        console.log('nos props ',this.props)
         const showCRHA = this.state.displayCRHA
         const dataPieWorks = {
             labels: [
@@ -191,7 +187,6 @@ class BoardWAR extends React.Component {
 BoardWAR.propTypes = {};
 
 function mapStateToProps(state, ownProps){
-    console.log(ownProps.location)
     return{
         works: state.works,
         idBoard: ownProps.location.state.id

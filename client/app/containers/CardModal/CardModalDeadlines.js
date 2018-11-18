@@ -156,6 +156,7 @@ class CardModalDeadlines extends React.Component {
                                             <Form.Field>
                                                 <Button>Add</Button>
                                             </Form.Field>
+
                                         </Form.Group>
                                     </Form>
                                 </List.Content>
