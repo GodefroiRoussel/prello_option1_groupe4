@@ -57,9 +57,9 @@ class AdminMembers extends React.Component {
                                 <List divided verticalAlign='middle'>
                                     <List.Item>
                                         <List.Content floated='right'>
-                                            <Button className={defaultStyle.backgroundColorSuccess}>open
+                                            <Button disabled={true} className={defaultStyle.backgroundColorSuccess}>open
                                                 account</Button>
-                                            <Button className={defaultStyle.backgroundColorAlert}>close account</Button>
+                                            <Button disabled={true} className={defaultStyle.backgroundColorAlert}>close account</Button>
                                         </List.Content>
                                         <List.Content className={defaultStyle.textColor1}>
                                             {x.profile.firstNameUser} {x.profile.lastNameUser} - {x.username}

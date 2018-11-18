@@ -106,12 +106,13 @@ class Team extends React.Component {
 
     panes = [
         { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} 
-                                                                                dispatchFunc={this.props.DispatchCallAddBoard} 
+                                                                                dispatchFunc={this.props.DispatchCallAddBoard}
                                                                                 team={this.props.team._id} 
                                                                                 user={this.props.user.username}
                                                                                 changeNameBoard={this.changeNameBoard}
                                                                                 handleAddBoardOnClick={this.handleAddBoardOnClick}
-                                                                                userFavoriteBoard={this.props.user.profile.favoriteBoards}/></Tab.Pane> },
+                                                                                userFavoriteBoard={this.props.user.profile.favoriteBoards}
+                                                                                             addable={true}/></Tab.Pane> },
         { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane>{this.users()}</Tab.Pane>},
         { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings()}</Tab.Pane> },
     ]
@@ -138,7 +139,7 @@ class Team extends React.Component {
             return(<div>
                 <h3 className={defaultStyle.textColor1}>Team visibility</h3>
                 <Form.Group inline>
-                    <label className={defaultStyle.textColor4}>This team is {this.isVisibleTeam(this.props.team.visibilityTeam)}</label>
+                    <label className={defaultStyle.textColor4}>This team is {this.isVisibleTeam(this.props.team.visibilityTeam)} set it </label>
                     <Select
                         onChange={this.changePrivacyValue.bind(this)}
                         options={options}

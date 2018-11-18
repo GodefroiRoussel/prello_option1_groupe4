@@ -65,7 +65,7 @@ class Home extends React.Component {
                         </Grid.Row>
                         <Grid.Row className={style.secondRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <h3 className={defaultStyle.textColor4}>Your boards favorites (to implement)</h3>
+                                <h3 className={defaultStyle.textColor4}>Your favorite boards</h3>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -101,7 +101,7 @@ class Home extends React.Component {
                         </Grid.Row>
                         <Grid.Row className={style.secondRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <h3 className={defaultStyle.textColor4}>All your Boards (to implement)</h3>
+                                <h3 className={defaultStyle.textColor4}>All your Boards </h3>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -118,7 +118,6 @@ class Home extends React.Component {
     }
 
     callCardBoard = (boards,addable) => {
-        console.log(boards)
         return(
             <Grid.Column mobile={15} tablet={13} computer={10}>
                 <CardBoards boards={boards}

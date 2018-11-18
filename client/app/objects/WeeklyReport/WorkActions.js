@@ -1,6 +1,7 @@
 export const EDIT_WORK_BILLABLE = 'EDIT_WORK_BILLABLE';
 export const EDIT_WORK_NOT_BILLABLE = 'EDIT_WORK_NOT_BILLABLE'
 export const ADD_WORK = 'ADD_WORK'
+export const GET_WORKS_CARD='GET_WORKS_CARD'
 
 export function editWorkBillable(data) {
     return {
@@ -19,6 +20,13 @@ export function editWorkNotBillable(data) {
 export function addWork(data) {
     return {
         type: ADD_WORK,
+        data
+    }
+}
+
+export function getWorksByCard(data){
+    return{
+        type: GET_WORKS_CARD,
         data
     }
 }

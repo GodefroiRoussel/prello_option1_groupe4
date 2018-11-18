@@ -168,7 +168,7 @@ class ListC extends Component {
                                     <Grid>
                                         <Grid.Row>
                                             <Grid.Column  width={8} floated='left'>
-                                                {x.titleCard}
+                                                {x.titleCard}{x.members}
                                             </Grid.Column>
                                             <Grid.Column floated='right'  width={3} textAlign='right'>
                                                 {x.billable ? (<Icon name='dollar' floated='right' className={defaultStyle.textColor3} />) : (' ')}
@@ -178,7 +178,7 @@ class ListC extends Component {
                                     </Grid>
 
                                 </Card.Header>
-                                <Card.Meta className={style.cardBoardMeta}>other infos</Card.Meta>
+                                <Card.Meta className={style.cardBoardMeta}>{x.assignedUsers.map((x,index)=>{return(<Button>{x.charAt(0).toUpperCase()}{x.charAt(1).toUpperCase()}</Button>)})}</Card.Meta>
                             </Card.Content>
                         </Card>
                     </List.Item>

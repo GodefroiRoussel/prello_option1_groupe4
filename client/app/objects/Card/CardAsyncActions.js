@@ -80,7 +80,6 @@ export function callAddMemberAssigned(data) {
 }
 
 export function callDeleteMemberAssigned(data) {
-    console.log(data)
     return dispatch => asteroid.call('deleteContributorCard', data)
         .then(result => dispatch(editContributorCard(result)))
 }

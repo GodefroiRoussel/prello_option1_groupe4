@@ -10,14 +10,14 @@ import {
 } from 'semantic-ui-react';
 import style from './cardModal.styl';
 import defaultStyle from "../../styles/settings.styl";
-
+import moment from 'moment'
 import {
     DateInput,
     TimeInput,
     DateTimeInput,
     DatesRangeInput
 } from 'semantic-ui-calendar-react';
-import {callAddWork} from "../../objects/WeeklyReport/WorkAsyncActions";
+import {callAddWork, callGetWorksByCard} from "../../objects/WeeklyReport/WorkAsyncActions";
 import {Grid} from "semantic-ui-react/dist/commonjs/collections/Grid/Grid";
 
 
@@ -27,22 +27,11 @@ class CardModalDeadlines extends React.Component {
         super(props)
         this.state = {
             openModal: false,
-            members:[{
-                id: "1",
-                firstName: "Charles",
-                LastName: "Dupont",
-                nickname: "charlyd"
-            },{
-                id: "2",
-                firstName: "Maurice",
-                LastName: "Tarpien",
-                nickname: "TarpM"
-
-            }],
             date: '',
             timeWork: null,
             dateTime: '',
-            datesRange: ''
+            datesRange: '',
+            getData: false
         };
     }
 
@@ -53,6 +42,9 @@ class CardModalDeadlines extends React.Component {
             this.setState({ [name]: value });
         }
     }
+    handleTime = (e, value) => {
+        this.setState({timeWork: value.value})
+    }
 
     handleDate = (e, value) => {
         this.setState({date: value.value})
@@ -60,7 +52,6 @@ class CardModalDeadlines extends React.Component {
 
     addWork = (e) => {
         if(e.target.dateWork.value && e.target.timeWork.value && e.target.timeWork.value > 0) {
-            console.log("dans le if")
             this.setState({timeWork: e.target.timeWork.value, dateWork: e.target.dateWork.value}, () =>
                 this.props.dispatchCallAddWork({
                     dateWork: this.state.dateWork,
@@ -69,13 +60,16 @@ class CardModalDeadlines extends React.Component {
                     boardId: this.props.board
                 })
             )
+            this.setState({getData: false})
         }
-        console.log(e.target.dateWork.value)
     }
-
 
     render() {
         const { openModal } = this.state;
+        if(this.props.dispatchCallGetWork && !this.state.getData){
+            this.props.dispatchCallGetWork({idCard: this.props.card._id})
+            this.setState({getData: true})
+        }
         return (
 
             <Modal
@@ -102,33 +96,8 @@ class CardModalDeadlines extends React.Component {
                             <List.Item>
                                 <List.Content>
                                     <List divided verticalAlign='middle'>
-                                        <List.Item>
-                                            <List.Content floated='right'>
-                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
-                                            </List.Content>
-                                            <List.Content className={defaultStyle.textColor1}>
-                                                Date - nb heures
-                                            </List.Content>
-                                        </List.Item>
-                                        <List.Item>
-                                            <List.Content floated='right'>
-                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
-                                            </List.Content>
-                                            <List.Content className={defaultStyle.textColor1}>
-                                                Date - nb heures
-                                            </List.Content>
-                                        </List.Item>
-                                        <List.Item>
-                                            <List.Content floated='right'>
-                                                <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
-                                            </List.Content>
-                                            <List.Content className={defaultStyle.textColor1}>
-                                                Date - nb heures
-                                            </List.Content>
-                                        </List.Item>
-
+                                        {this.worksIsFilled()}
                                     </List>
-
                                 </List.Content>
 
                             </List.Item>
@@ -139,7 +108,6 @@ class CardModalDeadlines extends React.Component {
                                 <List.Content floated='right'>
                                     <Form onSubmit={this.addWork}>
                                         <Form.Group>
-
                                                 <DateInput
                                                     closable={true}
                                                     closeOnMouseLeave={false}
@@ -148,10 +116,10 @@ class CardModalDeadlines extends React.Component {
                                                     name="dateWork"
                                                     placeholder="Date"
                                                     value={this.state.date}
-                                                    iconPosition="left"/>
-
+                                                    iconPosition="left"
+                                                    onChange={this.handleDate}/>
                                             <Form.Field>
-                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
+                                                <Input name="timeWork" value={this.state.timeWork} type={"number"} min="0" step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Field>
                                                 <Button>Add</Button>
@@ -171,6 +139,23 @@ class CardModalDeadlines extends React.Component {
         );
     }
 
+    worksIsFilled = () => {
+        if(this.props.works){
+            return this.props.works.map(x => {
+                return(
+                    <List.Item>
+                        <List.Content floated='right'>
+                            <Button className={defaultStyle.backgroundColorAlert}>Delete</Button>
+                        </List.Content>
+                        <List.Content className={defaultStyle.textColor1}>
+                         {moment(x.day).subtract(10, 'days').calendar()} - {x.timeReal}
+                        </List.Content>
+                    </List.Item>
+                )
+            })
+        }
+    }
+
 
 }
 
@@ -178,13 +163,14 @@ class CardModalDeadlines extends React.Component {
 function mapStateToProps(state, ownProps){
     return{
         card: ownProps.card,
-        board: ownProps.board
+        board: ownProps.board,
+        works: state.works,
     }
 };
 
 const mapDispatchToProps = (dispatch)=> ({
-    dispatchCallAddWork: data => dispatch(callAddWork(data))
-
+    dispatchCallAddWork: data => dispatch(callAddWork(data)),
+    dispatchCallGetWork: data => dispatch(callGetWorksByCard(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(cssModules(CardModalDeadlines, style));

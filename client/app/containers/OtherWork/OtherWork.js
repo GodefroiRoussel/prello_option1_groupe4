@@ -66,6 +66,8 @@ class OtherWork extends React.Component {
                     </Form.Field>
                     <Form.Field>
                         <DateInput
+                            closable={true}
+                            closeOnMouseLeave={false}
                             dateFormat={"YYYY-MM-DD"}
                             timeFormat={false}
                             name="dateWork"

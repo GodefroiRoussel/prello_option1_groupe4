@@ -149,7 +149,7 @@ class BoardWAR extends React.Component {
                     <Grid centered style={style.root}>
                         <Grid.Row className={style.firstRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <h2 className={defaultStyle.textColor4}>Weekly activity report - Board name VINCENT ICI !!!!</h2>
+                                <h2 className={defaultStyle.textColor4}>Weekly activity report </h2>
                                 <Divider />
                             </Grid.Column>
                         </Grid.Row>
@@ -194,8 +194,6 @@ class BoardWAR extends React.Component {
                                 </Form>
                             </Grid.Column>
                         </Grid.Row>
-
-
                         {showCRHA && this.state.worksBill ? (
                             <Grid.Row className={style.firstRowHome}>
                                 <Grid.Column mobile={15} tablet={5} computer={5}>
