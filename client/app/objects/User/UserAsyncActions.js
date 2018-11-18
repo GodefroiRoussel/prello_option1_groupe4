@@ -1,5 +1,6 @@
 import asteroid from '../../common/asteroid';
 import { Link, browserHistory } from 'react-router'
+import { addUser, getAllUser, removeUser, editUser, removeAuthorizationClient } from './UserActions';
 
 import { addUser, getAllUser, removeUser, editUserProfile, deleteFavoriteBoard, addFavoriteBoard } from './UserActions';
 
@@ -20,11 +21,11 @@ export function callRemoveUser(_id) {
 }
 
 export function callEditUserProfile(data) {
-    return dispatch => asteroid.call('editUserProfile',data)
+    return dispatch => asteroid.call('editUserProfile', data)
         .then(() => dispatch(editUserProfile(data)));
 }
 export function callEditUserPassword(data) {
-    return dispatch => asteroid.call('editUserPassword',data)
+    return dispatch => asteroid.call('editUserPassword', data)
         .then(() => dispatch(editUserPassword(data)));
 }
 
@@ -42,4 +43,9 @@ export function callDeleteFavoriteBoard(data){
             window.location.reload();
             return dispatch(deleteFavoriteBoard(data))
         });
+}
+
+export function callRemoveAuthorizationClient(_id) {
+    return dispatch => asteroid.call('removeAuthorization', _id)
+        .then(() => dispatch(removeAuthorizationClient(_id)));
 }
