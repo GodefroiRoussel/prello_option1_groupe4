@@ -106,10 +106,14 @@ class ListC extends Component {
                                 </Header>
                                 <Modal.Content>
                                     <Form onSubmit={this.handleCreateCard}>
-                                        <Form.Field className={style.inputForm}>
-                                            <Input type='text' autoFocus visible onKeyPress={this.handleCreateCard} onChange={(name)=> this.setState({nameCard: name.target.value})} placeholder='New card title'></Input>
-                                            <Button type="submit">Add</Button>
-                                        </Form.Field>
+                                        <Form.Group inline>
+                                            <Form.Field>
+                                                <Input type='text' autoFocus visible onKeyPress={this.handleCreateCard} onChange={(name)=> this.setState({nameCard: name.target.value})} placeholder='New card title'></Input>
+                                            </Form.Field>
+                                            <Form.Field>
+                                                <Button type="submit">Add</Button>
+                                            </Form.Field>
+                                        </Form.Group>
                                     </Form>
                                 </Modal.Content>
                                 <Modal.Actions>

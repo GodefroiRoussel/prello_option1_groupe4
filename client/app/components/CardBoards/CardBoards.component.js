@@ -115,8 +115,17 @@ const CardBoards = (props) => {
             <div className={style.buttonAddBoardTeam}>
                 <Form onSubmit={props.handleAddBoardOnClick}>
                 <Form.Field className={style.inputForm}>
-                    <Input type='text' onKeyPress={handleAddBoard} onChange={props.changeNameBoard} placeholder='Add a Board'></Input>
-                    <Button type="submit">Add</Button>
+                    <Form.Group inline>
+                        <Form.Field>
+                            <Input type='text' onKeyPress={handleAddBoard} onChange={props.changeNameBoard} placeholder='Add a Board'></Input>
+                        </Form.Field>
+                        <Form.Field>
+                            <Button type="submit">Add</Button>
+                        </Form.Field>
+
+                    </Form.Group>
+
+
                 </Form.Field>
                 </Form>
             </div>

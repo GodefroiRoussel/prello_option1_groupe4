@@ -94,10 +94,13 @@ class Home extends React.Component {
                             <Grid.Column mobile={15} tablet={13} computer={10}>
                                 <h3 className={defaultStyle.textColor4}>Your Teams</h3>
                                 <Form onSubmit={this.handleAddTeam}>
-                                    <Form.Field className={style.inputForm}>
-                                        <Input type='text' onKeyPress={this.handleAddTeam} onChange={(name)=> this.setState({nameTeam: name.target.value})} placeholder='Add a Team'></Input>
-                                        <Button type="submit">Add</Button>
-                                    </Form.Field>
+                                    <Form.Group inline>
+                                        <Form.Field>
+                                            <Input type='text' onKeyPress={this.handleAddTeam} onChange={(name)=> this.setState({nameTeam: name.target.value})} placeholder='Add a Team'></Input>                                        </Form.Field>
+                                        <Form.Field>
+                                            <Button type="submit">Add</Button>
+                                        </Form.Field>
+                                    </Form.Group>
                                 </Form>
                             </Grid.Column>
                         </Grid.Row>
