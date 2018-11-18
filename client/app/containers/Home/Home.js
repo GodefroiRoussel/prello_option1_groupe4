@@ -135,7 +135,7 @@ class Home extends React.Component {
 
     isTeamsFilled = (teams) =>{
         if(teams.length>0){
-            return(<CardTeamsComponent teams={teams}></CardTeamsComponent>)
+            return(<CardTeamsComponent teams={teams}/>)
         }
         else{return(<div></div>)}
     }

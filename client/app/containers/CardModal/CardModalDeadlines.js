@@ -64,7 +64,8 @@ class CardModalDeadlines extends React.Component {
                 this.props.dispatchCallAddWork({
                     dateWork: this.state.dateWork,
                     timeWork: this.state.timeWork,
-                    _id: this.props.card._id
+                    _id: this.props.card._id,
+                    boardId: this.props.board
                 })
             )
         }
@@ -122,11 +123,11 @@ class CardModalDeadlines extends React.Component {
                                                 dateFormat={"YYYY-MM-DD"}
                                                 timeFormat={false}
                                                 name="endDate"
-                                                placeholder="End Date"
+                                                placeholder="date"
                                                 value={this.state.date}
                                                 iconPosition="left"
                                                 onChange={this.handleDate} />
-                                            <Input type={"number"} step={0.05} placeholder='Nb hours' />
+                                            <Input type={"number"} step={0.25} placeholder='Nb hours' />
                                             <Button>Delete</Button>
                                         </Form.Group>
                                     </Form>
@@ -144,13 +145,13 @@ class CardModalDeadlines extends React.Component {
                                                 dateFormat={"YYYY-MM-DD"}
                                                 timeFormat={false}
                                                 name="dateWork"
-                                                placeholder="End Date"
+                                                placeholder="Date"
                                                 value={this.state.date}
                                                 iconPosition="left"
                                                 onChange={this.handleDate} />
                                             </Form.Field>
                                             <Form.Field>
-                                            <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.05} placeholder='Nb hours' />
+                                            <Input name="timeWork" value={this.state.timeWork} type={"number"} step={0.25} placeholder='Nb hours' />
                                             </Form.Field>
                                             <Form.Button>
                                             <Button>Add</Button>
@@ -175,7 +176,8 @@ class CardModalDeadlines extends React.Component {
 
 function mapStateToProps(state, ownProps){
     return{
-        card: ownProps.card
+        card: ownProps.card,
+        board: ownProps.board
     }
 };
 

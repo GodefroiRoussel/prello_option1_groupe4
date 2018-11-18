@@ -44,9 +44,12 @@ Meteor.methods({
     },
     addContributorCard(data) { //data = idCard, idMember
         const card = Card.findOne(data.idCard)
-        const members = card.assignedUsers
-        members.push(data.idMember)
-        Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        const membersInBoard = Meteor.call("getBoard", data.idBoard).members
+        var members = card.assignedUsers
+        if(membersInBoard.includes(data.idMember) && !card.assignedUsers.includes(data.idMember)){
+            members.push(data.idMember)
+            Card.update( {_id: data.idCard}, {$set: {assignedUsers: members}})
+        }
         return Card.findOne({_id: data.idCard})
     },
     deleteContributorCard(data) { //data = idCard, idMember
@@ -100,6 +103,10 @@ Meteor.methods({
         comments.splice(position, 1)
         Card.update( {_id: data.idCard}, {$set: {comments: comments}})
         return Card.findOne({_id: data.idCard})
+    },
+    isBillableCard(idCard) {
+        const card = Card.findOne({_id: idCard})
+        return card.billable
     },
     addCheckListCard(data){
         const card = Card.findOne(data._id)
