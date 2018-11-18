@@ -17,6 +17,7 @@ export function callGetBoard(idBoard) {
 }
 
 export function callAddBoard(data) {
+    console.log(data)
     let finaldata = {...data, ...{admins:[data.user], members:[data.user], listsId:[]}};
     if(data.team){
         finaldata = {...data, ...{teams:[data.team], admins:[data.user], members:[data.user], listsId:[]}}

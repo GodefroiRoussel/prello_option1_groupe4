@@ -110,7 +110,8 @@ class Team extends React.Component {
                                                                                 team={this.props.team._id} 
                                                                                 user={this.props.user.username}
                                                                                 changeNameBoard={this.changeNameBoard}
-                                                                                handleAddBoardOnClick={this.handleAddBoardOnClick}/></Tab.Pane> },
+                                                                                handleAddBoardOnClick={this.handleAddBoardOnClick}
+                                                                                userFavoriteBoard={this.props.user.profile.favoriteBoards}/></Tab.Pane> },
         { menuItem: {key: 'users', content: 'Members'}, render: () => <Tab.Pane>{this.users()}</Tab.Pane>},
         { menuItem: {key: 'setting',  content: 'Settings'}, render: () => <Tab.Pane>{this.settings()}</Tab.Pane> },
     ]

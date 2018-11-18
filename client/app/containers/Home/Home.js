@@ -53,6 +53,7 @@ class Home extends React.Component {
                 return <div/>
             }
             else{
+                const userBoard=this.props.boards.filter(x => x.teams == undefined && !this.props.user.profile.favoriteBoards.includes(x._id))
                 return(<div>
                     <Grid centered style={style.root}>
                         <Grid.Row className={style.firstRowHome}>
@@ -67,13 +68,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <CardBoards boards={this.props.boards} 
-                                user={this.props.user.username} 
-                                dispatchFunc={this.props.dispatchCallAddBoard} 
-                                changeNameBoard={this.changeNameBoard}
-                                handleAddBoardOnClick={this.handleAddBoardOnClick}></CardBoards>
-                            </Grid.Column>
+                            {this.callCardBoard(this.props.favoriteBoards)}
                         </Grid.Row>
                         <Grid.Row className={style.secondRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
@@ -82,13 +77,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <CardBoards boards={this.props.boards} 
-                                user={this.props.user.username} 
-                                dispatchFunc={this.props.dispatchCallAddBoard} 
-                                changeNameBoard={this.changeNameBoard}
-                                handleAddBoardOnClick={this.handleAddBoardOnClick}></CardBoards>
-                            </Grid.Column>
+                            {this.callCardBoard(userBoard)}
                         </Grid.Row>
                         <Grid.Row className={style.thirdRowHome}>
                             <Grid.Column mobile={15} tablet={13} computer={10}>
@@ -115,13 +104,7 @@ class Home extends React.Component {
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column mobile={15} tablet={13} computer={10}>
-                                <CardBoards boards={this.props.boards} 
-                                user={this.props.user.username} 
-                                dispatchFunc={this.props.dispatchCallAddBoard} 
-                                changeNameBoard={this.changeNameBoard}
-                                handleAddBoardOnClick={this.handleAddBoardOnClick}></CardBoards>
-                            </Grid.Column>
+                            {this.callCardBoard(this.props.boards)}
                         </Grid.Row>
                     </Grid>
 
@@ -131,6 +114,20 @@ class Home extends React.Component {
         else{
             return <Login/>
         }
+    }
+
+    callCardBoard = (boards) => {
+        console.log(boards)
+        return(
+            <Grid.Column mobile={15} tablet={13} computer={10}>
+                <CardBoards boards={boards} 
+                user={this.props.user.username} 
+                dispatchFunc={this.props.dispatchCallAddBoard} 
+                changeNameBoard={this.changeNameBoard}
+                handleAddBoardOnClick={this.handleAddBoardOnClick}
+                userFavoriteBoard={this.props.user.profile.favoriteBoards}></CardBoards>
+            </Grid.Column>
+        )
     }
 
     isTeamsFilled = (teams) =>{
@@ -155,6 +152,11 @@ function mapStateToProps(state, ownProps){
         teams: state.teams,
         user: state.user,
         boards: state.boards,
+        favoriteBoards: state.boards.filter(x => {
+            if(state.user){
+                return state.user.profile.favoriteBoards.includes(x._id)
+            }
+        }),
     }
 };
 
@@ -162,6 +164,7 @@ function mapDispatchToProps(dispatch){
     return{
         dispatchCallAddTeam: data => dispatch(callAddTeam(data)),
         dispatchCallAddBoard: data => dispatch(callAddBoard(data)),
+        dispatchCallEditUser: data => dispatch(callEditUserProfile(data))
     }
 };
 
