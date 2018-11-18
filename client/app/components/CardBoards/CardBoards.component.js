@@ -11,12 +11,14 @@ const CardBoards = (props) => {
 
     const boardsIsFilled = ()=>{
         if(props.boards){
+            console.log(props)
             return (
                 <div>
                     <Card.Group>
                         {props.boards.map(x => {
                             const favorite = props.userFavoriteBoard.includes(x._id);
-                            return(<Card key={x._id} className={style.cardBoard} >
+                            console.log(favorite)
+                            return(<Card key={x._id} className={style.cardBoard}>
                                 <Card.Content>
                                     <Card.Header className={style.cardBoardHeader}>
                                         <Grid>
@@ -25,7 +27,7 @@ const CardBoards = (props) => {
                                                     {x.titleBoard}
                                                 </Grid.Column>
                                                 <Grid.Column floated='right'  width={2} textAlign='right'>
-                                                    {favorite ? (<Icon onClick={()=>props.handleAddFavoriteBoard(x._id)} className={defaultStyle.textColor5} name='star' />) : (<Icon onClick={()=>props.handleDeleteFavoriteBoard(x._id)} className={defaultStyle.textColor3} name='star' />)}
+                                                    {favorite ? (<Icon onClick={()=>props.handleDeleteFavoriteBoard({boardId:x._id})} className={defaultStyle.textColor5} name='star' />) : (<Icon onClick={()=>props.handleAddFavoriteBoard({boardId:x._id})} className={defaultStyle.textColor3} name='star' />)}
                                                 </Grid.Column>
                                             </Grid.Row>
                                         </Grid>

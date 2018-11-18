@@ -71,17 +71,21 @@ Meteor.methods({
         return Meteor.users.update(Meteor.userId(), { $set: { profile: data } });
     },
     addFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId()
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         favBoards.push(data.boardId)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
-        const user = Meteor.users.findOne(data.userId)
-        const favBoards = user.favoriteBoards
+        const userId = Meteor.userId();
+        const user = Meteor.users.findOne(userId)
+        const favBoards = user.profile.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        return Meteor.users.update( {_id: data.userId}, {$set: {favoriteBoards: favBoards}})
+        const d = {favoriteBoards : favBoards}
+        Meteor.call("editUserProfile", d)
     },
     async loginPolytech(user) {
         const username = user.username;
