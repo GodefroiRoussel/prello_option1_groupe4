@@ -113,10 +113,5 @@ asteroid.ddp.on('changed', (updatedDoc) => {
     }
 });
 
-/*asteroid.ddp.on('get', (getdDoc) => {
-    if (getdDoc.collection === 'board') {
-        store.dispatch(getBoard(getDoc.id));
-    }
-});*/
 
 export default asteroid;

@@ -41,6 +41,7 @@ class CardModalMembers extends React.Component {
 
     // ATTENTION : e.target.value va etre l id du membre
     addContributorCard = (e) => {
+        console.log(e.target.value)
         if(e.target.value) {
             this.props.dispatchCallAddMemberToCard({idCard: this.state.card._id, idMember: e.target.value})
         }
@@ -77,39 +78,31 @@ class CardModalMembers extends React.Component {
                 <Modal.Content className={style.modalContentCutomize}>
                     <Modal.Description>
                         <List verticalAlign='middle'>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Helen</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Christian</List.Header>
-                                </List.Content>
-                            </List.Item>
-                            <List.Item>
-                                <List.Content floated='right'>
-                                    <Button>Delete</Button>
-                                </List.Content>
-                                <Image avatar src={ProfileAnonymous} />
-                                <List.Content>
-                                    <List.Header>Daniel</List.Header>
-                                </List.Content>
-                            </List.Item>
+                            {this.props.card.assignedUsers.map(x => {
+                                return(
+                                    <List.Item>
+                                        <List.Content floated='right'>
+                                            <Button>Delete</Button>
+                                        </List.Content>
+                                        <Image avatar src={ProfileAnonymous} />
+                                        <List.Content>
+                                            <List.Header>{x}</List.Header>
+                                        </List.Content>
+                                    </List.Item>
+                                )
+                            })}
                         </List>
-                        <Form onSubmit={this.toggleEditCardTitle}>
+                        <Form onSubmit={this.addContributorCard}>
                             <Form.Field className={style.inputEditTitle}>
                                 <label>Add a new worker</label>
-                                <Input list='languages' action='Add' name="titleList" type="text" placeholder={"Search by nickname"}/>
-                                
+                                <Input list='members' name="titleList" type="text" placeholder={"Search by nickname"}/>
+                                <datalist id='members'>
+                                {this.props.board.members.map(x => {
+                                    return(
+                                        <option value={x}/>
+                                    )
+                                })}
+                                </datalist>
                             </Form.Field>
                         </Form>
                     </Modal.Description>
