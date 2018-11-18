@@ -35,19 +35,52 @@ class Registration extends Component {
 
     handleRegistration  = (e) =>  {
         e.preventDefault();
-        this.props.dispatchCallAddUser({
-            gender: this.state.genderValue,
-            firstName: e.target.firstName.value,
-            name: e.target.name.value,
-            nickname: e.target.nickname.value,
-            email: e.target.email.value,
-            emailVerification: e.target.emailVerification.value,
-            password: e.target.password.value,
-            passwordConfirmation: e.target.passwordConfirmation.value
-        }).catch((error) => {
-            Alert.error(error.message);
-        });
-        browserHistory.push('/login');
+        if(this.state.genderValue=="NA")
+        {
+            Alert.error("Choose a gender");
+        }else if(!e.target.firstName.value)
+        {
+            Alert.error("Complete your first name");
+        }else if(!e.target.name.value)
+        {
+            Alert.error("Complete your name");
+        }else if(!e.target.nickname.value)
+        {
+            Alert.error("Complete your nickname");
+        }else if(!e.target.email.value)
+        {
+            Alert.error("Complete your email");
+        }else if(!e.target.emailVerification.value)
+        {
+            Alert.error("Complete your email verification");
+        }else if(!e.target.password.value)
+        {
+            Alert.error("Complete your password");
+        }else if(!e.target.passwordConfirmation.value)
+        {
+            Alert.error("Complete your password confirmation");
+        }else if(e.target.passwordConfirmation.value !== e.target.password.value)
+        {
+            Alert.error("Passwords are not equal");
+        }else if(e.target.emailVerification.value !== e.target.email.value)
+        {
+            Alert.error("Email are not equal");
+        }else{
+            this.props.dispatchCallAddUser({
+                gender: this.state.genderValue,
+                firstName: e.target.firstName.value,
+                name: e.target.name.value,
+                nickname: e.target.nickname.value,
+                email: e.target.email.value,
+                emailVerification: e.target.emailVerification.value,
+                password: e.target.password.value,
+                passwordConfirmation: e.target.passwordConfirmation.value
+            }).catch((error) => {
+                Alert.error(error.message);
+            });
+            browserHistory.push('/login');
+        }
+
     };
 
     changeGenderSelect(e, {value}){

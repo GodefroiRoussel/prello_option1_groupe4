@@ -164,9 +164,9 @@ class CardModal extends React.Component {
                                                     return(
                                                     <Card raised>
                                                         <Segment style={{backgroundColor: `rgb(${x.colorLabel}`}}>
-                                                            {x.titleLabel}
-                                                            <Button icon="delete" onClick={() => this.deleteLabelCard(x._id)}>
-                                                            </Button>
+                                                            <span className={defaultStyle.textColor3}> {x.titleLabel}</span>
+                                                            <Icon corner={'true'} name="delete" className={defaultStyle.textColor4} onClick={() => this.deleteLabelCard(x._id)}>
+                                                            </Icon>
                                                         </Segment>
                                                     </Card>)
                                                 })}
@@ -215,12 +215,18 @@ class CardModal extends React.Component {
                                             <h3 className={defaultStyle.textColor4}>Checklist</h3>
                                             <Progress color='green' value={this.props.todosFinished.length} total={this.props.todos.length} progress='ratio' />
                                             <div>
-                                                <input
-                                                type="text"
-                                                styleName="add-todo-input"
-                                                placeholder="Add todo item ..."
-                                                onKeyPress={this.handleAddTodo}
-                                                />
+                                                <Form>
+                                                    <Form.Field>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Add todo item ..."
+                                                            onKeyPress={this.handleAddTodo}
+                                                            name={"todoTitleAdd"}
+                                                            className={style.inputEditTitle}
+                                                        />
+                                                    </Form.Field>
+                                                </Form>
+
                                             </div>
                                             <div>
                                                 {this.props.todos.map((t, i) =>

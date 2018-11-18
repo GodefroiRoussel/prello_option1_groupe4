@@ -52,7 +52,7 @@ class BoardMenu extends Component {
                 <Menu.Item
                     className={defaultStyle.textColor3}
                     position='right'
-                    name='parameters'
+                    name='Settings'
                     onClick={() => browserHistory.push({pathname: '/settings', state:{_id: this.props.board._id}})}
                 >
                 </Menu.Item>
