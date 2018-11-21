@@ -73,7 +73,7 @@ Meteor.methods({
     getUser(id) {
         return Meteor.users.findOne(id);
     },
-    getAllUsersReturnUsername(){
+    getAllUsersReturnUsername() {
         const users = Meteor.users.find().fetch();
         var usernames = users.map(x => x.username);
         return usernames;
@@ -84,18 +84,18 @@ Meteor.methods({
         const profile = user.profile
         var newProfile = {}
         Object.keys(profile).forEach((f) => {
-            if(data[f]){
+            if (data[f]) {
                 newProfile[f] = data[f]
             }
-            else{
-                if(profile[f]){
+            else {
+                if (profile[f]) {
                     newProfile[f] = profile[f]
                 }
-                else{
-                    if(f=="favoriteBoards"){
-                        newProfile[f]=[]
-                    }else{
-                        newProfile[f]="";
+                else {
+                    if (f == "favoriteBoards") {
+                        newProfile[f] = []
+                    } else {
+                        newProfile[f] = "";
                     }
                 }
             }
@@ -107,7 +107,7 @@ Meteor.methods({
         const user = Meteor.users.findOne(userId)
         const favBoards = user.profile.favoriteBoards
         favBoards.push(data.boardId)
-        const d = {favoriteBoards : favBoards}
+        const d = { favoriteBoards: favBoards }
         Meteor.call("editUserProfile", d)
     },
     deleteFavoriteBoard(data) { // data = userId, boardId
@@ -116,7 +116,7 @@ Meteor.methods({
         const favBoards = user.profile.favoriteBoards
         const position = favBoards.indexOf(data.boardId)
         favBoards.splice(position, 1)
-        const d = {favoriteBoards : favBoards}
+        const d = { favoriteBoards: favBoards }
         Meteor.call("editUserProfile", d)
     },
     getClientsAuthorizedByUser() {
@@ -180,6 +180,7 @@ Meteor.methods({
                         seedUser: "",
                         avatarUser: "",
                         languageUser: "",
+                        favoriteBoards: [],
                         colourBlindUser: ""
                     }
                 });
