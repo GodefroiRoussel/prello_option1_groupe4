@@ -181,7 +181,8 @@ Meteor.methods({
                         avatarUser: "",
                         languageUser: "",
                         favoriteBoards: [],
-                        colourBlindUser: ""
+                        colourBlindUser: "",
+                        isAdminMember: 0
                     }
                 });
                 Meteor.users.update(newUserId,
