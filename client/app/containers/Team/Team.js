@@ -105,7 +105,7 @@ class Team extends React.Component {
     }
 
     panes = [
-        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boards} 
+        { menuItem: {key: 'boards',  content: 'Boards'}, render: () => <Tab.Pane><CardBoards boards={this.props.boardsTeam} 
                                                                                 dispatchFunc={this.props.DispatchCallAddBoard}
                                                                                 team={this.props.team._id} 
                                                                                 user={this.props.user.username}
@@ -174,11 +174,13 @@ class Team extends React.Component {
 };
 
 function mapStateToProps(state, ownProps){
+    const boardsTeam= state.boards.filter(el => el.teams!=undefined)
     return{
         team: state.teams.find(el => el._id === ownProps.location.state.team),
         teams: state.teams,
         user: state.user,
-        boards: state.boards
+        boards: state.boards,
+        boardsTeam: boardsTeam
     }
 };
 
